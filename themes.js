@@ -1,6 +1,6 @@
 // ===================================================================================
 //   THEMES.JS - GESTORE GLOBALE DI TEMI E PERSONALIZZAZIONE PER CRONOSHOP
-//   Versione: 3.0 (Completa e Robusta)
+//   Versione: 3.1 - Gestione di tutti i loghi del sito
 //   Autore: Il Tuo Main Coder
 //   Descrizione: Questo script gestisce l'intero sistema di temi, la personalizzazione
 //   avanzata, l'iniezione dell'UI (header/menu) e l'interattività di base
@@ -51,7 +51,6 @@ class ThemeManager {
         this.applySettings();
         this.attachGlobalListeners();
 
-        // Esegui la logica specifica della pagina se ci troviamo in themes.html
         if (document.getElementById('themesGrid')) {
             this.initThemesPage();
         }
@@ -79,7 +78,7 @@ class ThemeManager {
 
     /**
      * Applica tutte le impostazioni visive alla pagina.
-     * Questa è la funzione centrale che modifica il CSS.
+     * Questa è la funzione centrale che modifica il CSS e il logo.
      */
     applySettings() {
         const root = document.documentElement;
@@ -90,7 +89,7 @@ class ThemeManager {
         // Applica il tema preimpostato o lo sfondo personalizzato
         if (this.settings.customBg) {
             root.style.setProperty('--bg-main', this.settings.customBg);
-            // Se c'è uno sfondo custom, consideriamo il tema "scuro" di base per il testo, a meno che non si implementi una logica di contrasto
+            // Uno sfondo custom è considerato scuro di default per garantire la leggibilità del testo chiaro.
             isCurrentlyLight = false; 
         } else {
             Object.entries(currentTheme.css).forEach(([key, value]) => {
@@ -105,7 +104,7 @@ class ThemeManager {
         body.classList.toggle('light-mode', isCurrentlyLight);
         body.classList.toggle('glass-disabled', !this.settings.glassEffect);
         
-        // Aggiorna il logo in base al tema
+        // **LOGICA AGGIORNATA PER IL LOGO**
         this.updateLogo(isCurrentlyLight);
 
         // Sincronizza il toggle nel menu delle impostazioni
@@ -116,7 +115,7 @@ class ThemeManager {
 
     /**
      * Inietta dinamicamente l'HTML per header e sidebars.
-     * Garantisce coerenza in tutto il sito.
+     * Assegna la classe 'logo-image' per l'aggiornamento dinamico.
      */
     injectHTML() {
         const mainHeader = document.getElementById('mainHeader');
@@ -124,22 +123,18 @@ class ThemeManager {
         const rightSidebar = document.getElementById('rightSidebar');
 
         if (mainHeader) {
+            // **MODIFICA**: Aggiunta la classe 'logo-image'
             mainHeader.innerHTML = `
+                <a href="index.html" style="display:flex; align-items:center; gap:10px; text-decoration:none;">
+                    <img src="assets/cronoshop-logo-black.png" alt="Cronoshop Logo" class="logo-image" style="height:35px">
+                </a>
                 <button class="header-btn" id="leftSidebarBtn" aria-label="Apri menu"><i class="ph-bold ph-list"></i></button>
-                <div class="search-container-wrapper">
-                    <div class="search-container glass" id="searchContainer">
-                        <i class="ph ph-magnifying-glass"></i>
-                        <input type="text" id="searchInput" placeholder="Cerca...">
-                    </div>
-                </div>
+                <div class="search-container-wrapper"><div class="search-container glass" id="searchContainer"><i class="ph ph-magnifying-glass"></i><input type="text" id="searchInput" placeholder="Cerca..."></div></div>
                 <button class="header-btn" id="rightSidebarBtn" aria-label="Apri impostazioni"><i class="ph-bold ph-gear"></i></button>`;
         }
         if (leftSidebar) {
             leftSidebar.innerHTML = `
-                <div class="sidebar-header">
-                    <h3>Menu</h3>
-                    <button class="close-btn" id="closeLeftSidebarBtn"><i class="ph-bold ph-x"></i></button>
-                </div>
+                <div class="sidebar-header"><h3>Menu</h3><button class="close-btn" id="closeLeftSidebarBtn"><i class="ph-bold ph-x"></i></button></div>
                 <nav class="sidebar-nav">
                     <ul>
                         <li><a href="index.html"><i class="ph ph-house"></i> Home</a></li>
@@ -159,22 +154,11 @@ class ThemeManager {
         }
         if (rightSidebar) {
             rightSidebar.innerHTML = `
-                <div class="sidebar-header">
-                    <h3>Impostazioni</h3>
-                    <button class="close-btn" id="closeRightSidebarBtn"><i class="ph-bold ph-x"></i></button>
-                </div>
+                <div class="sidebar-header"><h3>Impostazioni</h3><button class="close-btn" id="closeRightSidebarBtn"><i class="ph-bold ph-x"></i></button></div>
                 <nav class="sidebar-nav">
                     <ul>
-                        <li>
-                            <label class="setting-item" for="themeToggle">
-                                <span><i class="ph ph-moon"></i> Tema Scuro</span>
-                                <div class="toggle-switch">
-                                    <input type="checkbox" id="themeToggle">
-                                    <span class="slider"></span>
-                                </div>
-                            </label>
-                        </li>
-                         <li><a href="#"><i class="ph ph-bell"></i> Notifiche</a></li>
+                        <li><label class="setting-item" for="themeToggle"><span><i class="ph ph-moon"></i> Tema Scuro</span><div class="toggle-switch"><input type="checkbox" id="themeToggle"><span class="slider"></span></div></label></li>
+                        <li><a href="#"><i class="ph ph-bell"></i> Notifiche</a></li>
                     </ul>
                 </nav>`;
         }
@@ -197,11 +181,12 @@ class ThemeManager {
     }
 
     /**
-     * Aggiorna dinamicamente il logo del sito in base al tema.
+     * **FUNZIONE CHIAVE**
+     * Aggiorna dinamicamente TUTTI i loghi del sito in base al tema.
      * @param {boolean} isLight - True se il tema è chiaro, false altrimenti.
      */
     updateLogo(isLight) {
-        const logoImages = document.querySelectorAll('.logo-image'); // Seleziona tutti i loghi
+        const logoImages = document.querySelectorAll('.logo-image');
         const logoPath = isLight ? 'assets/cronoshop-logo.png' : 'assets/cronoshop-logo-black.png';
         logoImages.forEach(img => {
             if (img.src !== logoPath) {
@@ -242,7 +227,7 @@ class ThemeManager {
 
         this.themeToggle?.addEventListener('change', () => {
             this.settings.themeId = this.themeToggle.checked ? 'dark' : 'light';
-            this.settings.customBg = null; // Rimuove lo sfondo custom se si usa il toggle
+            this.settings.customBg = null;
             this.saveSettings();
             this.applySettings();
             if (typeof this.updateUI === 'function') this.updateUI();
@@ -300,7 +285,7 @@ class ThemeManager {
             const card = e.target.closest('.theme-card');
             if (card) {
                 this.settings.themeId = card.dataset.theme;
-                this.settings.customBg = null; // Rimuove lo sfondo custom quando si sceglie un tema
+                this.settings.customBg = null;
                 this.saveSettings();
                 this.applySettings();
                 this.updateUI();
@@ -309,29 +294,26 @@ class ThemeManager {
 
         this.fontSelector.addEventListener('change', (e) => {
             this.settings.fontFamily = e.target.value;
-            this.saveSettings();
-            this.applySettings();
+            this.saveSettings(); this.applySettings();
         });
 
         this.fontSizeSlider.addEventListener('input', (e) => {
             const newSize = parseInt(e.target.value);
             this.settings.fontSize = newSize;
             this.fontSizeValue.textContent = `${newSize}px`;
-            this.saveSettings();
-            this.applySettings();
+            this.saveSettings(); this.applySettings();
         });
         
         this.glassEffectToggle.addEventListener('change', (e) => {
             this.settings.glassEffect = e.target.checked;
-            this.saveSettings();
-            this.applySettings();
+            this.saveSettings(); this.applySettings();
         });
 
         this.bgColorPicker.addEventListener('input', (e) => {
             this.settings.customBg = e.target.value;
             this.saveSettings();
             this.applySettings();
-            this.updateUI(); // Deseleziona le card dei temi
+            this.updateUI();
         });
     }
 }
