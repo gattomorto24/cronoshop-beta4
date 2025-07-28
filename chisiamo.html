@@ -12,74 +12,133 @@
     <link rel="apple-touch-icon" href="assets/cronoshop-logo.png">
 
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="themes.js" defer></script>
 
     <style>
         /* --- [1] IMPOSTAZIONI GLOBALI E VARIABILI --- */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
         :root {
-            --c-accent-primary: #007aff;
-            --c-bg-primary: #f2f2f7;
-            --c-bg-secondary: #ffffff;
-            --c-text-primary: #1d1d1f;
-            --c-text-secondary: #6e6e73;
-            --c-separator: rgba(60, 60, 67, 0.29);
-            --font-system: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", Roboto, Helvetica, Arial, sans-serif;
-            --radius-lg: 20px;
-            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
-            --spacing-md: 16px;
-            --spacing-lg: 24px;
-            --spacing-xl: 32px;
-            --header-height: 60px;
-            --transition-fast: 0.2s cubic-bezier(0.3, 0, 0.4, 1);
+            /* Colori Tema Scuro (Default) */
+            --bg-main: #121212;
+            --bg-glass: rgba(28, 28, 30, 0.75);
+            --bg-interactive: rgba(44, 44, 46, 0.8);
+            --border-glass: rgba(255, 255, 255, 0.15);
+            --text-primary: #f5f5f7;
+            --text-secondary: #a0a0a5;
+            --accent-primary: #0A84FF;
+            --overlay-bg: rgba(0, 0, 0, 0.6);
+            --radius-main: 24px;
+            --radius-sub: 16px;
+            --transition-smooth: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
-        html.dark-theme {
-            --c-accent-primary: #0a84ff;
-            --c-bg-primary: #000000;
-            --c-bg-secondary: #1c1c1e;
-            --c-text-primary: #f5f5f7;
-            --c-text-secondary: #8d8d92;
-            --c-separator: rgba(84, 84, 88, 0.65);
-            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.2);
+        
+        body.light-mode {
+            --bg-main: #f0f2f5;
+            --bg-glass: rgba(255, 255, 255, 0.7);
+            --bg-interactive: rgba(229, 229, 234, 0.8);
+            --border-glass: rgba(0, 0, 0, 0.1);
+            --text-primary: #1d1d1f;
+            --text-secondary: #6e6e73;
+            --accent-primary: #007AFF;
+            --overlay-bg: rgba(0, 0, 0, 0.4);
         }
 
         /* --- [2] RESET E STILI BASE --- */
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: var(--font-system);
-            background-color: var(--c-bg-primary);
-            color: var(--c-text-primary);
-            padding-top: var(--header-height);
-            line-height: 1.6;
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg-main);
+            color: var(--text-primary);
+            transition: background-color 0.3s, color 0.3s;
+            padding: 20px;
+            min-height: 100vh;
         }
-        a { color: var(--c-accent-primary); text-decoration: none; }
-        .container { max-width: 900px; margin: 0 auto; padding: 0 var(--spacing-lg); }
-
-        /* --- [3] STILI SPECIFICI DELLA PAGINA --- */
-        .about-section { padding: var(--spacing-xl) 0; }
-        .section-header { text-align: center; margin-bottom: var(--spacing-xl); }
-        .section-header h2 { font-size: 2.2rem; display: flex; align-items: center; justify-content: center; gap: var(--spacing-md); }
-        .section-header p { color: var(--c-text-secondary); max-width: 650px; margin: var(--spacing-md) auto 0; }
+        .page-wrapper { padding-top: 80px; }
+        .glass {
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-main);
+            transition: background 0.3s, border 0.3s;
+        }
+        a { color: var(--accent-primary); text-decoration: none; font-weight: 500; }
         
+        /* --- [3] HEADER, SEARCH & SIDEBARS (STANDARD) --- */
+        .main-header { position: fixed; top: 20px; left: 20px; right: 20px; z-index: 1000; display: flex; align-items: center; gap: 20px; padding: 0 20px; height: 70px; }
+        .header-btn { background: none; border: none; color: var(--text-secondary); cursor: pointer; font-size: 28px; display: flex; align-items: center; padding: 8px; border-radius: 50%; transition: all 0.2s; z-index: 1002; }
+        .header-btn:hover { background-color: var(--bg-interactive); color: var(--text-primary); }
+        .search-container-wrapper { flex-grow: 1; display: flex; justify-content: center; }
+        .search-container { display: flex; align-items: center; gap: 15px; padding: 0 20px; width: 100%; max-width: 80px; height: 50px; border-radius: 25px; cursor: pointer; transition: all var(--transition-smooth); overflow: hidden; }
+        .search-container.active { max-width: 500px; cursor: text; }
+        .search-container i { font-size: 20px; color: var(--text-secondary); transition: color 0.3s; }
+        .search-container.active i { color: var(--accent-primary); }
+        .search-container input { background: none; border: none; outline: none; color: var(--text-primary); font-size: 16px; width: 100%; opacity: 0; transform: translateX(-20px); transition: opacity 0.3s ease, transform 0.3s ease; }
+        .search-container.active input { opacity: 1; transform: translateX(0); }
+        .search-container input::placeholder { color: var(--text-secondary); }
+        .sidebar { position: fixed; top: 0; height: 100%; width: 300px; z-index: 2000; padding: 20px; transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .left-sidebar { left: 0; transform: translateX(-105%); }
+        .right-sidebar { right: 0; transform: translateX(105%); }
+        .sidebar.active { transform: translateX(0); }
+        .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding: 10px 0; }
+        .sidebar-header h3 { font-size: 24px; font-weight: 700; }
+        .close-btn { background: rgba(255, 255, 255, 0.1); color: var(--text-primary); border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+        .close-btn:hover { background-color: rgba(255, 255, 255, 0.2); transform: rotate(90deg); }
+        .sidebar-nav ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+        .sidebar-nav a, .setting-item { display: flex; align-items: center; gap: 15px; padding: 12px 15px; border-radius: 12px; font-size: 16px; font-weight: 500; color: var(--text-secondary); text-decoration: none; transition: all 0.2s; }
+        .sidebar-nav a:hover, .setting-item:hover { background-color: var(--accent-primary); color: white; transform: translateX(5px); }
+        .sidebar-nav a i { font-size: 22px; min-width: 25px; text-align: center; }
+        .setting-item { justify-content: space-between; cursor: pointer; }
+        .toggle-switch { position: relative; display: inline-block; width: 50px; height: 30px; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; inset: 0; background-color: var(--bg-interactive); border-radius: 34px; transition: .4s; }
+        .slider:before { position: absolute; content: ""; height: 22px; width: 22px; left: 4px; bottom: 4px; background-color: white; border-radius: 50%; transition: .4s; }
+        input:checked + .slider { background-color: var(--accent-primary); }
+        input:checked + .slider:before { transform: translateX(20px); }
+        .overlay { position: fixed; inset: 0; background: var(--overlay-bg); z-index: 1999; opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s ease; }
+        .overlay.active { opacity: 1; visibility: visible; }
+        
+        /* --- [4] DESIGN PAGINA "CHI SIAMO" --- */
+        .about-container { max-width: 900px; margin: 0 auto; }
+        .page-header { text-align: center; padding: 40px 20px; border-radius: var(--radius-main); margin-bottom: 2rem; }
+        .page-header h1 { font-size: 2.8rem; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 1rem; }
+        .page-header p { font-size: 1.1rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
+
         .info-card {
-            background-color: var(--c-bg-secondary);
-            border-radius: var(--radius-lg);
-            padding: var(--spacing-xl);
-            margin-bottom: var(--spacing-lg);
-            box-shadow: var(--shadow-md);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: var(--radius-main);
+            transition: transform 0.3s, box-shadow 0.3s;
         }
-        .info-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: var(--spacing-md);
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .info-card h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
             display: flex;
             align-items: center;
-            gap: var(--spacing-sm);
+            gap: 15px;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
         }
+        .info-card h2 i {
+            color: var(--accent-primary);
+        }
+
         .info-card p, .info-card li {
-            color: var(--c-text-secondary);
-            margin-bottom: var(--spacing-md);
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 1rem;
         }
         .info-card p:last-child, .info-card li:last-child {
             margin-bottom: 0;
         }
+        
         .info-card ul {
             list-style: none;
             padding-left: 0;
@@ -87,83 +146,164 @@
         .info-card li {
             display: flex;
             align-items: flex-start;
-            gap: var(--spacing-md);
+            gap: 15px;
         }
         .info-card li i {
-            color: var(--c-accent-primary);
-            margin-top: 4px; /* Allineamento verticale icona */
+            color: var(--accent-primary);
+            margin-top: 6px; /* Allineamento icona */
+            font-size: 1.2rem;
         }
-        .info-card strong {
-            font-weight: 600;
-            color: var(--c-text-primary);
+
+        /* OTTIMIZZAZIONE MOBILE */
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .page-wrapper { padding-top: 70px; }
+            .main-header { top: 10px; left: 10px; right: 10px; }
+            .page-header { padding: 30px 15px; }
+            .page-header h1 { font-size: 2.2rem; }
+            .info-card { padding: 1.5rem; }
+            .info-card h2 { font-size: 1.5rem; }
+            .info-card p, .info-card li { font-size: 1rem; }
         }
     </style>
 </head>
-<body>
+<body class="dark-mode">
 
-  <div id="navbar-placeholder"></div>
+    <header class="main-header glass" id="mainHeader"></header>
+    <aside class="sidebar left-sidebar glass" id="leftSidebar"></aside>
+    <aside class="sidebar right-sidebar glass" id="rightSidebar"></aside>
+    <div class="overlay" id="overlay"></div>
 
-  <div class="container">
-    <section class="about-section">
-      <div class="section-header">
-        <h2><i class="ph-fill ph-info"></i> Chi Siamo</h2>
-        <p>Cronoshop è la piattaforma per chi cerca davvero il risparmio senza rinunciare alla qualità.</p>
-      </div>
+    <div class="page-wrapper">
+        <main class="about-container">
+            <header class="page-header glass">
+                <h1><i class="ph-bold ph-info"></i> Chi Siamo</h1>
+                <p>Cronoshop è la piattaforma per chi cerca davvero il risparmio senza rinunciare alla qualità.</p>
+            </header>
 
-      <div class="info-card">
-        <h3><i class="ph-fill ph-flag"></i> La nostra missione</h3>
-        <p>Cronoshop nasce dall'esigenza concreta di offrire agli utenti italiani un portale aggiornato, curato e automatizzato dove trovare le migliori offerte Amazon giornaliere.</p>
-        <p>Non vendiamo direttamente prodotti: siamo un <strong>aggregatore di offerte</strong> e affiliati Amazon. Questo ci consente di restare obiettivi e proporre solo quello che conviene davvero.</p>
-      </div>
+            <section class="info-card glass">
+                <h2><i class="ph-bold ph-flag"></i> La Nostra Missione</h2>
+                <p>Cronoshop nasce dall'esigenza concreta di offrire agli utenti italiani un portale aggiornato, curato e automatizzato dove trovare le migliori offerte Amazon giornaliere.</p>
+                <p>Non vendiamo direttamente prodotti: siamo un <strong>aggregatore di offerte</strong> e affiliati Amazon. Questo ci consente di restare obiettivi e proporre solo quello che conviene davvero.</p>
+            </section>
 
-      <div class="info-card">
-        <h3><i class="ph-fill ph-gear-six"></i> Come funziona Cronoshop</h3>
-        <ul>
-          <li><i class="ph-fill ph-check-circle"></i> <div>Selezione ibrida (manuale + automatizzata) delle offerte più interessanti.</div></li>
-          <li><i class="ph-fill ph-check-circle"></i> <div>Aggiornamenti ogni 24h e prodotti sempre verificati.</div></li>
-          <li><i class="ph-fill ph-check-circle"></i> <div>Collegamenti diretti e sicuri ad Amazon.</div></li>
-          <li><i class="ph-fill ph-check-circle"></i> <div>Nessuna registrazione obbligatoria per visualizzare i contenuti.</div></li>
-          <li><i class="ph-fill ph-check-circle"></i> <div>Wishlist, carrello e personalizzazione per gli utenti registrati.</div></li>
-        </ul>
-      </div>
+            <section class="info-card glass">
+                <h2><i class="ph-bold ph-gear-six"></i> Come Funziona Cronoshop</h2>
+                <ul>
+                    <li><i class="ph-bold ph-check-circle"></i> <div>Selezione ibrida (manuale + automatizzata) delle offerte più interessanti.</div></li>
+                    <li><i class="ph-bold ph-check-circle"></i> <div>Aggiornamenti ogni 24h e prodotti sempre verificati.</div></li>
+                    <li><i class="ph-bold ph-check-circle"></i> <div>Collegamenti diretti e sicuri ad Amazon.</div></li>
+                    <li><i class="ph-bold ph-check-circle"></i> <div>Nessuna registrazione obbligatoria per visualizzare i contenuti.</div></li>
+                    <li><i class="ph-bold ph-check-circle"></i> <div>Wishlist, carrello e personalizzazione per gli utenti registrati.</div></li>
+                </ul>
+            </section>
 
-      <div class="info-card">
-        <h3><i class="ph-fill ph-rocket-launch"></i> La nostra visione</h3>
-        <p>Crediamo che il risparmio intelligente passi dalla trasparenza, dalla semplicità d'uso e da un design curato. Per questo Cronoshop è <strong>mobile-friendly</strong>, leggero e accessibile a tutti, con uno stile minimale ma premium.</p>
-        <p>Vogliamo diventare il punto di riferimento per chi cerca promozioni affidabili, senza perdite di tempo e senza spam.</p>
-      </div>
-    </section>
-  </div>
+            <section class="info-card glass">
+                <h2><i class="ph-bold ph-rocket-launch"></i> La Nostra Visione</h2>
+                <p>Crediamo che il risparmio intelligente passi dalla trasparenza, dalla semplicità d'uso e da un design curato. Per questo Cronoshop è <strong>mobile-friendly</strong>, leggero e accessibile a tutti, con uno stile minimale ma premium.</p>
+                <p>Vogliamo diventare il punto di riferimento per chi cerca promozioni affidabili, senza perdite di tempo e senza spam.</p>
+            </section>
+        </main>
+    </div>
 
-  <div id="footer-placeholder"></div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- LOGICA UI STANDARD (MENU, RICERCA, OVERLAY) ---
+            const leftSidebar = document.getElementById('leftSidebar');
+            const rightSidebar = document.getElementById('rightSidebar');
+            const overlay = document.getElementById('overlay');
+            const mainHeader = document.getElementById('mainHeader');
 
-  <script>
-    function loadComponent(url, placeholderId) {
-        fetch(url)
-            .then(response => response.ok ? response.text() : Promise.reject('Errore nel caricamento'))
-            .then(data => {
-                const placeholder = document.getElementById(placeholderId);
-                if (!placeholder) return;
-                
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = data;
-                
-                const script = tempDiv.querySelector('script');
-                placeholder.innerHTML = tempDiv.innerHTML;
+            // Inietta dinamicamente l'header e i menu per mantenerli consistenti
+            mainHeader.innerHTML = `
+                <button class="header-btn" id="leftSidebarBtn" aria-label="Apri menu"><i class="ph-bold ph-list"></i></button>
+                <div class="search-container-wrapper">
+                    <div class="search-container glass" id="searchContainer">
+                        <i class="ph ph-magnifying-glass"></i>
+                        <input type="text" id="searchInput" placeholder="Cerca...">
+                    </div>
+                </div>
+                <button class="header-btn" id="rightSidebarBtn" aria-label="Apri impostazioni"><i class="ph-bold ph-gear"></i></button>`;
+            
+            leftSidebar.innerHTML = `
+                <div class="sidebar-header">
+                    <h3>Menu</h3>
+                    <button class="close-btn" id="closeLeftSidebarBtn"><i class="ph-bold ph-x"></i></button>
+                </div>
+                <nav class="sidebar-nav">
+                    <ul>
+                        <li><a href="index.html"><i class="ph ph-house"></i> Home</a></li>
+                        <li><a href="account.html"><i class="ph ph-user-circle"></i> Account</a></li>
+                        <li><a href="products.html"><i class="ph ph-shopping-bag"></i> Prodotti</a></li>
+                        <li><a href="wishlist.html"><i class="ph ph-heart"></i> Wishlist</a></li>
+                        <li><a href="cart.html"><i class="ph ph-shopping-cart"></i> Carrello</a></li>
+                        <li><a href="chisiamo.html"><i class="ph ph-info"></i> Chi Siamo</a></li>
+                        <li><a href="blog.html"><i class="ph ph-newspaper"></i> Blog</a></li>
+                        <li><a href="stats.html"><i class="ph ph-chart-bar"></i> Statistiche</a></li>
+                        <li><a href="themes.html"><i class="ph ph-palette"></i> Temi</a></li>
+                        <li><a href="faq.html"><i class="ph ph-question"></i> FAQ</a></li>
+                        <li><a href="privacy.html"><i class="ph ph-shield-check"></i> Privacy</a></li>
+                        <li><a href="terms.html"><i class="ph ph-file-text"></i> Termini</a></li>
+                    </ul>
+                </nav>`;
 
-                if (script) {
-                    const newScript = document.createElement('script');
-                    newScript.textContent = script.textContent;
-                    document.body.appendChild(newScript).remove();
+            rightSidebar.innerHTML = `
+                <div class="sidebar-header">
+                    <h3>Impostazioni</h3>
+                    <button class="close-btn" id="closeRightSidebarBtn"><i class="ph-bold ph-x"></i></button>
+                </div>
+                <nav class="sidebar-nav">
+                    <ul>
+                        <li>
+                            <label class="setting-item" for="themeToggle">
+                                <span><i class="ph ph-moon"></i> Tema Scuro</span>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="themeToggle" checked>
+                                    <span class="slider"></span>
+                                </div>
+                            </label>
+                        </li>
+                         <li><a href="#"><i class="ph ph-bell"></i> Notifiche</a></li>
+                    </ul>
+                </nav>`;
+            
+            // Ricollega gli elementi dopo averli creati dinamicamente
+            const leftSidebarBtn = document.getElementById('leftSidebarBtn');
+            const rightSidebarBtn = document.getElementById('rightSidebarBtn');
+            const closeLeftSidebarBtn = document.getElementById('closeLeftSidebarBtn');
+            const closeRightSidebarBtn = document.getElementById('closeRightSidebarBtn');
+            const searchContainer = document.getElementById('searchContainer');
+            const searchInput = document.getElementById('searchInput');
+
+            const toggleSidebar = (sidebar, open) => {
+                sidebar.classList.toggle('active', open);
+                const anySidebarOpen = leftSidebar.classList.contains('active') || rightSidebar.classList.contains('active');
+                overlay.classList.toggle('active', anySidebarOpen);
+            };
+
+            leftSidebarBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleSidebar(leftSidebar, true); });
+            rightSidebarBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleSidebar(rightSidebar, true); });
+            closeLeftSidebarBtn.addEventListener('click', () => toggleSidebar(leftSidebar, false));
+            closeRightSidebarBtn.addEventListener('click', () => toggleSidebar(rightSidebar, false));
+            overlay.addEventListener('click', () => {
+                toggleSidebar(leftSidebar, false);
+                toggleSidebar(rightSidebar, false);
+            });
+            
+            searchContainer.addEventListener('click', () => {
+                searchContainer.classList.add('active');
+                searchInput.focus();
+            });
+            document.addEventListener('click', (e) => {
+                if (!searchContainer.contains(e.target) && searchInput.value === '') {
+                    searchContainer.classList.remove('active');
                 }
-            })
-            .catch(error => console.error(`Impossibile caricare ${url}: ${error}`));
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-        loadComponent('nav.html', 'navbar-placeholder');
-        loadComponent('footer.html', 'footer-placeholder');
-    });
-  </script>
+            });
+             searchInput.addEventListener('blur', () => {
+                if(searchInput.value === '') searchContainer.classList.remove('active');
+            });
+        });
+    </script>
 </body>
 </html>
