@@ -1,380 +1,513 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cronoshop Navigation</title>
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+<nav class="ios-navbar" id="mainNavbar">
+    <div class="ios-navbar-content">
+        <div class="ios-navbar-left">
+            <a href="index.html" class="ios-logo">
+                <img src="assets/cronoshop-logo.png" alt="Cronoshop" class="ios-logo-image">
+                <span class="ios-logo-text">Cronoshop</span>
+            </a>
+        </div>
+        
+        <div class="ios-navbar-center" id="searchContainer">
+            <div class="ios-search-bar">
+                <i class="ph ph-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="Cerca prodotti, categorie..." maxlength="100">
+                <button id="voiceSearchBtn" class="ios-voice-btn" title="Ricerca vocale">
+                    <i class="ph ph-microphone"></i>
+                </button>
+                <button id="searchCancel" class="ios-cancel-btn">
+                    <i class="ph ph-x"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="ios-navbar-right">
+            <!-- Desktop Navigation Links -->
+            <div class="ios-nav-desktop">
+                <a href="products.html" class="ios-nav-link" data-page="products">
+                    <i class="ph ph-shopping-bag"></i>
+                    <span>Prodotti</span>
+                </a>
+                <a href="cronoai.html" class="ios-nav-link" data-page="cronoai">
+                    <i class="ph ph-robot"></i>
+                    <span>CronoAI</span>
+                </a>
+                <a href="groups.html" class="ios-nav-link" data-page="groups">
+                    <i class="ph ph-whatsapp-logo"></i>
+                    <span>Gruppi</span>
+                </a>
+            </div>
+
+            <!-- Action Buttons -->
+            <button class="ios-nav-action" id="searchToggle" title="Cerca">
+                <i class="ph ph-magnifying-glass"></i>
+            </button>
+            
+            <button class="ios-nav-action" id="themeToggle" title="Cambia tema">
+                <i class="ph ph-moon"></i>
+            </button>
+            
+            <a href="wishlist.html" class="ios-nav-action" title="Lista desideri">
+                <i class="ph ph-heart"></i>
+                <span class="ios-badge" id="wishlistBadge">0</span>
+            </a>
+            
+            <a href="cart.html" class="ios-nav-action" title="Carrello">
+                <i class="ph ph-shopping-cart"></i>
+                <span class="ios-badge" id="cartBadge">0</span>
+            </a>
+            
+            <button class="ios-nav-action" id="menuToggle" title="Menu">
+                <i class="ph ph-list"></i>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="ios-mobile-menu" id="mobileMenu">
+    <div class="ios-mobile-menu-header">
+        <h3>Menu</h3>
+        <button class="ios-close-btn" id="closeMenu">
+            <i class="ph ph-x"></i>
+        </button>
+    </div>
     
-    <style>
-        :root {
-            --background-gradient: linear-gradient(105deg, #2d3748 0%, #1a202c 100%);
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --text-primary: #f7fafc;
-            --text-secondary: #a0aec0;
-            --accent-primary: #4299e1;
-            --accent-secondary: #38b2ac;
-            --green-toggle: #48bb78;
-            --card-bg: rgba(45, 55, 72, 0.7);
-            --radius-main: 24px;
-            --radius-sub: 16px;
-            --transition-smooth: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.37);
-        }
-
-        /* Glass Effect */
-        .glass {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-main);
-            box-shadow: var(--shadow-glass);
-        }
-
-        /* --- Header --- */
-        .main-header {
-            padding: 10px 20px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-shrink: 0;
-            position: relative;
-        }
-
-        .main-nav {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .main-nav .nav-icon-btn {
-            font-size: 22px;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            padding: 8px;
-            border-radius: 8px;
-        }
-
-        .main-nav .nav-icon-btn:hover { 
-            color: var(--text-primary); 
-            background: rgba(255, 255, 255, 0.1);
-            transform: scale(1.1);
-        }
-
-        .main-nav a {
-            text-decoration: none;
-            color: var(--text-secondary);
-            font-weight: 500;
-            padding: 8px 12px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .main-nav a:hover { 
-            color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .main-nav a.active {
-            color: var(--text-primary);
-            background-color: rgba(255, 255, 255, 0.08);
-        }
-
-        .main-nav a.active::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 20px;
-            height: 2px;
-            background: var(--accent-primary);
-            border-radius: 1px;
-        }
-
-        /* Dynamic Search Bar */
-        .dynamic-search-bar {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.8);
-            width: 50%;
-            max-width: 500px;
-            display: flex;
-            align-items: center;
-            padding: 12px 16px;
-            opacity: 0;
-            visibility: hidden;
-            transition: all var(--transition-smooth);
-            pointer-events: none;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .dynamic-search-bar.visible {
-            opacity: 1;
-            visibility: visible;
-            transform: translate(-50%, -50%) scale(1);
-            pointer-events: auto;
-        }
-
-        .dynamic-search-bar .search-input {
-            width: 100%;
-            background: transparent;
-            border: none;
-            color: var(--text-primary);
-            font-size: 16px;
-            padding: 0 10px;
-            outline: none;
-        }
-
-        .dynamic-search-bar .search-input::placeholder {
-            color: var(--text-secondary);
-        }
-
-        .dynamic-search-bar .search-icon {
-            font-size: 20px;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: color 0.2s ease;
-        }
-
-        .dynamic-search-bar .search-icon:hover {
-            color: var(--text-primary);
-        }
-
-        /* Logo styling */
-        .logo-img {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .dynamic-search-bar {
-                width: 80%;
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- Cronoshop Navigation Bar -->
-    <header class="main-header glass">
-        <nav class="main-nav">
-            <i class="ph ph-list nav-icon-btn" id="leftSidebarBtn"></i>
-            <a href="index.html" class="active">Home</a>
-            <a href="categorie.html">Categorie</a>
-            <a href="products.html">Prodotti</a>
-            <a href="groups.html">Gruppi</a>
-            <a href="cronoai.html">CronoAI+</a>
-            <a href="blog.html">Blog</a>
-        </nav>
-        <div class="main-nav">
-            <a href="#" id="rightSidebarBtn">Altro</a>
-            <i class="ph ph-magnifying-glass nav-icon-btn" id="searchBtn"></i>
+    <div class="ios-mobile-menu-content">
+        <div class="ios-menu-section">
+            <h4>Navigazione</h4>
+            <a href="index.html" class="ios-menu-item" data-page="index">
+                <i class="ph ph-house"></i>
+                <span>Home</span>
+            </a>
+            <a href="products.html" class="ios-menu-item" data-page="products">
+                <i class="ph ph-shopping-bag"></i>
+                <span>Prodotti</span>
+            </a>
+            <a href="cronoai.html" class="ios-menu-item" data-page="cronoai">
+                <i class="ph ph-robot"></i>
+                <span>CronoAI</span>
+            </a>
+            <a href="groups.html" class="ios-menu-item" data-page="groups">
+                <i class="ph ph-whatsapp-logo"></i>
+                <span>Gruppi WhatsApp</span>
+            </a>
+            <a href="blog.html" class="ios-menu-item" data-page="blog">
+                <i class="ph ph-article"></i>
+                <span>Blog</span>
+            </a>
         </div>
-        <div class="dynamic-search-bar glass" id="dynamicSearchBar">
-            <i class="ph ph-magnifying-glass search-icon"></i>
-            <input type="text" class="search-input" placeholder="Cerca su Cronoshop" id="searchInput">
-            <i class="ph ph-microphone search-icon" id="voiceSearchBtn"></i>
+
+        <div class="ios-menu-section">
+            <h4>Account</h4>
+            <a href="wishlist.html" class="ios-menu-item" data-page="wishlist">
+                <i class="ph ph-heart"></i>
+                <span>Lista Desideri</span>
+            </a>
+            <a href="cart.html" class="ios-menu-item" data-page="cart">
+                <i class="ph ph-shopping-cart"></i>
+                <span>Carrello</span>
+            </a>
+            <a href="account.html" class="ios-menu-item" data-page="account">
+                <i class="ph ph-user"></i>
+                <span>Il Mio Account</span>
+            </a>
         </div>
-    </header>
 
-    <script>
-        // Navigation functionality
-        class CronoshopNavigation {
-            constructor() {
-                this.isSearchActive = false;
-                this.init();
+        <div class="ios-menu-section">
+            <h4>Informazioni</h4>
+            <a href="chisiamo.html" class="ios-menu-item" data-page="chisiamo">
+                <i class="ph ph-info"></i>
+                <span>Chi Siamo</span>
+            </a>
+            <a href="faq.html" class="ios-menu-item" data-page="faq">
+                <i class="ph ph-question"></i>
+                <span>FAQ</span>
+            </a>
+            <a href="privacy.html" class="ios-menu-item" data-page="privacy">
+                <i class="ph ph-shield-check"></i>
+                <span>Privacy</span>
+            </a>
+            <a href="terms.html" class="ios-menu-item" data-page="terms">
+                <i class="ph ph-file-text"></i>
+                <span>Termini</span>
+            </a>
+        </div>
+
+        <div class="ios-menu-section">
+            <h4>Personalizzazione</h4>
+            <a href="themes.html" class="ios-menu-item" data-page="themes">
+                <i class="ph ph-palette"></i>
+                <span>Temi</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Overlay -->
+<div class="ios-overlay" id="overlay"></div>
+
+<style>
+/* Navigation Styles */
+.ios-search-bar {
+    display: flex;
+    align-items: center;
+    background: var(--ios-fill-secondary);
+    border-radius: var(--ios-radius-full);
+    padding: 8px 16px;
+    gap: 8px;
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid var(--ios-separator-non-opaque);
+}
+
+.ios-search-bar i {
+    color: var(--ios-text-secondary);
+    font-size: 16px;
+}
+
+.ios-search-bar input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    color: var(--ios-text-primary);
+    font-size: 16px;
+    outline: none;
+}
+
+.ios-search-bar input::placeholder {
+    color: var(--ios-text-tertiary);
+}
+
+.ios-voice-btn, .ios-cancel-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: var(--ios-radius-full);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--ios-text-secondary);
+    transition: all var(--ios-transition-fast);
+}
+
+.ios-voice-btn:hover, .ios-cancel-btn:hover {
+    background: var(--ios-fill-tertiary);
+    color: var(--ios-text-primary);
+}
+
+/* Search Container States */
+#searchContainer {
+    display: none;
+}
+
+.ios-navbar.search-active #searchContainer {
+    display: flex;
+}
+
+.ios-navbar.search-active .ios-navbar-left,
+.ios-navbar.search-active .ios-nav-desktop {
+    display: none;
+}
+
+/* Mobile Responsive */
+@media (max-width: 1024px) {
+    .ios-nav-desktop {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .ios-logo-text {
+        display: none;
+    }
+    
+    .ios-navbar.search-active .ios-navbar-right {
+        display: none;
+    }
+}
+</style>
+
+<script>
+class CronoshopNavigation {
+    constructor() {
+        this.isSearchActive = false;
+        this.isDarkMode = false;
+        this.init();
+    }
+
+    init() {
+        this.setupEventListeners();
+        this.loadTheme();
+        this.updateBadges();
+        this.highlightActiveNavigation();
+    }
+
+    setupEventListeners() {
+        // Menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const closeMenu = document.getElementById('closeMenu');
+        const overlay = document.getElementById('overlay');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        menuToggle?.addEventListener('click', () => this.toggleMenu());
+        closeMenu?.addEventListener('click', () => this.closeMenu());
+        overlay?.addEventListener('click', () => this.closeMenu());
+
+        // Search toggle
+        const searchToggle = document.getElementById('searchToggle');
+        const searchCancel = document.getElementById('searchCancel');
+        const searchInput = document.getElementById('searchInput');
+        const voiceSearchBtn = document.getElementById('voiceSearchBtn');
+
+        searchToggle?.addEventListener('click', () => this.toggleSearch());
+        searchCancel?.addEventListener('click', () => this.closeSearch());
+        searchInput?.addEventListener('input', (e) => this.handleSearch(e.target.value));
+        voiceSearchBtn?.addEventListener('click', () => this.startVoiceSearch());
+
+        // Theme toggle
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle?.addEventListener('click', () => this.toggleTheme());
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                this.toggleSearch();
             }
-
-            init() {
-                this.setupEventListeners();
-                this.setActiveNavItem();
+            if (e.key === 'Escape') {
+                this.closeSearch();
+                this.closeMenu();
             }
-
-            setupEventListeners() {
-                // Search functionality
-                const searchBtn = document.getElementById('searchBtn');
-                const dynamicSearchBar = document.getElementById('dynamicSearchBar');
-                const searchInput = document.getElementById('searchInput');
-                const voiceSearchBtn = document.getElementById('voiceSearchBtn');
-
-                // Toggle search bar
-                searchBtn?.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    this.toggleSearchBar();
-                });
-
-                // Voice search
-                voiceSearchBtn?.addEventListener('click', () => {
-                    this.startVoiceSearch();
-                });
-
-                // Close search on outside click
-                document.addEventListener('click', (e) => {
-                    if (!dynamicSearchBar?.contains(e.target) && !searchBtn?.contains(e.target)) {
-                        this.closeSearchBar();
-                    }
-                });
-
-                // Search input
-                searchInput?.addEventListener('input', (e) => {
-                    this.handleSearch(e.target.value);
-                });
-
-                // Sidebar buttons
-                const leftSidebarBtn = document.getElementById('leftSidebarBtn');
-                const rightSidebarBtn = document.getElementById('rightSidebarBtn');
-
-                leftSidebarBtn?.addEventListener('click', () => {
-                    this.triggerSidebarEvent('left');
-                });
-
-                rightSidebarBtn?.addEventListener('click', () => {
-                    this.triggerSidebarEvent('right');
-                });
-            }
-
-            toggleSearchBar() {
-                const searchBar = document.getElementById('dynamicSearchBar');
-                const searchInput = document.getElementById('searchInput');
-
-                if (!this.isSearchActive) {
-                    searchBar.classList.add('visible');
-                    this.isSearchActive = true;
-                    setTimeout(() => searchInput?.focus(), 300);
-                    this.animateSearchBarOpen();
-                } else {
-                    this.closeSearchBar();
-                }
-            }
-
-            closeSearchBar() {
-                const searchBar = document.getElementById('dynamicSearchBar');
-                const searchInput = document.getElementById('searchInput');
-
-                searchBar?.classList.remove('visible');
-                this.isSearchActive = false;
-                if (searchInput) searchInput.value = '';
-            }
-
-            animateSearchBarOpen() {
-                const searchBar = document.getElementById('dynamicSearchBar');
-                if (searchBar) {
-                    searchBar.style.transform = 'translate(-50%, -50%) scale(0.8)';
-                    setTimeout(() => {
-                        searchBar.style.transform = 'translate(-50%, -50%) scale(1)';
-                    }, 50);
-                }
-            }
-
-            handleSearch(query) {
-                // Emit search event for parent pages to handle
-                const searchEvent = new CustomEvent('cronoshopSearch', {
-                    detail: { query: query.toLowerCase().trim() }
-                });
-                window.dispatchEvent(searchEvent);
-            }
-
-            startVoiceSearch() {
-                const voiceBtn = document.getElementById('voiceSearchBtn');
-                if (voiceBtn) {
-                    voiceBtn.style.color = '#ff4757';
-                    voiceBtn.style.transform = 'scale(1.2)';
-
-                    setTimeout(() => {
-                        voiceBtn.style.color = '';
-                        voiceBtn.style.transform = 'scale(1)';
-                        this.showNotification('Ricerca vocale non ancora disponibile', 'info');
-                    }, 2000);
-                }
-            }
-
-            triggerSidebarEvent(side) {
-                const sidebarEvent = new CustomEvent('cronoshopSidebar', {
-                    detail: { side: side }
-                });
-                window.dispatchEvent(sidebarEvent);
-            }
-
-            setActiveNavItem() {
-                const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-                const navLinks = document.querySelectorAll('.main-nav a');
-                
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === currentPage) {
-                        link.classList.add('active');
-                    }
-                });
-            }
-
-            showNotification(message, type = 'info') {
-                const notification = document.createElement('div');
-                const colors = {
-                    success: '#48bb78',
-                    error: '#ff4757',
-                    info: '#4299e1',
-                    warning: '#ed8936'
-                };
-
-                notification.style.cssText = `
-                    position: fixed;
-                    top: 80px;
-                    right: 20px;
-                    background: ${colors[type]};
-                    color: white;
-                    padding: 16px 24px;
-                    border-radius: 12px;
-                    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-                    z-index: 10000;
-                    transform: translateX(100%);
-                    transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-                    max-width: 300px;
-                    font-size: 14px;
-                    font-weight: 500;
-                    backdrop-filter: blur(20px);
-                `;
-
-                const icons = {
-                    success: 'check-circle',
-                    error: 'x-circle',
-                    info: 'info',
-                    warning: 'warning'
-                };
-
-                notification.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <i class="ph ph-${icons[type]}"></i>
-                        <span>${message}</span>
-                    </div>
-                `;
-
-                document.body.appendChild(notification);
-
-                setTimeout(() => {
-                    notification.style.transform = 'translateX(0)';
-                }, 100);
-
-                setTimeout(() => {
-                    notification.style.transform = 'translateX(100%)';
-                    setTimeout(() => notification.remove(), 300);
-                }, 3000);
-            }
-        }
-
-        // Initialize navigation
-        document.addEventListener('DOMContentLoaded', () => {
-            window.cronoshopNav = new CronoshopNavigation();
-            console.log('🚀 Cronoshop Navigation initialized!');
         });
-    </script>
-</body>
-</html>
+
+        // Listen for cart updates
+        document.addEventListener('cronoshop:cart-updated', () => this.updateBadges());
+        document.addEventListener('cronoshop:close-search', () => this.closeSearch());
+    }
+
+    toggleMenu() {
+        const mobileMenu = document.getElementById('mobileMenu');
+        const overlay = document.getElementById('overlay');
+        
+        mobileMenu?.classList.add('active');
+        overlay?.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    closeMenu() {
+        const mobileMenu = document.getElementById('mobileMenu');
+        const overlay = document.getElementById('overlay');
+        
+        mobileMenu?.classList.remove('active');
+        overlay?.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    toggleSearch() {
+        const navbar = document.getElementById('mainNavbar');
+        const searchInput = document.getElementById('searchInput');
+        
+        if (!this.isSearchActive) {
+            navbar?.classList.add('search-active');
+            this.isSearchActive = true;
+            setTimeout(() => searchInput?.focus(), 100);
+        } else {
+            this.closeSearch();
+        }
+    }
+
+    closeSearch() {
+        const navbar = document.getElementById('mainNavbar');
+        const searchInput = document.getElementById('searchInput');
+        
+        navbar?.classList.remove('search-active');
+        this.isSearchActive = false;
+        if (searchInput) searchInput.value = '';
+        
+        // Dispatch event to clear search results
+        document.dispatchEvent(new CustomEvent('cronoshop:search', {
+            detail: { query: '' }
+        }));
+    }
+
+    handleSearch(query) {
+        // Dispatch search event for other components to listen
+        document.dispatchEvent(new CustomEvent('cronoshop:search', {
+            detail: { query }
+        }));
+    }
+
+    startVoiceSearch() {
+        const voiceBtn = document.getElementById('voiceSearchBtn');
+        
+        if (!voiceBtn) return;
+        
+        // Visual feedback
+        voiceBtn.style.color = 'var(--ios-red)';
+        voiceBtn.style.transform = 'scale(1.2)';
+        
+        // Check for speech recognition support
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const recognition = new SpeechRecognition();
+            
+            recognition.lang = 'it-IT';
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                const searchInput = document.getElementById('searchInput');
+                if (searchInput) {
+                    searchInput.value = transcript;
+                    this.handleSearch(transcript);
+                }
+            };
+            
+            recognition.onerror = () => {
+                this.showNotification('Errore nel riconoscimento vocale', 'error');
+            };
+            
+            recognition.onend = () => {
+                voiceBtn.style.color = '';
+                voiceBtn.style.transform = '';
+            };
+            
+            recognition.start();
+        } else {
+            setTimeout(() => {
+                voiceBtn.style.color = '';
+                voiceBtn.style.transform = '';
+                this.showNotification('Ricerca vocale non supportata', 'info');
+            }, 1000);
+        }
+    }
+
+    toggleTheme() {
+        const body = document.body;
+        const themeBtn = document.getElementById('themeToggle');
+        const icon = themeBtn?.querySelector('i');
+        
+        this.isDarkMode = !this.isDarkMode;
+        
+        if (this.isDarkMode) {
+            body.classList.add('ios-dark-mode');
+            if (icon) icon.className = 'ph ph-sun';
+            localStorage.setItem('cronoshop_theme', 'dark');
+            this.showNotification('Tema scuro attivato', 'success');
+        } else {
+            body.classList.remove('ios-dark-mode');
+            if (icon) icon.className = 'ph ph-moon';
+            localStorage.setItem('cronoshop_theme', 'light');
+            this.showNotification('Tema chiaro attivato', 'success');
+        }
+    }
+
+    loadTheme() {
+        const savedTheme = localStorage.getItem('cronoshop_theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldUseDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
+        
+        if (shouldUseDark) {
+            document.body.classList.add('ios-dark-mode');
+            this.isDarkMode = true;
+            const themeBtn = document.getElementById('themeToggle');
+            const icon = themeBtn?.querySelector('i');
+            if (icon) icon.className = 'ph ph-sun';
+        }
+    }
+
+    updateBadges() {
+        try {
+            // Update cart badge
+            const cart = JSON.parse(localStorage.getItem('cronoshop_cart') || '[]');
+            const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 0), 0);
+            
+            const cartBadge = document.getElementById('cartBadge');
+            if (cartBadge) {
+                cartBadge.textContent = totalItems;
+                cartBadge.style.display = totalItems > 0 ? 'block' : 'none';
+            }
+
+            // Update wishlist badge
+            const wishlist = JSON.parse(localStorage.getItem('cronoshop_wishlist') || '[]');
+            const wishlistBadge = document.getElementById('wishlistBadge');
+            if (wishlistBadge) {
+                wishlistBadge.textContent = wishlist.length;
+                wishlistBadge.style.display = wishlist.length > 0 ? 'block' : 'none';
+            }
+        } catch (error) {
+            console.error('Error updating badges:', error);
+        }
+    }
+
+    highlightActiveNavigation() {
+        const currentPage = window.location.pathname.split('/').pop().replace('.html', '') || 'index';
+        const activeLinks = document.querySelectorAll(`[data-page="${currentPage}"]`);
+        activeLinks.forEach(link => link.classList.add('active'));
+    }
+
+    showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        const colors = {
+            success: '#48bb78',
+            error: '#ff4757',
+            info: '#4299e1',
+            warning: '#ed8936'
+        };
+
+        notification.style.cssText = `
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: ${colors[type]};
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            font-size: 14px;
+            font-weight: 500;
+            max-width: 280px;
+        `;
+
+        const icons = {
+            success: 'check-circle',
+            error: 'x-circle', 
+            info: 'info',
+            warning: 'warning'
+        };
+
+        notification.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <i class="ph ph-${icons[type]}"></i>
+                <span>${message}</span>
+            </div>
+        `;
+
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            notification.style.transform = 'translateX(0)';
+        }, 100);
+
+        setTimeout(() => {
+            notification.style.transform = 'translateX(100%)';
+            setTimeout(() => notification.remove(), 300);
+        }, 3000);
+    }
+}
+
+// Initialize navigation when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    window.CronoshopNavigation = CronoshopNavigation;
+    new CronoshopNavigation();
+});
+
+// Make it globally available
+window.CronoshopNavigation = CronoshopNavigation;
+</script>
