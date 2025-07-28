@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cronoshop - Le Migliori Offerte Amazon 2025</title>
     
-    <meta name="description" content="Scopri ogni giorno le migliori offerte Amazon con il nuovo design iOS di Cronoshop. Interface moderna e intuitiva per risparmiare senza sforzo.">
+    <meta name="description" content="Scopri ogni giorno le migliori offerte Amazon con il nuovo design di Cronoshop. Interfaccia moderna e intuitiva per risparmiare senza sforzo.">
     <meta name="author" content="Cronoshop Team">
     <link rel="canonical" href="https://www.cronoshop.eu/">
     
@@ -20,15 +20,15 @@
 
         :root {
             /* Colori Tema Scuro (Default) */
-            --bg-main: #121212;
-            --bg-glass: rgba(28, 28, 30, 0.75);
-            --bg-interactive: rgba(44, 44, 46, 0.8);
-            --border-glass: rgba(255, 255, 255, 0.15);
+            --bg-main: linear-gradient(135deg, #1a202c 0%, #111318 100%);
+            --bg-glass: rgba(28, 28, 30, 0.6);
+            --bg-interactive: rgba(44, 44, 46, 0.7);
+            --border-glass: rgba(255, 255, 255, 0.1);
             --text-primary: #f5f5f7;
             --text-secondary: #a0a0a5;
             --accent-primary: #0A84FF;
             --accent-green: #30D158;
-            --accent-purple: #BF5AF2;
+            --accent-red: #FF453A;
             --overlay-bg: rgba(0, 0, 0, 0.6);
             --radius-main: 24px;
             --radius-sub: 16px;
@@ -36,19 +36,20 @@
         }
         
         body.light-mode {
-            --bg-main: #f0f2f5;
-            --bg-glass: rgba(255, 255, 255, 0.7);
-            --bg-interactive: rgba(229, 229, 234, 0.8);
-            --border-glass: rgba(0, 0, 0, 0.1);
+            --bg-main: linear-gradient(135deg, #f0f2f5 0%, #e2e8f0 100%);
+            --bg-glass: rgba(255, 255, 255, 0.6);
+            --bg-interactive: rgba(229, 229, 234, 0.7);
+            --border-glass: rgba(0, 0, 0, 0.08);
             --text-primary: #1d1d1f;
             --text-secondary: #6e6e73;
             --accent-primary: #007AFF;
             --accent-green: #34C759;
-            --accent-purple: #AF52DE;
+            --accent-red: #FF3B30;
             --overlay-bg: rgba(0, 0, 0, 0.4);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         body {
             font-family: 'Inter', -apple-system, sans-serif;
             background: var(--bg-main);
@@ -58,7 +59,7 @@
             min-height: 100vh;
         }
         .page-wrapper { padding-top: 80px; }
-        .glass { background: var(--bg-glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--border-glass); border-radius: var(--radius-main); transition: background 0.3s, border 0.3s; }
+        .glass { background: var(--bg-glass); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border: 1px solid var(--border-glass); border-radius: var(--radius-main); transition: background 0.3s, border 0.3s; }
         a { color: var(--accent-primary); text-decoration: none; font-weight: 500; }
         
         /* Header, Search & Sidebars */
@@ -92,7 +93,7 @@
         .slider:before { position: absolute; content: ""; height: 22px; width: 22px; left: 4px; bottom: 4px; background-color: white; border-radius: 50%; transition: .4s; }
         input:checked + .slider { background-color: var(--accent-primary); }
         input:checked + .slider:before { transform: translateX(20px); }
-        .overlay { position: fixed; inset: 0; background: var(--overlay-bg); z-index: 1999; opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s ease; }
+        .overlay { position: fixed; inset: 0; background: var(--overlay-bg); z-index: 1999; opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s ease; backdrop-filter: blur(5px); }
         .overlay.active { opacity: 1; visibility: visible; }
         
         /* Main Content Grid */
@@ -123,10 +124,10 @@
         .product-info h4 { font-size: 1.1rem; margin-bottom: 0.5rem; line-height: 1.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .product-info .price { font-size: 1.4rem; font-weight: 700; color: var(--accent-green); margin-bottom: 1rem; }
         .product-actions { display: flex; gap: 10px; }
-        .buy-btn { flex-grow: 1; background: var(--accent-primary); color: white; border: none; padding: 10px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: background-color 0.2s; }
-        .buy-btn:hover { background: color-mix(in srgb, var(--accent-primary) 85%, black); }
+        .details-btn { flex-grow: 1; background: var(--bg-glass); color: var(--text-primary); border: 1px solid var(--border-glass); padding: 10px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: background-color 0.2s; }
+        .details-btn:hover { background: var(--bg-interactive); }
         .icon-btn { width: 40px; height: 40px; background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: 10px; color: var(--text-primary); cursor: pointer; transition: all 0.2s; font-size: 18px; }
-        .icon-btn:hover { background-color: color-mix(in srgb, var(--bg-interactive) 80%, white); transform: scale(1.1); }
+        .icon-btn:hover { background-color: var(--bg-interactive); transform: scale(1.1); }
         .icon-btn.active { color: var(--accent-red); background-color: rgba(255, 59, 48, 0.1); }
 
         /* Product Modal (Premium Redesign) */
@@ -190,6 +191,239 @@
         </div>
 
     <script src="main.js"></script>
-    <script src="index.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        
+        // --- ELEMENTI DEL DOM ---
+        const mainHeader = document.getElementById('mainHeader');
+        const leftSidebar = document.getElementById('leftSidebar');
+        const rightSidebar = document.getElementById('rightSidebar');
+        const overlay = document.getElementById('overlay');
+        const productsGrid = document.getElementById('productsGrid');
+        const productModal = document.getElementById('productModal');
+
+        // --- INIEZIONE DINAMICA HEADER E MENU ---
+        mainHeader.innerHTML = `
+            <button class="header-btn" id="leftSidebarBtn" aria-label="Apri menu"><i class="ph-bold ph-list"></i></button>
+            <div class="search-container-wrapper">
+                <div class="search-container glass" id="searchContainer">
+                    <i class="ph ph-magnifying-glass"></i>
+                    <input type="text" id="searchInput" placeholder="Cerca un'offerta...">
+                </div>
+            </div>
+            <button class="header-btn" id="rightSidebarBtn" aria-label="Apri impostazioni"><i class="ph-bold ph-gear"></i></button>`;
+
+        leftSidebar.innerHTML = `
+            <div class="sidebar-header">
+                <h3>Menu</h3>
+                <button class="close-btn" id="closeLeftSidebarBtn"><i class="ph-bold ph-x"></i></button>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="index.html"><i class="ph ph-house"></i> Home</a></li>
+                    <li><a href="account.html"><i class="ph ph-user-circle"></i> Account</a></li>
+                    <li><a href="products.html"><i class="ph ph-shopping-bag"></i> Prodotti</a></li>
+                    <li><a href="wishlist.html"><i class="ph ph-heart"></i> Wishlist</a></li>
+                    <li><a href="cart.html"><i class="ph ph-shopping-cart"></i> Carrello</a></li>
+                    <li><a href="chisiamo.html"><i class="ph ph-info"></i> Chi Siamo</a></li>
+                    <li><a href="blog.html"><i class="ph ph-newspaper"></i> Blog</a></li>
+                    <li><a href="stats.html"><i class="ph ph-chart-bar"></i> Statistiche</a></li>
+                    <li><a href="themes.html"><i class="ph ph-palette"></i> Temi</a></li>
+                    <li><a href="faq.html"><i class="ph ph-question"></i> FAQ</a></li>
+                    <li><a href="privacy.html"><i class="ph ph-shield-check"></i> Privacy</a></li>
+                    <li><a href="terms.html"><i class="ph ph-file-text"></i> Termini</a></li>
+                </ul>
+            </nav>`;
+
+        rightSidebar.innerHTML = `
+            <div class="sidebar-header">
+                <h3>Impostazioni</h3>
+                <button class="close-btn" id="closeRightSidebarBtn"><i class="ph-bold ph-x"></i></button>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <label class="setting-item" for="themeToggle">
+                            <span><i class="ph ph-moon"></i> Tema Scuro</span>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="themeToggle" checked>
+                                <span class="slider"></span>
+                            </div>
+                        </label>
+                    </li>
+                    <li><a href="#"><i class="ph ph-bell"></i> Notifiche</a></li>
+                </ul>
+            </nav>`;
+
+        // --- RICOLLEGAMENTO ELEMENTI DINAMICI E LOGICA UI ---
+        const leftSidebarBtn = document.getElementById('leftSidebarBtn');
+        const rightSidebarBtn = document.getElementById('rightSidebarBtn');
+        const closeLeftSidebarBtn = document.getElementById('closeLeftSidebarBtn');
+        const closeRightSidebarBtn = document.getElementById('closeRightSidebarBtn');
+        const searchContainer = document.getElementById('searchContainer');
+        const searchInput = document.getElementById('searchInput');
+        const themeToggle = document.getElementById('themeToggle');
+
+        const toggleSidebar = (sidebar, open) => {
+            sidebar.classList.toggle('active', open);
+            const anySidebarOpen = leftSidebar.classList.contains('active') || rightSidebar.classList.contains('active');
+            overlay.classList.toggle('active', anySidebarOpen);
+        };
+
+        leftSidebarBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleSidebar(leftSidebar, true); });
+        rightSidebarBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleSidebar(rightSidebar, true); });
+        closeLeftSidebarBtn.addEventListener('click', () => toggleSidebar(leftSidebar, false));
+        closeRightSidebarBtn.addEventListener('click', () => toggleSidebar(rightSidebar, false));
+        overlay.addEventListener('click', () => {
+            toggleSidebar(leftSidebar, false);
+            toggleSidebar(rightSidebar, false);
+        });
+
+        searchContainer.addEventListener('click', () => {
+            searchContainer.classList.add('active');
+            searchInput.focus();
+        });
+        document.addEventListener('click', (e) => {
+            if (!searchContainer.contains(e.target) && searchInput.value === '') searchContainer.classList.remove('active');
+        });
+        searchInput.addEventListener('blur', () => {
+            if (searchInput.value === '') searchContainer.classList.remove('active');
+        });
+        
+        // --- GESTIONE TEMA ---
+        if (themeToggle) {
+            themeToggle.addEventListener('change', () => {
+                if (window.applyGlobalTheme) {
+                    const newTheme = themeToggle.checked ? 'dark' : 'light';
+                    window.applyGlobalTheme(newTheme);
+                }
+            });
+        }
+        // Sincronizza il toggle con il tema attuale all'avvio
+        if (document.body.classList.contains('light-mode')) {
+             if (themeToggle) themeToggle.checked = false;
+        }
+
+
+        // --- GESTIONE PRODOTTI E MODALE ---
+        let allProducts = [];
+
+        const renderProducts = (filter = '') => {
+            const query = filter.toLowerCase();
+            const filteredProducts = allProducts.filter(product => 
+                product.nome.toLowerCase().includes(query) ||
+                product.descrizione.toLowerCase().includes(query)
+            );
+            if(productsGrid) {
+                productsGrid.innerHTML = filteredProducts.map(createProductCard).join('');
+            }
+        };
+
+        const createProductCard = (product) => {
+            const price = parseFloat(product.prezzo) || 0;
+            const isLiked = isProductInWishlist(product.id);
+            
+            return `
+                <div class="product-card glass">
+                    <div class="product-card-clickable" data-product-id="${product.id}">
+                        <img src="${product.img}" alt="${product.nome}" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <h4>${product.nome}</h4>
+                        <p class="price">€${price.toFixed(2)}</p>
+                        <div class="product-actions">
+                            <button class="details-btn" data-product-id="${product.id}">Dettagli</button>
+                            <button class="icon-btn ${isLiked ? 'active' : ''}" data-wishlist-id="${product.id}" aria-label="Aggiungi alla wishlist">
+                                <i class="ph ph-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>`;
+        };
+
+        const showProductModal = (product) => {
+            const price = parseFloat(product.prezzo) || 0;
+            const originalPrice = parseFloat(product.prezzo_originale) || 0;
+            const isLiked = isProductInWishlist(product.id);
+
+            productModal.innerHTML = `
+                <div class="modal-content glass" onclick="event.stopPropagation()">
+                    <img src="${product.img}" alt="${product.nome}" class="modal-image">
+                    <div class="modal-info">
+                        <h2 class="modal-title">${product.nome}</h2>
+                        <p class="modal-description">${product.descrizione}</p>
+                        <div class="modal-price">
+                            €${price.toFixed(2)}
+                            ${originalPrice > price ? `<span class="original">€${originalPrice.toFixed(2)}</span>` : ''}
+                        </div>
+                        <div class="modal-actions">
+                             <a href="${product.link}" target="_blank" rel="noopener noreferrer" class="btn primary">Vai su Amazon</a>
+                             <button class="icon-btn ${isLiked ? 'active' : ''}" data-wishlist-id="${product.id}" style="width: 50px; height: 50px; font-size: 24px;"><i class="ph ph-heart"></i></button>
+                        </div>
+                    </div>
+                </div>`;
+            productModal.classList.add('visible');
+        };
+        
+        productModal.addEventListener('click', () => productModal.classList.remove('visible'));
+
+        // --- LOGICA INTERATTIVA (WISHLIST, ETC.) ---
+        const isProductInWishlist = (productId) => {
+            try {
+                const wishlist = JSON.parse(localStorage.getItem('cronoshop_wishlist') || '[]');
+                return wishlist.some(item => item.id === productId);
+            } catch { return false; }
+        };
+        
+        const toggleWishlist = (productId) => {
+            try {
+                let wishlist = JSON.parse(localStorage.getItem('cronoshop_wishlist') || '[]');
+                const product = allProducts.find(p => p.id === productId);
+                if (!product) return;
+                
+                const itemIndex = wishlist.findIndex(item => item.id === productId);
+                const buttons = document.querySelectorAll(`[data-wishlist-id="${productId}"]`);
+
+                if (itemIndex > -1) {
+                    wishlist.splice(itemIndex, 1);
+                    buttons.forEach(btn => btn.classList.remove('active'));
+                } else {
+                    wishlist.push(product);
+                    buttons.forEach(btn => btn.classList.add('active'));
+                }
+                localStorage.setItem('cronoshop_wishlist', JSON.stringify(wishlist));
+            } catch (e) { console.error("Wishlist Error:", e)}
+        };
+
+        document.body.addEventListener('click', (e) => {
+            const detailsBtn = e.target.closest('.details-btn');
+            const wishlistBtn = e.target.closest('[data-wishlist-id]');
+            
+            if (detailsBtn) {
+                 const product = allProducts.find(p => p.id === detailsBtn.dataset.productId);
+                 if (product) showProductModal(product);
+            }
+            
+            if (wishlistBtn) {
+                toggleWishlist(wishlistBtn.dataset.wishlistId);
+            }
+        });
+
+        // --- CARICAMENTO INIZIALE ---
+        const init = () => {
+            // Usa window.products definito in main.js
+            if (typeof window.products !== 'undefined') {
+                allProducts = window.products;
+                renderProducts();
+            } else {
+                console.error("Dati dei prodotti (main.js) non trovati.");
+                if(productsGrid) productsGrid.innerHTML = "<p>Errore nel caricamento dei prodotti.</p>";
+            }
+            searchInput.addEventListener('input', () => renderProducts(searchInput.value));
+        };
+
+        init();
+    });
+    </script>
 </body>
 </html>
