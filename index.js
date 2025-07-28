@@ -35,9 +35,9 @@ class CronoshopIndex {
     // Load products from script.js if available
     if (typeof products !== "undefined" && Array.isArray(products)) {
       this.products = [...products]
-      console.log(`✅ Loaded ${this.products.length} products from script.js`)
+      console.log(`✅ Loaded ${this.products.length} products from main.js`)
     } else {
-      console.warn("⚠️ Products not found in script.js, using fallback data")
+      console.warn("⚠️ Products not found in main.js, using fallback data")
       this.products = this.getFallbackProducts()
     }
     this.filteredProducts = [...this.products]
