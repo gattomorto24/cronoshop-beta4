@@ -1,17 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
     
     // --- ELEMENTI DEL DOM ---
-    const leftSidebarBtn = document.getElementById('leftSidebarBtn');
-    const rightSidebarBtn = document.getElementById('rightSidebarBtn');
+    const mainHeader = document.getElementById('mainHeader');
     const leftSidebar = document.getElementById('leftSidebar');
     const rightSidebar = document.getElementById('rightSidebar');
     const overlay = document.getElementById('overlay');
-    const mainHeader = document.getElementById('mainHeader');
     const productsGrid = document.getElementById('productsGrid');
     const productModal = document.getElementById('productModal');
 
     // --- INIEZIONE DINAMICA HEADER E MENU ---
-    // Questo approccio mantiene il codice HTML pulito e centralizza la struttura del menu.
     mainHeader.innerHTML = `
         <button class="header-btn" id="leftSidebarBtn" aria-label="Apri menu"><i class="ph-bold ph-list"></i></button>
         <div class="search-container-wrapper">
@@ -65,9 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
         </nav>`;
 
     // --- RICOLLEGAMENTO ELEMENTI DINAMICI E LOGICA UI ---
-    // È necessario farlo dopo aver inserito l'HTML
-    const newLeftSidebarBtn = document.getElementById('leftSidebarBtn');
-    const newRightSidebarBtn = document.getElementById('rightSidebarBtn');
+    const leftSidebarBtn = document.getElementById('leftSidebarBtn');
+    const rightSidebarBtn = document.getElementById('rightSidebarBtn');
     const closeLeftSidebarBtn = document.getElementById('closeLeftSidebarBtn');
     const closeRightSidebarBtn = document.getElementById('closeRightSidebarBtn');
     const searchContainer = document.getElementById('searchContainer');
@@ -80,8 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
         overlay.classList.toggle('active', anySidebarOpen);
     };
 
-    newLeftSidebarBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleSidebar(leftSidebar, true); });
-    newRightSidebarBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleSidebar(rightSidebar, true); });
+    leftSidebarBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleSidebar(leftSidebar, true); });
+    rightSidebarBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleSidebar(rightSidebar, true); });
     closeLeftSidebarBtn.addEventListener('click', () => toggleSidebar(leftSidebar, false));
     closeRightSidebarBtn.addEventListener('click', () => toggleSidebar(rightSidebar, false));
     overlay.addEventListener('click', () => {
@@ -101,13 +97,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     // --- GESTIONE TEMA ---
-    // Si aspetta che `applyGlobalTheme` sia definito in `themes.js`
-    themeToggle.addEventListener('change', () => {
-        if (window.applyGlobalTheme) {
-            const newTheme = themeToggle.checked ? 'dark' : 'light';
-            window.applyGlobalTheme(newTheme);
-        }
-    });
+    if (themeToggle) {
+        themeToggle.addEventListener('change', () => {
+            if (window.applyGlobalTheme) {
+                const newTheme = themeToggle.checked ? 'dark' : 'light';
+                window.applyGlobalTheme(newTheme);
+            } else {
+                 document.body.classList.toggle('light-mode', !themeToggle.checked);
+            }
+        });
+    }
+    if (document.body.classList.contains('light-mode')) {
+         if (themeToggle) themeToggle.checked = false;
+    }
 
     // --- GESTIONE PRODOTTI E MODALE ---
     let allProducts = [];
@@ -118,7 +120,9 @@ document.addEventListener('DOMContentLoaded', () => {
             product.nome.toLowerCase().includes(query) ||
             product.descrizione.toLowerCase().includes(query)
         );
-        productsGrid.innerHTML = filteredProducts.map(createProductCard).join('');
+        if(productsGrid) {
+            productsGrid.innerHTML = filteredProducts.map(createProductCard).join('');
+        }
     };
 
     const createProductCard = (product) => {
@@ -134,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <h4>${product.nome}</h4>
                     <p class="price">€${price.toFixed(2)}</p>
                     <div class="product-actions">
-                        <a href="${product.link}" target="_blank" rel="noopener noreferrer" class="buy-btn">Acquista</a>
+                        <button class="details-btn" data-product-id="${product.id}">Dettagli</button>
                         <button class="icon-btn ${isLiked ? 'active' : ''}" data-wishlist-id="${product.id}" aria-label="Aggiungi alla wishlist">
                             <i class="ph ph-heart"></i>
                         </button>
@@ -171,58 +175,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- LOGICA INTERATTIVA (WISHLIST, ETC.) ---
     const isProductInWishlist = (productId) => {
-        const wishlist = JSON.parse(localStorage.getItem('cronoshop_wishlist') || '[]');
-        return wishlist.some(item => item.id === productId);
+        try {
+            const wishlist = JSON.parse(localStorage.getItem('cronoshop_wishlist') || '[]');
+            return wishlist.some(item => item.id === productId);
+        } catch { return false; }
     };
     
     const toggleWishlist = (productId) => {
-        let wishlist = JSON.parse(localStorage.getItem('cronoshop_wishlist') || '[]');
-        const product = allProducts.find(p => p.id === productId);
-        if (!product) return;
-        
-        const itemIndex = wishlist.findIndex(item => item.id === productId);
-        const buttons = document.querySelectorAll(`[data-wishlist-id="${productId}"]`);
+        try {
+            let wishlist = JSON.parse(localStorage.getItem('cronoshop_wishlist') || '[]');
+            const product = allProducts.find(p => p.id === productId);
+            if (!product) return;
+            
+            const itemIndex = wishlist.findIndex(item => item.id === productId);
+            const buttons = document.querySelectorAll(`[data-wishlist-id="${productId}"]`);
 
-        if (itemIndex > -1) {
-            wishlist.splice(itemIndex, 1);
-            buttons.forEach(btn => btn.classList.remove('active'));
-        } else {
-            wishlist.push(product);
-            buttons.forEach(btn => btn.classList.add('active'));
-        }
-        localStorage.setItem('cronoshop_wishlist', JSON.stringify(wishlist));
+            if (itemIndex > -1) {
+                wishlist.splice(itemIndex, 1);
+                buttons.forEach(btn => btn.classList.remove('active'));
+            } else {
+                wishlist.push(product);
+                buttons.forEach(btn => btn.classList.add('active'));
+            }
+            localStorage.setItem('cronoshop_wishlist', JSON.stringify(wishlist));
+        } catch (e) { console.error("Wishlist Error:", e)}
     };
 
-    productsGrid.addEventListener('click', (e) => {
-        const clickableArea = e.target.closest('.product-card-clickable');
+    document.body.addEventListener('click', (e) => {
+        const detailsBtn = e.target.closest('.details-btn');
         const wishlistBtn = e.target.closest('[data-wishlist-id]');
-
-        if (wishlistBtn) {
-            toggleWishlist(wishlistBtn.dataset.wishlistId);
-            return;
+        
+        if (detailsBtn) {
+             const product = allProducts.find(p => p.id === detailsBtn.dataset.productId);
+             if (product) showProductModal(product);
         }
         
-        if (clickableArea) {
-            const product = allProducts.find(p => p.id === clickableArea.dataset.productId);
-            if (product) showProductModal(product);
+        if (wishlistBtn) {
+            toggleWishlist(wishlistBtn.dataset.wishlistId);
         }
-    });
-    
-    // Gestione del click sul cuore anche dentro il modale
-    productModal.addEventListener('click', (e) => {
-         const wishlistBtn = e.target.closest('[data-wishlist-id]');
-         if (wishlistBtn) {
-             toggleWishlist(wishlistBtn.dataset.wishlistId);
-         }
     });
 
     // --- CARICAMENTO INIZIALE ---
     const init = () => {
-        if (typeof window.products !== 'undefined') {
+        // Usa window.products definito in main.js
+        if (typeof window.products !== 'undefined' && Array.isArray(window.products)) {
             allProducts = window.products;
             renderProducts();
         } else {
             console.error("Dati dei prodotti (main.js) non trovati.");
+            if(productsGrid) productsGrid.innerHTML = `<p style="grid-column: 1 / -1; text-align: center; color: var(--text-secondary);">Errore: impossibile caricare i prodotti. Assicurati che il file 'main.js' sia presente e corretto.</p>`;
         }
         searchInput.addEventListener('input', () => renderProducts(searchInput.value));
     };
