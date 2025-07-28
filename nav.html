@@ -146,89 +146,6 @@
 <!-- Overlay -->
 <div class="ios-overlay" id="overlay"></div>
 
-<style>
-/* Navigation Styles */
-.ios-search-bar {
-    display: flex;
-    align-items: center;
-    background: var(--ios-fill-secondary);
-    border-radius: var(--ios-radius-full);
-    padding: 8px 16px;
-    gap: 8px;
-    width: 100%;
-    max-width: 400px;
-    border: 1px solid var(--ios-separator-non-opaque);
-}
-
-.ios-search-bar i {
-    color: var(--ios-text-secondary);
-    font-size: 16px;
-}
-
-.ios-search-bar input {
-    flex: 1;
-    border: none;
-    background: transparent;
-    color: var(--ios-text-primary);
-    font-size: 16px;
-    outline: none;
-}
-
-.ios-search-bar input::placeholder {
-    color: var(--ios-text-tertiary);
-}
-
-.ios-voice-btn, .ios-cancel-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
-    border-radius: var(--ios-radius-full);
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    color: var(--ios-text-secondary);
-    transition: all var(--ios-transition-fast);
-}
-
-.ios-voice-btn:hover, .ios-cancel-btn:hover {
-    background: var(--ios-fill-tertiary);
-    color: var(--ios-text-primary);
-}
-
-/* Search Container States */
-#searchContainer {
-    display: none;
-}
-
-.ios-navbar.search-active #searchContainer {
-    display: flex;
-}
-
-.ios-navbar.search-active .ios-navbar-left,
-.ios-navbar.search-active .ios-nav-desktop {
-    display: none;
-}
-
-/* Mobile Responsive */
-@media (max-width: 1024px) {
-    .ios-nav-desktop {
-        display: none;
-    }
-}
-
-@media (max-width: 768px) {
-    .ios-logo-text {
-        display: none;
-    }
-    
-    .ios-navbar.search-active .ios-navbar-right {
-        display: none;
-    }
-}
-</style>
-
 <script>
 class CronoshopNavigation {
     constructor() {
@@ -249,7 +166,6 @@ class CronoshopNavigation {
         const menuToggle = document.getElementById('menuToggle');
         const closeMenu = document.getElementById('closeMenu');
         const overlay = document.getElementById('overlay');
-        const mobileMenu = document.getElementById('mobileMenu');
 
         menuToggle?.addEventListener('click', () => this.toggleMenu());
         closeMenu?.addEventListener('click', () => this.closeMenu());
@@ -284,7 +200,6 @@ class CronoshopNavigation {
 
         // Listen for cart updates
         document.addEventListener('cronoshop:cart-updated', () => this.updateBadges());
-        document.addEventListener('cronoshop:close-search', () => this.closeSearch());
     }
 
     toggleMenu() {
@@ -325,18 +240,13 @@ class CronoshopNavigation {
         navbar?.classList.remove('search-active');
         this.isSearchActive = false;
         if (searchInput) searchInput.value = '';
-        
-        // Dispatch event to clear search results
-        document.dispatchEvent(new CustomEvent('cronoshop:search', {
-            detail: { query: '' }
-        }));
     }
 
     handleSearch(query) {
-        // Dispatch search event for other components to listen
-        document.dispatchEvent(new CustomEvent('cronoshop:search', {
-            detail: { query }
-        }));
+        // Dispatch search event for index.js to handle
+        if (window.cronoshopIndex) {
+            window.cronoshopIndex.handleSearch(query);
+        }
     }
 
     startVoiceSearch() {
@@ -344,11 +254,9 @@ class CronoshopNavigation {
         
         if (!voiceBtn) return;
         
-        // Visual feedback
         voiceBtn.style.color = 'var(--ios-red)';
         voiceBtn.style.transform = 'scale(1.2)';
         
-        // Check for speech recognition support
         if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             const recognition = new SpeechRecognition();
@@ -393,12 +301,12 @@ class CronoshopNavigation {
         this.isDarkMode = !this.isDarkMode;
         
         if (this.isDarkMode) {
-            body.classList.add('ios-dark-mode');
+            body.classList.add('dark-mode');
             if (icon) icon.className = 'ph ph-sun';
             localStorage.setItem('cronoshop_theme', 'dark');
             this.showNotification('Tema scuro attivato', 'success');
         } else {
-            body.classList.remove('ios-dark-mode');
+            body.classList.remove('dark-mode');
             if (icon) icon.className = 'ph ph-moon';
             localStorage.setItem('cronoshop_theme', 'light');
             this.showNotification('Tema chiaro attivato', 'success');
@@ -411,7 +319,7 @@ class CronoshopNavigation {
         const shouldUseDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
         
         if (shouldUseDark) {
-            document.body.classList.add('ios-dark-mode');
+            document.body.classList.add('dark-mode');
             this.isDarkMode = true;
             const themeBtn = document.getElementById('themeToggle');
             const icon = themeBtn?.querySelector('i');
@@ -421,7 +329,6 @@ class CronoshopNavigation {
 
     updateBadges() {
         try {
-            // Update cart badge
             const cart = JSON.parse(localStorage.getItem('cronoshop_cart') || '[]');
             const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 0), 0);
             
@@ -431,7 +338,6 @@ class CronoshopNavigation {
                 cartBadge.style.display = totalItems > 0 ? 'block' : 'none';
             }
 
-            // Update wishlist badge
             const wishlist = JSON.parse(localStorage.getItem('cronoshop_wishlist') || '[]');
             const wishlistBadge = document.getElementById('wishlistBadge');
             if (wishlistBadge) {

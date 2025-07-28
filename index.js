@@ -24,22 +24,15 @@ class CronoshopIndex {
     setTimeout(() => {
       this.hideLoadingIndicator()
       this.displayProducts()
-    }, 1000)
+    }, 1500)
   }
 
   // ===== PRODUCT LOADING =====
   loadProducts() {
-    // Load products from main.js
-    if (typeof window.products !== "undefined" && Array.isArray(window.products)) {
-      this.products = [...window.products]
-      console.log(`✅ Loaded ${this.products.length} products from main.js`)
-    } else if (typeof window.products !== "undefined" && Array.isArray(window.products)) {
-      this.products = [...window.products]
-      console.log(`✅ Loaded ${this.products.length} products from global variable`)
-    } else {
-      console.warn("⚠️ Products not found, using fallback data")
-      this.products = this.getFallbackProducts()
-    }
+    // Load products from main.js - multiple fallback methods
+    const products = window.products || window.products || this.getFallbackProducts()
+    this.products = [...products]
+    console.log(`✅ Loaded ${this.products.length} products`)
     this.filteredProducts = [...this.products]
   }
 
@@ -53,7 +46,7 @@ class CronoshopIndex {
         sconto: 25,
         descrizione: 'Smartphone AI con display 6.9" QHD+',
         categoria: "smartphone",
-        img: "https://m.media-amazon.com/images/I/61hiFJPpY9L._AC_SL1500_.jpg",
+        img: "/placeholder.svg?height=300&width=400&text=Samsung+Galaxy+S25+Ultra",
         link: "https://amzn.to/3Z551fa",
       },
       {
@@ -64,7 +57,7 @@ class CronoshopIndex {
         sconto: 27,
         descrizione: "Display Super Retina XDR da 6,1 pollici",
         categoria: "smartphone",
-        img: "https://m.media-amazon.com/images/I/71d7rfSl0wL._AC_SL1500_.jpg",
+        img: "/placeholder.svg?height=300&width=400&text=iPhone+15",
         link: "https://www.amazon.it/dp/B0CHWV5HTM",
       },
       {
@@ -75,8 +68,41 @@ class CronoshopIndex {
         sconto: 49,
         descrizione: "100% cotone per il massimo comfort",
         categoria: "fashion",
-        img: "https://m.media-amazon.com/images/I/71BHou6YJKL._AC_SY879_.jpg",
+        img: "/placeholder.svg?height=300&width=400&text=Calvin+Klein+T-Shirt",
         link: "https://amzn.to/4kbOb6E",
+      },
+      {
+        id: "fallback4",
+        nome: "Amazon Fire TV Stick HD",
+        prezzo: 28.99,
+        prezzo_originale: 49.99,
+        sconto: 42,
+        descrizione: "Streaming HD con TV gratuita",
+        categoria: "tech",
+        img: "/placeholder.svg?height=300&width=400&text=Fire+TV+Stick",
+        link: "https://amzn.to/4jhgwHr",
+      },
+      {
+        id: "fallback5",
+        nome: "Nike Air Max 270",
+        prezzo: 89.99,
+        prezzo_originale: 150.0,
+        sconto: 40,
+        descrizione: "Scarpe sportive con tecnologia Air Max",
+        categoria: "sport",
+        img: "/placeholder.svg?height=300&width=400&text=Nike+Air+Max+270",
+        link: "https://amzn.to/nike270",
+      },
+      {
+        id: "fallback6",
+        nome: "De'Longhi Macchina del Caffè",
+        prezzo: 129.99,
+        prezzo_originale: 199.99,
+        sconto: 35,
+        descrizione: "Macchina per caffè espresso automatica",
+        categoria: "casa",
+        img: "/placeholder.svg?height=300&width=400&text=DeLonghi+Caffe",
+        link: "https://amzn.to/delonghicaffe",
       },
     ]
   }
@@ -206,25 +232,103 @@ class CronoshopIndex {
 
   // ===== EVENT LISTENERS =====
   setupEventListeners() {
-    // Search functionality
+    this.setupSidebarControls()
     this.setupSearchControls()
-
-    // Interactive elements
     this.setupInteractiveElements()
-
-    // Keyboard shortcuts
     this.setupKeyboardShortcuts()
+    this.setupDarkModeToggle()
+  }
+
+  setupSidebarControls() {
+    const leftSidebarBtn = document.getElementById("leftSidebarBtn")
+    const rightSidebarBtn = document.getElementById("rightSidebarBtn")
+    const closeRightSidebarBtn = document.getElementById("closeRightSidebarBtn")
+    const overlay = document.getElementById("overlay")
+    const leftSidebar = document.getElementById("leftSidebar")
+    const rightSidebar = document.getElementById("rightSidebar")
+
+    const toggleSidebar = (sidebar, show) => {
+      if (show) {
+        sidebar.classList.add("visible")
+        overlay.classList.add("visible")
+        this.animateSidebarContent(sidebar)
+      } else {
+        sidebar.classList.remove("visible")
+        overlay.classList.remove("visible")
+      }
+    }
+
+    leftSidebarBtn?.addEventListener("click", () => {
+      this.playClickAnimation(leftSidebarBtn)
+      toggleSidebar(leftSidebar, true)
+    })
+
+    rightSidebarBtn?.addEventListener("click", () => {
+      this.playClickAnimation(rightSidebarBtn)
+      toggleSidebar(rightSidebar, true)
+    })
+
+    closeRightSidebarBtn?.addEventListener("click", () => {
+      this.playClickAnimation(closeRightSidebarBtn)
+      toggleSidebar(rightSidebar, false)
+    })
+
+    overlay?.addEventListener("click", () => {
+      toggleSidebar(leftSidebar, false)
+      toggleSidebar(rightSidebar, false)
+    })
+
+    // Toggle switches animation
+    document.querySelectorAll(".toggle").forEach((toggle) => {
+      toggle.addEventListener("change", () => {
+        this.playToggleAnimation(toggle)
+      })
+    })
   }
 
   setupSearchControls() {
-    // Listen for search events from navigation
-    document.addEventListener("cronoshop:search", (e) => {
-      this.handleSearch(e.detail.query)
+    const searchBtn = document.getElementById("searchBtn")
+    const dynamicSearchBar = document.getElementById("dynamicSearchBar")
+    const searchInput = document.getElementById("searchInput")
+    const voiceSearchBtn = document.getElementById("voiceSearchBtn")
+
+    searchBtn?.addEventListener("click", (e) => {
+      e.stopPropagation()
+      this.toggleSearchBar()
+    })
+
+    searchInput?.addEventListener("input", (e) => {
+      this.handleSearch(e.target.value)
+    })
+
+    voiceSearchBtn?.addEventListener("click", () => {
+      this.startVoiceSearch()
+    })
+
+    document.addEventListener("click", (e) => {
+      if (!dynamicSearchBar?.contains(e.target) && !searchBtn?.contains(e.target)) {
+        this.closeSearchBar()
+      }
+    })
+
+    const sidebarSearchInput = document.getElementById("sidebarSearchInput")
+    sidebarSearchInput?.addEventListener("input", (e) => {
+      this.handleSidebarSearch(e.target.value)
     })
   }
 
   setupInteractiveElements() {
-    // Product card interactions
+    const favoriteBtn = document.getElementById("favoriteBtn")
+    favoriteBtn?.addEventListener("click", () => {
+      this.toggleFavorite(favoriteBtn)
+    })
+
+    document.querySelectorAll(".action-buttons button").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        this.createRippleEffect(e, btn)
+      })
+    })
+
     document.addEventListener("click", (e) => {
       if (e.target.closest(".product-card .action-icon")) {
         const icon = e.target.closest(".action-icon")
@@ -235,14 +339,84 @@ class CronoshopIndex {
 
   setupKeyboardShortcuts() {
     document.addEventListener("keydown", (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+        e.preventDefault()
+        this.toggleSearchBar()
+      }
+
       if (e.key === "Escape") {
-        // Close any open modals
-        document.dispatchEvent(new CustomEvent("cronoshop:close-search"))
+        this.closeSearchBar()
+        document.getElementById("leftSidebar")?.classList.remove("visible")
+        document.getElementById("rightSidebar")?.classList.remove("visible")
+        document.getElementById("overlay")?.classList.remove("visible")
+      }
+    })
+  }
+
+  setupDarkModeToggle() {
+    const darkModeToggle = document.getElementById("darkModeToggle")
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem("cronoshop_theme")
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
+    const shouldUseDark = savedTheme === "dark" || (!savedTheme && prefersDark)
+
+    if (shouldUseDark) {
+      document.body.classList.add("dark-mode")
+      if (darkModeToggle) darkModeToggle.checked = true
+    }
+
+    darkModeToggle?.addEventListener("change", () => {
+      const isDark = darkModeToggle.checked
+
+      if (isDark) {
+        document.body.classList.add("dark-mode")
+        localStorage.setItem("cronoshop_theme", "dark")
+        this.showNotification("Tema scuro attivato", "success")
+      } else {
+        document.body.classList.remove("dark-mode")
+        localStorage.setItem("cronoshop_theme", "light")
+        this.showNotification("Tema chiaro attivato", "success")
       }
     })
   }
 
   // ===== SEARCH FUNCTIONALITY =====
+  toggleSearchBar() {
+    const searchBar = document.getElementById("dynamicSearchBar")
+    const searchInput = document.getElementById("searchInput")
+
+    if (!this.isSearchActive) {
+      searchBar.classList.add("visible")
+      this.isSearchActive = true
+      setTimeout(() => searchInput?.focus(), 300)
+      this.animateSearchBarOpen()
+    } else {
+      this.closeSearchBar()
+    }
+  }
+
+  closeSearchBar() {
+    const searchBar = document.getElementById("dynamicSearchBar")
+    const searchInput = document.getElementById("searchInput")
+
+    searchBar?.classList.remove("visible")
+    this.isSearchActive = false
+    if (searchInput) searchInput.value = ""
+    this.currentSearchQuery = ""
+    this.displayProducts()
+  }
+
+  animateSearchBarOpen() {
+    const searchBar = document.getElementById("dynamicSearchBar")
+    if (searchBar) {
+      searchBar.style.transform = "translate(-50%, -50%) scale(0.8)"
+      setTimeout(() => {
+        searchBar.style.transform = "translate(-50%, -50%) scale(1)"
+      }, 50)
+    }
+  }
+
   handleSearch(query) {
     this.currentSearchQuery = query.toLowerCase().trim()
 
@@ -261,6 +435,11 @@ class CronoshopIndex {
     this.showSearchResults()
   }
 
+  handleSidebarSearch(query) {
+    console.log("Sidebar search:", query)
+    this.handleSearch(query)
+  }
+
   showSearchResults() {
     const resultsCount = this.filteredProducts.length
     const bigProductCard = document.querySelector(".big-product")
@@ -273,7 +452,123 @@ class CronoshopIndex {
     }
   }
 
+  startVoiceSearch() {
+    const voiceBtn = document.getElementById("voiceSearchBtn")
+
+    if (!voiceBtn) return
+
+    voiceBtn.style.color = "#ff4757"
+    voiceBtn.style.transform = "scale(1.2)"
+
+    if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+      const recognition = new SpeechRecognition()
+
+      recognition.lang = "it-IT"
+      recognition.continuous = false
+      recognition.interimResults = false
+
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript
+        const searchInput = document.getElementById("searchInput")
+        if (searchInput) {
+          searchInput.value = transcript
+          this.handleSearch(transcript)
+        }
+      }
+
+      recognition.onerror = () => {
+        this.showNotification("Errore nel riconoscimento vocale", "error")
+      }
+
+      recognition.onend = () => {
+        voiceBtn.style.color = ""
+        voiceBtn.style.transform = ""
+      }
+
+      recognition.start()
+    } else {
+      setTimeout(() => {
+        voiceBtn.style.color = ""
+        voiceBtn.style.transform = ""
+        this.showNotification("Ricerca vocale non supportata", "info")
+      }, 2000)
+    }
+  }
+
   // ===== ANIMATIONS =====
+  playClickAnimation(element) {
+    element.style.transform = "scale(0.95)"
+    setTimeout(() => {
+      element.style.transform = "scale(1)"
+    }, 150)
+  }
+
+  playToggleAnimation(toggle) {
+    toggle.style.transform = "scale(1.1)"
+    setTimeout(() => {
+      toggle.style.transform = "scale(1)"
+    }, 200)
+  }
+
+  animateSidebarContent(sidebar) {
+    const items = sidebar.querySelectorAll(".item, .main-menu a")
+    items.forEach((item, index) => {
+      item.style.opacity = "0"
+      item.style.transform = "translateX(-20px)"
+
+      setTimeout(() => {
+        item.style.transition = "all 0.3s ease"
+        item.style.opacity = "1"
+        item.style.transform = "translateX(0)"
+      }, index * 50)
+    })
+  }
+
+  toggleFavorite(btn) {
+    const isFavorited = btn.style.color === "rgb(255, 215, 0)"
+
+    if (isFavorited) {
+      btn.style.color = ""
+      btn.style.transform = "scale(1)"
+      this.showNotification("Rimosso dai preferiti", "info")
+    } else {
+      btn.style.color = "#ffd700"
+      btn.style.transform = "scale(1.2)"
+      setTimeout(() => {
+        btn.style.transform = "scale(1)"
+      }, 200)
+      this.showNotification("Aggiunto ai preferiti", "success")
+    }
+  }
+
+  createRippleEffect(event, button) {
+    const ripple = document.createElement("span")
+    const rect = button.getBoundingClientRect()
+    const size = Math.max(rect.width, rect.height)
+    const x = event.clientX - rect.left - size / 2
+    const y = event.clientY - rect.top - size / 2
+
+    ripple.style.cssText = `
+      position: absolute;
+      width: ${size}px;
+      height: ${size}px;
+      left: ${x}px;
+      top: ${y}px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      transform: scale(0);
+      animation: ripple 0.6s linear;
+      pointer-events: none;
+    `
+
+    button.style.position = "relative"
+    button.style.overflow = "hidden"
+    button.appendChild(ripple)
+
+    setTimeout(() => ripple.remove(), 600)
+  }
+
   playAddToCartAnimation(icon) {
     icon.style.transform = "scale(1.3) rotate(180deg)"
     icon.style.background = "#48bb78"
@@ -304,12 +599,25 @@ class CronoshopIndex {
 
       localStorage.setItem("cronoshop_cart", JSON.stringify(cart))
       this.showNotification(`${product.nome} aggiunto al carrello!`, "success")
-
-      // Update cart badge
-      document.dispatchEvent(new CustomEvent("cronoshop:cart-updated"))
+      this.updateCartBadge()
     } catch (error) {
       console.error("Error adding to cart:", error)
       this.showNotification("Errore nell'aggiungere al carrello", "error")
+    }
+  }
+
+  updateCartBadge() {
+    try {
+      const cart = JSON.parse(localStorage.getItem("cronoshop_cart") || "[]")
+      const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 0), 0)
+
+      const cartBadges = document.querySelectorAll(".cart-badge")
+      cartBadges.forEach((badge) => {
+        badge.textContent = totalItems
+        badge.style.display = totalItems > 0 ? "block" : "none"
+      })
+    } catch (error) {
+      console.error("Error updating cart badge:", error)
     }
   }
 
@@ -333,7 +641,7 @@ class CronoshopIndex {
 
     notification.style.cssText = `
       position: fixed;
-      top: 100px;
+      top: 80px;
       right: 20px;
       background: ${colors[type]};
       color: white;
@@ -379,6 +687,55 @@ class CronoshopIndex {
     const preferences = JSON.parse(localStorage.getItem("cronoshop_preferences") || "{}")
     console.log("User preferences loaded:", preferences)
   }
+
+  addAnimationStyles() {
+    const style = document.createElement("style")
+    style.textContent = `
+      @keyframes ripple {
+        to {
+          transform: scale(4);
+          opacity: 0;
+        }
+      }
+      
+      @keyframes slideInUp {
+        from {
+          transform: translateY(30px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+      
+      @keyframes fadeInScale {
+        from {
+          transform: scale(0.8);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      /* Dark mode styles */
+      body.dark-mode {
+        --background-gradient: linear-gradient(105deg, #1a1a1a 0%, #0d0d0d 100%);
+        --glass-bg: rgba(0, 0, 0, 0.3);
+        --glass-border: rgba(255, 255, 255, 0.05);
+        --text-primary: #ffffff;
+        --text-secondary: #cccccc;
+        --card-bg: rgba(0, 0, 0, 0.4);
+      }
+
+      body.dark-mode {
+        background-image: var(--background-gradient);
+      }
+    `
+    document.head.appendChild(style)
+  }
 }
 
 // Initialize the application
@@ -386,6 +743,7 @@ let cronoshopIndex
 
 document.addEventListener("DOMContentLoaded", () => {
   cronoshopIndex = new CronoshopIndex()
+  cronoshopIndex.addAnimationStyles()
   window.cronoshopIndex = cronoshopIndex
   console.log("🚀 Cronoshop Index initialized successfully!")
 })
