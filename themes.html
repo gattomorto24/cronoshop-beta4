@@ -9,706 +9,254 @@
     <link rel="canonical" href="https://www.cronoshop.eu/themes.html">
     <link rel="icon" type="image/png" href="assets/cronoshop-logo.png">
     <link rel="apple-touch-icon" href="assets/cronoshop-logo.png">
-    <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-</head>
-<body>
-    <div class="page-wrapper">
-        <div id="navigation-container"></div>
-        
-        <main class="main-content">
-            <div class="main-card glass">
-                <div class="page-header">
-                    <h1>🎨 Temi e Personalizzazione</h1>
-                    <p>Personalizza l'aspetto di Cronoshop secondo i tuoi gusti</p>
-                </div>
-
-                <!-- Theme Selection -->
-                <div class="themes-section glass" style="margin-bottom: 2rem; padding: 2rem; border-radius: 16px;">
-                    <h2 style="color: var(--text-primary); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
-                        <i class="ph ph-swatches"></i>
-                        Scegli il Tuo Tema
-                    </h2>
-                    
-                    <div class="themes-grid">
-                        <div class="theme-card active" data-theme="light">
-                            <div class="theme-preview theme-light">
-                                <div class="preview-header">
-                                    <div class="preview-dot" style="background: #ff5f57;"></div>
-                                    <div class="preview-dot" style="background: #ffbd2e;"></div>
-                                    <div class="preview-dot" style="background: #28ca42;"></div>
-                                </div>
-                                <div class="preview-content">
-                                    <div class="preview-bar long"></div>
-                                    <div class="preview-bar medium"></div>
-                                    <div class="preview-bar short"></div>
-                                </div>
-                            </div>
-                            <h3>Tema Chiaro</h3>
-                            <p>Il tema classico con colori chiari e puliti</p>
-                        </div>
-                        
-                        <div class="theme-card" data-theme="dark">
-                            <div class="theme-preview theme-dark">
-                                <div class="preview-header">
-                                    <div class="preview-dot" style="background: #ff453a;"></div>
-                                    <div class="preview-dot" style="background: #ffd60a;"></div>
-                                    <div class="preview-dot" style="background: #30d158;"></div>
-                                </div>
-                                <div class="preview-content">
-                                    <div class="preview-bar long"></div>
-                                    <div class="preview-bar medium"></div>
-                                    <div class="preview-bar short"></div>
-                                </div>
-                            </div>
-                            <h3>Tema Scuro</h3>
-                            <p>Perfetto per l'uso notturno, riduce l'affaticamento degli occhi</p>
-                        </div>
-                        
-                        <div class="theme-card" data-theme="auto">
-                            <div class="theme-preview theme-auto">
-                                <div class="preview-header">
-                                    <div class="preview-dot" style="background: #007aff;"></div>
-                                    <div class="preview-dot" style="background: #34c759;"></div>
-                                    <div class="preview-dot" style="background: #ff9500;"></div>
-                                </div>
-                                <div class="preview-content">
-                                    <div class="preview-bar long"></div>
-                                    <div class="preview-bar medium"></div>
-                                    <div class="preview-bar short"></div>
-                                </div>
-                            </div>
-                            <h3>Tema Automatico</h3>
-                            <p>Cambia automaticamente in base all'ora del giorno</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Advanced Settings -->
-                <div class="settings-section glass" style="margin-bottom: 2rem; padding: 2rem; border-radius: 16px;">
-                    <h2 style="color: var(--text-primary); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
-                        <i class="ph ph-gear"></i>
-                        Impostazioni Avanzate
-                    </h2>
-                    
-                    <div class="settings-grid">
-                        <div class="setting-item">
-                            <div class="setting-info">
-                                <h4>Effetto Vetro</h4>
-                                <p>Abilita effetti di trasparenza e blur</p>
-                            </div>
-                            <div class="setting-control">
-                                <input type="checkbox" class="theme-toggle" id="glassEffectToggle" checked>
-                                <label for="glassEffectToggle" class="toggle-label"></label>
-                            </div>
-                        </div>
-                        
-                        <div class="setting-item">
-                            <div class="setting-info">
-                                <h4>Animazioni Ridotte</h4>
-                                <p>Riduce le animazioni per migliorare le prestazioni</p>
-                            </div>
-                            <div class="setting-control">
-                                <input type="checkbox" class="theme-toggle" id="reducedMotionToggle">
-                                <label for="reducedMotionToggle" class="toggle-label"></label>
-                            </div>
-                        </div>
-                        
-                        <div class="setting-item">
-                            <div class="setting-info">
-                                <h4>Contrasto Elevato</h4>
-                                <p>Aumenta il contrasto per una migliore leggibilità</p>
-                            </div>
-                            <div class="setting-control">
-                                <input type="checkbox" class="theme-toggle" id="highContrastToggle">
-                                <label for="highContrastToggle" class="toggle-label"></label>
-                            </div>
-                        </div>
-                        
-                        <div class="setting-item">
-                            <div class="setting-info">
-                                <h4>Dimensione Testo</h4>
-                                <p>Regola la dimensione del testo</p>
-                            </div>
-                            <div class="setting-control">
-                                <input type="range" class="theme-slider" id="fontSizeSlider" min="14" max="20" value="16">
-                                <span class="slider-value">16px</span>
-                            </div>
-                        </div>
-                        
-                        <div class="setting-item">
-                            <div class="setting-info">
-                                <h4>Raggio Bordi</h4>
-                                <p>Personalizza l'arrotondamento degli elementi</p>
-                            </div>
-                            <div class="setting-control">
-                                <input type="range" class="theme-slider" id="borderRadiusSlider" min="4" max="24" value="12">
-                                <span class="slider-value">12px</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Live Preview -->
-                <div class="preview-section glass" style="margin-bottom: 2rem; padding: 2rem; border-radius: 16px;">
-                    <h2 style="color: var(--text-primary); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
-                        <i class="ph ph-eye"></i>
-                        Anteprima Live
-                    </h2>
-                    
-                    <div class="live-preview">
-                        <div class="preview-navbar" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1rem; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
-                            <div style="display: flex; align-items: center; gap: 0.5rem;">
-                                <div style="width: 24px; height: 24px; background: var(--accent-primary); border-radius: 6px;"></div>
-                                <span style="font-weight: 600; color: var(--text-primary);">Cronoshop</span>
-                            </div>
-                            <div style="display: flex; gap: 0.5rem;">
-                                <div style="width: 32px; height: 32px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 50%;"></div>
-                                <div style="width: 32px; height: 32px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 50%;"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="preview-content" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
-                            <div class="preview-card" style="background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1rem;">
-                                <div style="width: 100%; height: 80px; background: var(--glass-bg); border-radius: 8px; margin-bottom: 0.5rem;"></div>
-                                <div style="height: 16px; background: var(--glass-bg); border-radius: 4px; margin-bottom: 0.25rem;"></div>
-                                <div style="height: 12px; background: var(--glass-bg); border-radius: 4px; width: 70%;"></div>
-                            </div>
-                            
-                            <div class="preview-card" style="background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1rem;">
-                                <div style="width: 100%; height: 80px; background: var(--glass-bg); border-radius: 8px; margin-bottom: 0.5rem;"></div>
-                                <div style="height: 16px; background: var(--glass-bg); border-radius: 4px; margin-bottom: 0.25rem;"></div>
-                                <div style="height: 12px; background: var(--glass-bg); border-radius: 4px; width: 85%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Reset Section -->
-                <div class="reset-section glass" style="padding: 2rem; border-radius: 16px; text-align: center;">
-                    <h3 style="color: var(--text-primary); margin-bottom: 1rem;">
-                        <i class="ph ph-arrow-clockwise"></i>
-                        Ripristina Impostazioni
-                    </h3>
-                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
-                        Ripristina tutte le personalizzazioni ai valori predefiniti
-                    </p>
-                    <button class="action-btn secondary" id="resetButton">
-                        <i class="ph ph-trash"></i>
-                        Ripristina Tutto
-                    </button>
-                </div>
-            </div>
-        </main>
-    </div>
-
     <style>
+        /* --- [1] IMPOSTAZIONI GLOBALI E VARIABILI --- */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        :root {
+            /* Colori Tema Scuro (Default) */
+            --bg-main: #121212;
+            --bg-glass: rgba(28, 28, 30, 0.7);
+            --bg-interactive: rgba(44, 44, 46, 0.8);
+            --border-glass: rgba(255, 255, 255, 0.15);
+            --text-primary: #f5f5f7;
+            --text-secondary: #a0a0a5;
+            --accent-primary: #0A84FF;
+            --overlay-bg: rgba(0, 0, 0, 0.5);
+
+            /* Misure e Transizioni */
+            --radius-main: 24px;
+            --radius-sub: 16px;
+            --transition-smooth: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        
+        body.light-mode {
+            --bg-main: #f0f2f5;
+            --bg-glass: rgba(255, 255, 255, 0.7);
+            --bg-interactive: rgba(229, 229, 234, 0.8);
+            --border-glass: rgba(0, 0, 0, 0.1);
+            --text-primary: #1d1d1f;
+            --text-secondary: #6e6e73;
+            --accent-primary: #007AFF;
+            --overlay-bg: rgba(0, 0, 0, 0.4);
+        }
+
+        /* --- [2] RESET E STILI BASE --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-main);
+            color: var(--text-primary);
+            transition: background-color 0.3s, color 0.3s;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .page-wrapper { padding-top: 80px; }
+        .glass {
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-main);
+            transition: background 0.3s, border 0.3s;
+        }
+        
+        /* --- [3] HEADER, SEARCH & SIDEBAR --- */
+        .main-header {
+            position: fixed; top: 20px; left: 20px; right: 20px;
+            z-index: 1000; display: flex; align-items: center; gap: 20px;
+            padding: 0 20px; height: 70px;
+        }
+        .header-btn {
+            background: none; border: none; color: var(--text-secondary); cursor: pointer;
+            font-size: 28px; display: flex; align-items: center; padding: 8px;
+            border-radius: 50%; transition: all 0.2s; z-index: 1002;
+        }
+        .header-btn:hover { background-color: var(--bg-interactive); color: var(--text-primary); }
+        .search-container-wrapper { flex-grow: 1; display: flex; justify-content: center; }
+        .search-container {
+            display: flex; align-items: center; gap: 15px; padding: 0 20px;
+            width: 100%; max-width: 80px; height: 50px; border-radius: 25px;
+            cursor: pointer; transition: all var(--transition-smooth); overflow: hidden;
+        }
+        .search-container.active { max-width: 500px; cursor: text; }
+        .search-container i { font-size: 20px; color: var(--text-secondary); transition: color 0.3s; }
+        .search-container.active i { color: var(--accent-primary); }
+        .search-container input {
+            background: none; border: none; outline: none; color: var(--text-primary);
+            font-size: 16px; width: 100%; opacity: 0; transform: translateX(-20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .search-container.active input { opacity: 1; transform: translateX(0); }
+        .search-container input::placeholder { color: var(--text-secondary); }
+
+        .sidebar {
+            position: fixed; top: 0; left: 0; height: 100%; width: 300px;
+            z-index: 2000; padding: 20px; transform: translateX(-105%);
+            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .sidebar.active { transform: translateX(0); }
+        .sidebar-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 30px; padding: 10px 0;
+        }
+        .sidebar-header h3 { font-size: 24px; font-weight: 700; }
+        .close-btn {
+            background: rgba(255, 255, 255, 0.1); color: var(--text-primary);
+            border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 20px;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s;
+        }
+        .close-btn:hover { background-color: rgba(255, 255, 255, 0.2); transform: rotate(90deg); }
+        .sidebar-nav ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+        .sidebar-nav a, .setting-item {
+            display: flex; align-items: center; gap: 15px; padding: 12px 15px;
+            border-radius: 12px; font-size: 16px; font-weight: 500;
+            color: var(--text-secondary); text-decoration: none; transition: all 0.2s;
+        }
+        .sidebar-nav a:hover, .setting-item:hover {
+            background-color: var(--accent-primary); color: white; transform: translateX(5px);
+        }
+        .sidebar-nav a i { font-size: 22px; min-width: 25px; text-align: center; }
+        .setting-item { justify-content: space-between; cursor: pointer; }
+        .toggle-switch { position: relative; display: inline-block; width: 50px; height: 30px; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; inset: 0; background-color: var(--bg-interactive); border-radius: 34px; transition: .4s; }
+        .slider:before { position: absolute; content: ""; height: 22px; width: 22px; left: 4px; bottom: 4px; background-color: white; border-radius: 50%; transition: .4s; }
+        input:checked + .slider { background-color: var(--accent-primary); }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        .overlay {
+            position: fixed; inset: 0; background: var(--overlay-bg);
+            z-index: 1999; opacity: 0; visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        .overlay.active { opacity: 1; visibility: visible; }
+        
+        /* --- [4] DESIGN PAGINA TEMI --- */
+        .themes-container { max-width: 1200px; margin: 0 auto; }
+        .page-header {
+            text-align: center; padding: 40px 20px;
+            border-radius: var(--radius-main); margin-bottom: 2rem;
+        }
+        .page-header h1 {
+            font-size: 2.8rem; font-weight: 700;
+            display: flex; align-items: center; justify-content: center; gap: 15px;
+            margin-bottom: 1rem;
+        }
+        .page-header p {
+            font-size: 1.1rem; color: var(--text-secondary);
+            max-width: 600px; margin: 0 auto;
+        }
+
         .themes-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.5rem;
         }
 
         .theme-card {
-            background: var(--card-bg);
-            border: 2px solid transparent;
             border-radius: var(--radius-sub);
             padding: 1.5rem;
             cursor: pointer;
+            border: 2px solid transparent;
             transition: all 0.3s ease;
-            text-align: center;
-            backdrop-filter: blur(20px);
         }
-
         .theme-card:hover {
             transform: translateY(-5px);
-            box-shadow: var(--shadow-glass);
+            border-color: var(--accent-primary);
         }
-
         .theme-card.active {
             border-color: var(--accent-primary);
-            box-shadow: 0 0 0 4px rgba(66, 153, 225, 0.1);
+            box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.3);
         }
 
         .theme-preview {
             height: 120px;
             border-radius: 12px;
             margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
             position: relative;
             overflow: hidden;
         }
-
-        .preview-header {
-            height: 30px;
-            display: flex;
-            align-items: center;
-            padding: 0 0.5rem;
-            gap: 0.25rem;
-        }
-
-        .preview-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-        }
-
-        .preview-content {
-            flex: 1;
-            padding: 0.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-        }
-
-        .preview-bar {
-            height: 8px;
-            border-radius: 4px;
-        }
-
-        .preview-bar.short { width: 60%; }
-        .preview-bar.medium { width: 80%; }
-        .preview-bar.long { width: 100%; }
-
-        /* Theme previews */
-        .theme-light {
-            background: #f2f2f7;
-        }
-
-        .theme-light .preview-header {
-            background: #ffffff;
-            border-bottom: 1px solid #e5e5ea;
-        }
-
-        .theme-light .preview-bar {
-            background: #e5e5ea;
-        }
-
-        .theme-dark {
-            background: #000000;
-        }
-
-        .theme-dark .preview-header {
-            background: #1c1c1e;
-            border-bottom: 1px solid #38383a;
-        }
-
-        .theme-dark .preview-bar {
-            background: #2c2c2e;
-        }
-
-        .theme-auto {
-            background: linear-gradient(135deg, #f2f2f7 50%, #000000 50%);
-        }
-
-        .theme-auto .preview-header {
-            background: linear-gradient(135deg, #ffffff 50%, #1c1c1e 50%);
-            border-bottom: 1px solid #666;
-        }
-
-        .theme-auto .preview-bar {
-            background: linear-gradient(135deg, #e5e5ea 50%, #2c2c2e 50%);
+        .theme-preview::before { /* Sfumatura per leggibilità */
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 100%);
         }
 
         .theme-card h3 {
-            color: var(--text-primary);
             font-size: 1.2rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
+            color: var(--text-primary);
         }
-
         .theme-card p {
-            color: var(--text-secondary);
             font-size: 0.9rem;
-        }
-
-        .settings-grid {
-            display: grid;
-            gap: 1.5rem;
-        }
-
-        .setting-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-        }
-
-        .setting-info h4 {
-            color: var(--text-primary);
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-
-        .setting-info p {
             color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .setting-control {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .theme-toggle {
-            display: none;
-        }
-
-        .toggle-label {
-            position: relative;
-            width: 50px;
-            height: 30px;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .toggle-label::after {
-            content: '';
-            position: absolute;
-            top: 2px;
-            left: 2px;
-            width: 24px;
-            height: 24px;
-            background: white;
-            border-radius: 50%;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        .theme-toggle:checked + .toggle-label {
-            background: var(--accent-primary);
-        }
-
-        .theme-toggle:checked + .toggle-label::after {
-            transform: translateX(20px);
-        }
-
-        .theme-slider {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 120px;
-            height: 6px;
-            border-radius: 3px;
-            background: var(--glass-bg);
-            outline: none;
-            cursor: pointer;
-        }
-
-        .theme-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--accent-primary);
-            cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        .theme-slider::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--accent-primary);
-            cursor: pointer;
-            border: none;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        .slider-value {
-            color: var(--text-primary);
-            font-weight: 600;
-            min-width: 40px;
-            text-align: center;
-        }
-
-        @media (max-width: 768px) {
-            .themes-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .setting-item {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 1rem;
-            }
-
-            .setting-control {
-                justify-content: space-between;
-            }
         }
     </style>
+</head>
+<body class="dark-mode"> <header class="main-header glass" id="mainHeader">
+        <button class="header-btn" id="menuBtn" aria-label="Apri menu"><i class="ph-bold ph-list"></i></button>
+        <div class="search-container-wrapper">
+            <div class="search-container glass" id="searchContainer">
+                <i class="ph ph-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="Cerca un tema...">
+            </div>
+        </div>
+    </header>
 
-    <script src="script.js"></script>
-    <script>
-        class ThemeManager {
-            constructor() {
-                this.settings = this.loadSettings();
-                this.init();
-            }
+    <aside class="sidebar left-sidebar glass" id="leftSidebar">
+        <div class="sidebar-header">
+            <h3>Cronoshop</h3>
+            <button class="close-btn" id="closeMenuBtn" aria-label="Chiudi menu"><i class="ph-bold ph-x"></i></button>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="account.html"><i class="ph ph-user-circle"></i> Account</a></li>
+                <li><a href="wishlist.html"><i class="ph ph-heart"></i> Wishlist</a></li>
+                <li><a href="cart.html"><i class="ph ph-shopping-cart"></i> Carrello</a></li>
+                <li><a href="chisiamo.html"><i class="ph ph-info"></i> Chi Siamo</a></li>
+                <li><a href="stats.html"><i class="ph ph-chart-bar"></i> Statistiche</a></li>
+                <li><a href="themes.html"><i class="ph ph-palette"></i> Temi</a></li>
+                <li><a href="faq.html"><i class="ph ph-question"></i> FAQ</a></li>
+                <li><a href="privacy.html"><i class="ph ph-shield-check"></i> Privacy</a></li>
+                <li><a href="terms.html"><i class="ph ph-file-text"></i> Termini</a></li>
+                <li>
+                    <label class="setting-item" for="themeToggle">
+                        <span><i class="ph ph-moon"></i> Tema Scuro</span>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="themeToggle" checked>
+                            <span class="slider"></span>
+                        </div>
+                    </label>
+                </li>
+            </ul>
+        </nav>
+    </aside>
 
-            init() {
-                this.setupEventListeners();
-                this.applySettings();
-                this.updateUI();
-            }
+    <div class="overlay" id="overlay"></div>
 
-            loadSettings() {
-                const defaultSettings = {
-                    theme: 'light',
-                    glassEffect: true,
-                    reducedMotion: false,
-                    highContrast: false,
-                    fontSize: 16,
-                    borderRadius: 12
-                };
-                
-                try {
-                    const saved = localStorage.getItem('cronoshop_theme_settings');
-                    return saved ? { ...defaultSettings, ...JSON.parse(saved) } : defaultSettings;
-                } catch (error) {
-                    console.error('Error loading theme settings:', error);
-                    return defaultSettings;
-                }
-            }
+    <div class="page-wrapper">
+        <main class="themes-container">
+            <header class="page-header glass">
+                <h1><i class="ph-bold ph-paint-brush"></i> Temi e Personalizzazione</h1>
+                <p>Scegli l'atmosfera che preferisci per la tua esperienza su Cronoshop.</p>
+            </header>
 
-            saveSettings() {
-                try {
-                    localStorage.setItem('cronoshop_theme_settings', JSON.stringify(this.settings));
-                    // Also save theme for compatibility with nav.html
-                    localStorage.setItem('cronoshop_theme', this.settings.theme);
-                } catch (error) {
-                    console.error('Error saving theme settings:', error);
-                }
-            }
+            <div class="themes-grid" id="themesGrid">
+                </div>
+        </main>
+    </div>
 
-            setupEventListeners() {
-                // Theme cards
-                document.querySelectorAll('.theme-card').forEach(card => {
-                    card.addEventListener('click', () => {
-                        const theme = card.dataset.theme;
-                        this.setTheme(theme);
-                    });
-                });
+    <script src="themes.js"></script>
 
-                // Toggles
-                document.getElementById('glassEffectToggle').addEventListener('change', (e) => {
-                    this.setSetting('glassEffect', e.target.checked);
-                });
-
-                document.getElementById('reducedMotionToggle').addEventListener('change', (e) => {
-                    this.setSetting('reducedMotion', e.target.checked);
-                });
-
-                document.getElementById('highContrastToggle').addEventListener('change', (e) => {
-                    this.setSetting('highContrast', e.target.checked);
-                });
-
-                // Sliders
-                const fontSizeSlider = document.getElementById('fontSizeSlider');
-                fontSizeSlider.addEventListener('input', (e) => {
-                    this.setSetting('fontSize', parseInt(e.target.value));
-                    this.updateSliderValue(e.target, e.target.value + 'px');
-                });
-
-                const borderRadiusSlider = document.getElementById('borderRadiusSlider');
-                borderRadiusSlider.addEventListener('input', (e) => {
-                    this.setSetting('borderRadius', parseInt(e.target.value));
-                    this.updateSliderValue(e.target, e.target.value + 'px');
-                });
-
-                // Reset button
-                document.getElementById('resetButton').addEventListener('click', () => {
-                    this.resetSettings();
-                });
-            }
-
-            setTheme(theme) {
-                this.settings.theme = theme;
-                this.saveSettings();
-                this.applyTheme();
-                this.updateThemeCards();
-                this.showNotification(`Tema ${this.getThemeName(theme)} applicato!`, 'success');
-            }
-
-            setSetting(key, value) {
-                this.settings[key] = value;
-                this.saveSettings();
-                this.applySettings();
-            }
-
-            applyTheme() {
-                const html = document.documentElement;
-                
-                // Remove existing theme classes
-                html.classList.remove('light-theme', 'dark-theme', 'auto-theme');
-                
-                if (this.settings.theme === 'auto') {
-                    // Auto theme based on time
-                    const hour = new Date().getHours();
-                    const isDark = hour < 7 || hour >= 19;
-                    html.classList.add(isDark ? 'dark-theme' : 'light-theme');
-                } else {
-                    html.classList.add(`${this.settings.theme}-theme`);
-                }
-            }
-
-            applySettings() {
-                this.applyTheme();
-                
-                const root = document.documentElement;
-                
-                // Apply custom properties
-                root.style.setProperty('--font-size-base', `${this.settings.fontSize}px`);
-                root.style.setProperty('--border-radius-custom', `${this.settings.borderRadius}px`);
-                
-                // Apply classes
-                root.classList.toggle('glass-disabled', !this.settings.glassEffect);
-                root.classList.toggle('reduced-motion', this.settings.reducedMotion);
-                root.classList.toggle('high-contrast', this.settings.highContrast);
-                
-                // Update body font size
-                document.body.style.fontSize = `${this.settings.fontSize}px`;
-            }
-
-            updateUI() {
-                // Update theme cards
-                this.updateThemeCards();
-                
-                // Update toggles
-                document.getElementById('glassEffectToggle').checked = this.settings.glassEffect;
-                document.getElementById('reducedMotionToggle').checked = this.settings.reducedMotion;
-                document.getElementById('highContrastToggle').checked = this.settings.highContrast;
-                
-                // Update sliders
-                const fontSizeSlider = document.getElementById('fontSizeSlider');
-                fontSizeSlider.value = this.settings.fontSize;
-                this.updateSliderValue(fontSizeSlider, this.settings.fontSize + 'px');
-                
-                const borderRadiusSlider = document.getElementById('borderRadiusSlider');
-                borderRadiusSlider.value = this.settings.borderRadius;
-                this.updateSliderValue(borderRadiusSlider, this.settings.borderRadius + 'px');
-            }
-
-            updateThemeCards() {
-                document.querySelectorAll('.theme-card').forEach(card => {
-                    card.classList.toggle('active', card.dataset.theme === this.settings.theme);
-                });
-            }
-
-            updateSliderValue(slider, value) {
-                const valueSpan = slider.parentElement.querySelector('.slider-value');
-                if (valueSpan) {
-                    valueSpan.textContent = value;
-                }
-            }
-
-            resetSettings() {
-                if (confirm('Sei sicuro di voler ripristinare tutte le impostazioni ai valori predefiniti?')) {
-                    this.settings = {
-                        theme: 'light',
-                        glassEffect: true,
-                        reducedMotion: false,
-                        highContrast: false,
-                        fontSize: 16,
-                        borderRadius: 12
-                    };
-                    this.saveSettings();
-                    this.applySettings();
-                    this.updateUI();
-                    this.showNotification('Impostazioni ripristinate!', 'success');
-                }
-            }
-
-            getThemeName(theme) {
-                const names = {
-                    light: 'Chiaro',
-                    dark: 'Scuro',
-                    auto: 'Automatico'
-                };
-                return names[theme] || theme;
-            }
-
-            showNotification(message, type = 'info') {
-                const notification = document.createElement('div');
-                const colors = {
-                    success: '#48bb78',
-                    error: '#ff4757',
-                    info: '#4299e1',
-                    warning: '#ed8936'
-                };
-
-                notification.style.cssText = `
-                    position: fixed;
-                    top: 100px;
-                    right: 20px;
-                    background: ${colors[type]};
-                    color: white;
-                    padding: 12px 20px;
-                    border-radius: 8px;
-                    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-                    z-index: 10000;
-                    transform: translateX(100%);
-                    transition: transform 0.3s ease;
-                    font-size: 14px;
-                    font-weight: 500;
-                    max-width: 280px;
-                `;
-
-                const icons = {
-                    success: 'check-circle',
-                    error: 'x-circle',
-                    info: 'info',
-                    warning: 'warning'
-                };
-
-                notification.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <i class="ph ph-${icons[type]}"></i>
-                        <span>${message}</span>
-                    </div>
-                `;
-
-                document.body.appendChild(notification);
-
-                setTimeout(() => {
-                    notification.style.transform = 'translateX(0)';
-                }, 100);
-
-                setTimeout(() => {
-                    notification.style.transform = 'translateX(100%)';
-                    setTimeout(() => notification.remove(), 300);
-                }, 3000);
-            }
-        }
-
-        // Initialize theme manager
-        let themeManager;
-        document.addEventListener('DOMContentLoaded', () => {
-            themeManager = new ThemeManager();
-            
-            // Load navigation
-            fetch('nav.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('navigation-container').innerHTML = data;
-                })
-                .catch(error => console.error('Error loading navigation:', error));
-        });
-
-        // Auto theme update every minute for auto mode
-        setInterval(() => {
-            if (themeManager && themeManager.settings.theme === 'auto') {
-                themeManager.applyTheme();
-            }
-        }, 60000);
-    </script>
 </body>
 </html>
