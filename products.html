@@ -177,11 +177,24 @@
     <div class="modal-container" id="productModal">
         </div>
 
-    <script src="main.js"></script>
     <script src="themes.js" defer></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
+            // --- DATI DEI PRODOTTI ---
+            // In un progetto reale, questi dati proverrebbero da un file esterno o da un'API.
+            // Per garantire il funzionamento, li includiamo qui.
+            const allProducts = [
+                { id: "prod1", link: "https://amzn.to/3Z551fa", img: "https://m.media-amazon.com/images/I/61hiFJPpY9L._AC_SL1500_.jpg", nome: "Samsung Galaxy S25 Ultra", prezzo: 1199.00, prezzo_originale: 1599.00, sconto: 25, descrizione: "Smartphone AI con display 6.9\" QHD+ Dynamic AMOLED 2X, fotocamera da 200MP...", categoria: "smartphone" },
+                { id: "prod2", link: "https://amzn.to/4mB7UhK", img: "https://m.media-amazon.com/images/I/71b8mpCMTOL._AC_SL1500_.jpg", nome: "by Amazon Quinoa biologica, 500g", prezzo: 5.49, prezzo_originale: 6.99, sconto: 21, descrizione: "Quinoa biologica di alta qualità, ricca di proteine e fibre...", categoria: "casa" },
+                { id: "prod3", link: "https://www.amazon.it/dp/B0CHWV5HTM", img: "https://m.media-amazon.com/images/I/71d7rfSl0wL._AC_SL1500_.jpg", nome: "Apple iPhone 15 (128 GB)", prezzo: 645.00, prezzo_originale: 879.00, sconto: 27, descrizione: "Uno dei migliori smartphone per prestazioni e qualità fotografica...", categoria: "smartphone" },
+                { id: "prod15", link: "https://amzn.to/4kbOb6E", img: "https://m.media-amazon.com/images/I/71BHou6YJKL._AC_SY879_.jpg", nome: "Calvin Klein T-Shirt Uomo in Cotone", prezzo: 18.00, prezzo_originale: 35.00, sconto: 49, descrizione: "Un classico intramontabile per ogni guardaroba...", categoria: "fashion" },
+                { id: "prod22", link: "https://amzn.to/4jhgwHr", img: "https://m.media-amazon.com/images/I/51B45gaTgjL._AC_SL1000_.jpg", nome: "Amazon Fire TV Stick HD (Ultimo modello)", prezzo: 28.99, prezzo_originale: 49.99, sconto: 42, descrizione: "Streaming HD con TV gratuita e in diretta, telecomando vocale Alexa...", categoria: "tech" },
+                { id: "prod17", link: "https://www.amazon.it/dp/B0F1P4F8SR/", img: "https://m.media-amazon.com/images/I/71GSwlTsPDL.__AC_SX300_SY300_QL70_ML2_.jpg", nome: "Sunsilk Crema Styling Capelli Mossi", prezzo: 5.99, prezzo_originale: 32.34, sconto: 81, descrizione: "Crema per lo styling dei capelli mossi, Onde Meravigliose...", categoria: "salute" },
+                { id: "prod76", link: "https://www.amazon.com/dp/B0CB21FKJ3", img: "https://m.media-amazon.com/images/I/71E-K37BdsL.__AC_SY395_SX395_QL70_ML2_.jpg", nome: "Skechers Uno Stand On Air", prezzo: 19.00, prezzo_originale: 65.00, sconto: 71, descrizione: "Sneaker Durabuck con lacci e soletta in memory foam per un comfort imbattibile.", categoria: "fashion" },
+                { id: "prod51", link: "https://amzn.to/43qkEio", img: "https://m.media-amazon.com/images/I/61V8VUE1dFL.__AC_SX300_SY300_QL70_ML2_.jpg", nome: "Amazfit Bip 5 Smartwatch", prezzo: 57.99, prezzo_originale: 89.90, sconto: 35, descrizione: "Smartwatch con chiamate Bluetooth, Alexa integrata, GPS, durata batteria 10 giorni...", categoria: "tech" },
+            ];
+
             // --- LOGICA UI STANDARD (MENU, RICERCA, OVERLAY) ---
             const leftSidebar = document.getElementById('leftSidebar');
             const rightSidebar = document.getElementById('rightSidebar');
@@ -250,28 +263,21 @@
             
             // --- LOGICA SPECIFICA PAGINA PRODOTTI ---
             class ProductsPageManager {
-                constructor() {
-                    this.allProducts = [];
+                constructor(products) {
+                    this.allProducts = products;
                     this.wishlist = [];
                     this.currentFilter = 'all';
                     this.init();
                 }
 
                 init() {
-                    this.loadData();
+                    this.loadWishlist();
                     this.renderCategories();
                     this.renderProducts();
                     this.attachEventListeners();
                 }
                 
-                loadData() {
-                    // Carica i prodotti da main.js
-                    if (typeof window.products !== 'undefined') {
-                        this.allProducts = window.products;
-                    } else {
-                        console.error("Dati dei prodotti (main.js) non trovati.");
-                    }
-                    // Carica la wishlist per sapere quali prodotti marcare come "piaciuti"
+                loadWishlist() {
                     try {
                         this.wishlist = JSON.parse(localStorage.getItem('cronoshop_wishlist') || '[]');
                     } catch { this.wishlist = []; }
@@ -359,7 +365,7 @@
                         this.wishlist.push(product);
                     }
                     localStorage.setItem('cronoshop_wishlist', JSON.stringify(this.wishlist));
-                    this.renderProducts(); // Rirenderizza per aggiornare i cuori
+                    this.renderProducts();
                 }
 
                 attachEventListeners() {
@@ -400,7 +406,7 @@
                 }
             }
 
-            new ProductsPageManager();
+            new ProductsPageManager(allProducts);
         });
     </script>
 </body>
