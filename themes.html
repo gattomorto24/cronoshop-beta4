@@ -10,45 +10,40 @@
     <link rel="icon" type="image/png" href="assets/cronoshop-logo.png">
     <link rel="apple-touch-icon" href="assets/cronoshop-logo.png">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
     <style>
         /* --- [1] IMPOSTAZIONI GLOBALI E VARIABILI --- */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@400;500;600&family=Roboto+Mono:wght@400;500&display=swap');
 
         :root {
             /* Colori Tema Scuro (Default) */
             --bg-main: #121212;
-            --bg-glass: rgba(28, 28, 30, 0.7);
+            --bg-glass: rgba(28, 28, 30, 0.75);
             --bg-interactive: rgba(44, 44, 46, 0.8);
             --border-glass: rgba(255, 255, 255, 0.15);
             --text-primary: #f5f5f7;
             --text-secondary: #a0a0a5;
             --accent-primary: #0A84FF;
-            --overlay-bg: rgba(0, 0, 0, 0.5);
+            --overlay-bg: rgba(0, 0, 0, 0.6);
 
             /* Misure e Transizioni */
             --radius-main: 24px;
             --radius-sub: 16px;
             --transition-smooth: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+
+            /* Impostazioni Personalizzabili (verranno sovrascritte da JS) */
+            --font-main: 'Inter', -apple-system, sans-serif;
+            --font-size-base: 16px;
         }
         
-        body.light-mode {
-            --bg-main: #f0f2f5;
-            --bg-glass: rgba(255, 255, 255, 0.7);
-            --bg-interactive: rgba(229, 229, 234, 0.8);
-            --border-glass: rgba(0, 0, 0, 0.1);
-            --text-primary: #1d1d1f;
-            --text-secondary: #6e6e73;
-            --accent-primary: #007AFF;
-            --overlay-bg: rgba(0, 0, 0, 0.4);
-        }
-
         /* --- [2] RESET E STILI BASE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: var(--font-main);
+            font-size: var(--font-size-base);
             background: var(--bg-main);
             color: var(--text-primary);
-            transition: background-color 0.3s, color 0.3s;
+            transition: background 0.3s, color 0.3s;
             padding: 20px;
             min-height: 100vh;
         }
@@ -59,65 +54,37 @@
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--border-glass);
             border-radius: var(--radius-main);
-            transition: background 0.3s, border 0.3s;
+            transition: background 0.3s, border 0.3s, backdrop-filter 0.3s;
         }
+        body.glass-disabled .glass {
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+        }
+        a { color: var(--accent-primary); text-decoration: none; font-weight: 500; }
         
-        /* --- [3] HEADER, SEARCH & SIDEBAR --- */
-        .main-header {
-            position: fixed; top: 20px; left: 20px; right: 20px;
-            z-index: 1000; display: flex; align-items: center; gap: 20px;
-            padding: 0 20px; height: 70px;
-        }
-        .header-btn {
-            background: none; border: none; color: var(--text-secondary); cursor: pointer;
-            font-size: 28px; display: flex; align-items: center; padding: 8px;
-            border-radius: 50%; transition: all 0.2s; z-index: 1002;
-        }
+        /* --- [3] HEADER, SEARCH & SIDEBARS (STANDARD) --- */
+        .main-header { position: fixed; top: 20px; left: 20px; right: 20px; z-index: 1000; display: flex; align-items: center; gap: 20px; padding: 0 20px; height: 70px; }
+        .header-btn { background: none; border: none; color: var(--text-secondary); cursor: pointer; font-size: 28px; display: flex; align-items: center; padding: 8px; border-radius: 50%; transition: all 0.2s; z-index: 1002; }
         .header-btn:hover { background-color: var(--bg-interactive); color: var(--text-primary); }
         .search-container-wrapper { flex-grow: 1; display: flex; justify-content: center; }
-        .search-container {
-            display: flex; align-items: center; gap: 15px; padding: 0 20px;
-            width: 100%; max-width: 80px; height: 50px; border-radius: 25px;
-            cursor: pointer; transition: all var(--transition-smooth); overflow: hidden;
-        }
+        .search-container { display: flex; align-items: center; gap: 15px; padding: 0 20px; width: 100%; max-width: 80px; height: 50px; border-radius: 25px; cursor: pointer; transition: all var(--transition-smooth); overflow: hidden; }
         .search-container.active { max-width: 500px; cursor: text; }
         .search-container i { font-size: 20px; color: var(--text-secondary); transition: color 0.3s; }
         .search-container.active i { color: var(--accent-primary); }
-        .search-container input {
-            background: none; border: none; outline: none; color: var(--text-primary);
-            font-size: 16px; width: 100%; opacity: 0; transform: translateX(-20px);
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
+        .search-container input { background: none; border: none; outline: none; color: var(--text-primary); font-size: 16px; width: 100%; opacity: 0; transform: translateX(-20px); transition: opacity 0.3s ease, transform 0.3s ease; }
         .search-container.active input { opacity: 1; transform: translateX(0); }
         .search-container input::placeholder { color: var(--text-secondary); }
-
-        .sidebar {
-            position: fixed; top: 0; left: 0; height: 100%; width: 300px;
-            z-index: 2000; padding: 20px; transform: translateX(-105%);
-            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
+        .sidebar { position: fixed; top: 0; height: 100%; width: 300px; z-index: 2000; padding: 20px; transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .left-sidebar { left: 0; transform: translateX(-105%); }
+        .right-sidebar { right: 0; transform: translateX(105%); }
         .sidebar.active { transform: translateX(0); }
-        .sidebar-header {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 30px; padding: 10px 0;
-        }
+        .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding: 10px 0; }
         .sidebar-header h3 { font-size: 24px; font-weight: 700; }
-        .close-btn {
-            background: rgba(255, 255, 255, 0.1); color: var(--text-primary);
-            border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 20px;
-            cursor: pointer; display: flex; align-items: center; justify-content: center;
-            transition: all 0.2s;
-        }
+        .close-btn { background: rgba(255, 255, 255, 0.1); color: var(--text-primary); border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
         .close-btn:hover { background-color: rgba(255, 255, 255, 0.2); transform: rotate(90deg); }
         .sidebar-nav ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-        .sidebar-nav a, .setting-item {
-            display: flex; align-items: center; gap: 15px; padding: 12px 15px;
-            border-radius: 12px; font-size: 16px; font-weight: 500;
-            color: var(--text-secondary); text-decoration: none; transition: all 0.2s;
-        }
-        .sidebar-nav a:hover, .setting-item:hover {
-            background-color: var(--accent-primary); color: white; transform: translateX(5px);
-        }
+        .sidebar-nav a, .setting-item { display: flex; align-items: center; gap: 15px; padding: 12px 15px; border-radius: 12px; font-size: 16px; font-weight: 500; color: var(--text-secondary); text-decoration: none; transition: all 0.2s; }
+        .sidebar-nav a:hover, .setting-item:hover { background-color: var(--accent-primary); color: white; transform: translateX(5px); }
         .sidebar-nav a i { font-size: 22px; min-width: 25px; text-align: center; }
         .setting-item { justify-content: space-between; cursor: pointer; }
         .toggle-switch { position: relative; display: inline-block; width: 50px; height: 30px; }
@@ -126,136 +93,87 @@
         .slider:before { position: absolute; content: ""; height: 22px; width: 22px; left: 4px; bottom: 4px; background-color: white; border-radius: 50%; transition: .4s; }
         input:checked + .slider { background-color: var(--accent-primary); }
         input:checked + .slider:before { transform: translateX(20px); }
-
-        .overlay {
-            position: fixed; inset: 0; background: var(--overlay-bg);
-            z-index: 1999; opacity: 0; visibility: hidden;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
-        }
+        .overlay { position: fixed; inset: 0; background: var(--overlay-bg); z-index: 1999; opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s ease; }
         .overlay.active { opacity: 1; visibility: visible; }
         
         /* --- [4] DESIGN PAGINA TEMI --- */
         .themes-container { max-width: 1200px; margin: 0 auto; }
-        .page-header {
-            text-align: center; padding: 40px 20px;
-            border-radius: var(--radius-main); margin-bottom: 2rem;
-        }
-        .page-header h1 {
-            font-size: 2.8rem; font-weight: 700;
-            display: flex; align-items: center; justify-content: center; gap: 15px;
-            margin-bottom: 1rem;
-        }
-        .page-header p {
-            font-size: 1.1rem; color: var(--text-secondary);
-            max-width: 600px; margin: 0 auto;
-        }
+        .page-header { text-align: center; padding: 40px 20px; border-radius: var(--radius-main); margin-bottom: 2rem; }
+        .page-header h1 { font-size: 2.8rem; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 1rem; }
+        .page-header p { font-size: 1.1rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
+        .section-title { font-size: 1.8rem; font-weight: 600; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-glass); }
+        
+        .themes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .theme-card { border-radius: var(--radius-sub); padding: 1.5rem; cursor: pointer; border: 2px solid transparent; transition: all 0.3s ease; }
+        .theme-card:hover { transform: translateY(-5px); border-color: var(--accent-primary); }
+        .theme-card.active { border-color: var(--accent-primary); box-shadow: 0 0 20px color-mix(in srgb, var(--accent-primary) 30%, transparent); }
+        .theme-preview { height: 120px; border-radius: 12px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: white; position: relative; overflow: hidden; }
+        .theme-preview::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 100%); }
+        .theme-card h3 { font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-primary); }
+        .theme-card p { font-size: 0.9rem; color: var(--text-secondary); }
 
-        .themes-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .theme-card {
-            border-radius: var(--radius-sub);
-            padding: 1.5rem;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-        }
-        .theme-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent-primary);
-        }
-        .theme-card.active {
-            border-color: var(--accent-primary);
-            box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.3);
-        }
-
-        .theme-preview {
-            height: 120px;
-            border-radius: 12px;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-        .theme-preview::before { /* Sfumatura per leggibilità */
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 100%);
-        }
-
-        .theme-card h3 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
-        }
-        .theme-card p {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
+        .customization-section { padding: 2rem; margin-top: 2rem; }
+        .settings-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .setting-group label { display: block; font-weight: 500; margin-bottom: 0.8rem; }
+        .setting-group input, .setting-group select { width: 100%; padding: 0.8rem; background: var(--bg-interactive); border: 1px solid var(--border-glass); border-radius: 12px; color: var(--text-primary); font-size: 1rem; }
+        .color-input { -webkit-appearance: none; -moz-appearance: none; appearance: none; width: 100%; height: 50px; background-color: transparent; border: none; cursor: pointer; }
+        .color-input::-webkit-color-swatch { border-radius: 12px; border: 1px solid var(--border-glass); }
+        .color-input::-moz-color-swatch { border-radius: 12px; border: 1px solid var(--border-glass); }
     </style>
 </head>
-<body class="dark-mode"> <header class="main-header glass" id="mainHeader">
-        <button class="header-btn" id="menuBtn" aria-label="Apri menu"><i class="ph-bold ph-list"></i></button>
-        <div class="search-container-wrapper">
-            <div class="search-container glass" id="searchContainer">
-                <i class="ph ph-magnifying-glass"></i>
-                <input type="text" id="searchInput" placeholder="Cerca un tema...">
-            </div>
-        </div>
-    </header>
+<body class="dark-mode">
 
-    <aside class="sidebar left-sidebar glass" id="leftSidebar">
-        <div class="sidebar-header">
-            <h3>Cronoshop</h3>
-            <button class="close-btn" id="closeMenuBtn" aria-label="Chiudi menu"><i class="ph-bold ph-x"></i></button>
-        </div>
-        <nav class="sidebar-nav">
-                       <ul>
-                <li><a href="index.html"><i class="ph ph-home"></i> Home</a></li>
-                <li><a href="account.html"><i class="ph ph-user-circle"></i> Account</a></li>
-                <li><a href="products.html"><i class="ph ph-shopping-bag"></i> Prodotti</a></li>
-                <li><a href="wishlist.html"><i class="ph ph-heart"></i> Wishlist</a></li>
-                <li><a href="cart.html"><i class="ph ph-shopping-cart"></i> Carrello</a></li>
-                <li><a href="chisiamo.html"><i class="ph ph-info"></i> Chi Siamo</a></li>
-                <li><a href="blog.html"><i class="ph ph-newspaper"></i> Blog</a></li>
-                <li><a href="stats.html"><i class="ph ph-chart-bar"></i> Statistiche</a></li>
-                <li><a href="themes.html"><i class="ph ph-palette"></i> Temi</a></li>
-                <li><a href="faq.html"><i class="ph ph-question"></i> FAQ</a></li>
-                <li><a href="privacy.html"><i class="ph ph-shield-check"></i> Privacy</a></li>
-                <li><a href="terms.html"><i class="ph ph-file-text"></i> Termini</a></li>
-                <li>
-                    <label class="setting-item" for="themeToggle">
-                        <span><i class="ph ph-moon"></i> Tema Scuro</span>
-                        <div class="toggle-switch">
-                            <input type="checkbox" id="themeToggle" checked>
-                            <span class="slider"></span>
-                        </div>
-                    </label>
-                </li>
-            </ul>
-        </nav>
-    </aside>
-
+    <header class="main-header glass" id="mainHeader"></header>
+    <aside class="sidebar left-sidebar glass" id="leftSidebar"></aside>
+    <aside class="sidebar right-sidebar glass" id="rightSidebar"></aside>
     <div class="overlay" id="overlay"></div>
 
     <div class="page-wrapper">
         <main class="themes-container">
             <header class="page-header glass">
                 <h1><i class="ph-bold ph-paint-brush"></i> Temi e Personalizzazione</h1>
-                <p>Scegli l'atmosfera che preferisci per la tua esperienza su Cronoshop.</p>
+                <p>Scegli l'atmosfera che preferisci o crea il tuo stile unico per Cronoshop.</p>
             </header>
 
-            <div class="themes-grid" id="themesGrid">
+            <section class="themes-section glass">
+                <div style="padding: 2rem;">
+                    <h2 class="section-title">Temi Preimpostati</h2>
+                    <div class="themes-grid" id="themesGrid">
+                        </div>
                 </div>
+            </section>
+
+            <section class="customization-section glass">
+                <h2 class="section-title">Personalizzazione Avanzata</h2>
+                <div class="settings-grid">
+                    <div class="setting-group">
+                        <label for="fontSelector">Carattere del Testo</label>
+                        <select id="fontSelector">
+                            <option value="'Inter', sans-serif">Inter (Default)</option>
+                            <option value="'Lora', serif">Lora (Serif)</option>
+                            <option value="'Roboto Mono', monospace">Roboto Mono (Monospace)</option>
+                        </select>
+                    </div>
+                    <div class="setting-group">
+                        <label for="fontSizeSlider">Dimensione Testo (<span id="fontSizeValue">16px</span>)</label>
+                        <input type="range" id="fontSizeSlider" min="14" max="20" step="1" value="16">
+                    </div>
+                    <div class="setting-group">
+                        <label>Effetto Vetro (Glassmorphism)</label>
+                        <div class="setting-item" style="padding: 0;">
+                             <span>Attiva / Disattiva Trasparenza</span>
+                             <div class="toggle-switch">
+                                <input type="checkbox" id="glassEffectToggle" checked>
+                                <span class="slider"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="setting-group">
+                        <label for="bgColorPicker">Colore di Sfondo</label>
+                        <input type="color" id="bgColorPicker" class="color-input" value="#121212">
+                    </div>
+                </div>
+            </section>
         </main>
     </div>
 
