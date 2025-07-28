@@ -28,6 +28,7 @@
             --text-secondary: #a0a0a5;
             --accent-primary: #0A84FF;
             --accent-green: #30D158;
+            --accent-purple: #BF5AF2;
             --accent-red: #FF453A;
             --overlay-bg: rgba(0, 0, 0, 0.6);
             --radius-main: 24px;
@@ -63,11 +64,11 @@
         a { color: var(--accent-primary); text-decoration: none; font-weight: 500; }
         
         /* Header, Search & Sidebars */
-        .main-header { position: fixed; top: 20px; left: 20px; right: 20px; z-index: 1000; display: flex; align-items: center; gap: 20px; padding: 0 20px; height: 70px; }
+        .main-header { position: fixed; top: 20px; left: 20px; right: 20px; z-index: 1000; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 0 20px; height: 70px; }
         .header-btn { background: none; border: none; color: var(--text-secondary); cursor: pointer; font-size: 28px; display: flex; align-items: center; padding: 8px; border-radius: 50%; transition: all 0.2s; z-index: 1002; }
         .header-btn:hover { background-color: var(--bg-interactive); color: var(--text-primary); }
-        .search-container-wrapper { flex-grow: 1; display: flex; justify-content: center; }
-        .search-container { display: flex; align-items: center; gap: 15px; padding: 0 20px; width: 100%; max-width: 80px; height: 50px; border-radius: 25px; cursor: pointer; transition: all var(--transition-smooth); overflow: hidden; }
+        .search-container-wrapper { position: absolute; left: 50%; transform: translateX(-50%); width: 100%; display: flex; justify-content: center; pointer-events: none; }
+        .search-container { display: flex; align-items: center; gap: 15px; padding: 0 20px; width: 100%; max-width: 80px; height: 50px; border-radius: 25px; cursor: pointer; transition: all var(--transition-smooth); overflow: hidden; pointer-events: auto; }
         .search-container.active { max-width: 500px; cursor: text; }
         .search-container i { font-size: 20px; color: var(--text-secondary); transition: color 0.3s; }
         .search-container.active i { color: var(--accent-primary); }
@@ -128,7 +129,7 @@
         .details-btn:hover { background: var(--bg-interactive); }
         .icon-btn { width: 40px; height: 40px; background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: 10px; color: var(--text-primary); cursor: pointer; transition: all 0.2s; font-size: 18px; }
         .icon-btn:hover { background-color: var(--bg-interactive); transform: scale(1.1); }
-        .icon-btn.active { color: var(--accent-red); background-color: rgba(255, 59, 48, 0.1); }
+        .icon-btn.active { color: var(--accent-red); background-color: rgba(255, 59, 48, 0.1); border-color: rgba(255, 59, 48, 0.2); }
 
         /* Product Modal (Premium Redesign) */
         .modal-container { position: fixed; inset: 0; z-index: 3000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; padding: 20px; }
@@ -150,6 +151,13 @@
             .main-header { top: 10px; left: 10px; right: 10px; }
             .main-grid { grid-template-columns: 1fr; }
             .search-container.active { max-width: calc(100% - 140px); }
+        }
+         @media (max-width: 480px) {
+            .modal-content { border-radius: var(--radius-main); }
+            .modal-image { border-radius: var(--radius-main); }
+            .modal-info { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); border-radius: 0 0 var(--radius-main) var(--radius-main); }
+            .modal-title, .modal-description, .modal-price { color: white; }
+            .modal-price .original { color: rgba(255,255,255,0.7); }
         }
     </style>
 </head>
@@ -191,239 +199,6 @@
         </div>
 
     <script src="main.js"></script>
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        
-        // --- ELEMENTI DEL DOM ---
-        const mainHeader = document.getElementById('mainHeader');
-        const leftSidebar = document.getElementById('leftSidebar');
-        const rightSidebar = document.getElementById('rightSidebar');
-        const overlay = document.getElementById('overlay');
-        const productsGrid = document.getElementById('productsGrid');
-        const productModal = document.getElementById('productModal');
-
-        // --- INIEZIONE DINAMICA HEADER E MENU ---
-        mainHeader.innerHTML = `
-            <button class="header-btn" id="leftSidebarBtn" aria-label="Apri menu"><i class="ph-bold ph-list"></i></button>
-            <div class="search-container-wrapper">
-                <div class="search-container glass" id="searchContainer">
-                    <i class="ph ph-magnifying-glass"></i>
-                    <input type="text" id="searchInput" placeholder="Cerca un'offerta...">
-                </div>
-            </div>
-            <button class="header-btn" id="rightSidebarBtn" aria-label="Apri impostazioni"><i class="ph-bold ph-gear"></i></button>`;
-
-        leftSidebar.innerHTML = `
-            <div class="sidebar-header">
-                <h3>Menu</h3>
-                <button class="close-btn" id="closeLeftSidebarBtn"><i class="ph-bold ph-x"></i></button>
-            </div>
-            <nav class="sidebar-nav">
-                <ul>
-                    <li><a href="index.html"><i class="ph ph-house"></i> Home</a></li>
-                    <li><a href="account.html"><i class="ph ph-user-circle"></i> Account</a></li>
-                    <li><a href="products.html"><i class="ph ph-shopping-bag"></i> Prodotti</a></li>
-                    <li><a href="wishlist.html"><i class="ph ph-heart"></i> Wishlist</a></li>
-                    <li><a href="cart.html"><i class="ph ph-shopping-cart"></i> Carrello</a></li>
-                    <li><a href="chisiamo.html"><i class="ph ph-info"></i> Chi Siamo</a></li>
-                    <li><a href="blog.html"><i class="ph ph-newspaper"></i> Blog</a></li>
-                    <li><a href="stats.html"><i class="ph ph-chart-bar"></i> Statistiche</a></li>
-                    <li><a href="themes.html"><i class="ph ph-palette"></i> Temi</a></li>
-                    <li><a href="faq.html"><i class="ph ph-question"></i> FAQ</a></li>
-                    <li><a href="privacy.html"><i class="ph ph-shield-check"></i> Privacy</a></li>
-                    <li><a href="terms.html"><i class="ph ph-file-text"></i> Termini</a></li>
-                </ul>
-            </nav>`;
-
-        rightSidebar.innerHTML = `
-            <div class="sidebar-header">
-                <h3>Impostazioni</h3>
-                <button class="close-btn" id="closeRightSidebarBtn"><i class="ph-bold ph-x"></i></button>
-            </div>
-            <nav class="sidebar-nav">
-                <ul>
-                    <li>
-                        <label class="setting-item" for="themeToggle">
-                            <span><i class="ph ph-moon"></i> Tema Scuro</span>
-                            <div class="toggle-switch">
-                                <input type="checkbox" id="themeToggle" checked>
-                                <span class="slider"></span>
-                            </div>
-                        </label>
-                    </li>
-                    <li><a href="#"><i class="ph ph-bell"></i> Notifiche</a></li>
-                </ul>
-            </nav>`;
-
-        // --- RICOLLEGAMENTO ELEMENTI DINAMICI E LOGICA UI ---
-        const leftSidebarBtn = document.getElementById('leftSidebarBtn');
-        const rightSidebarBtn = document.getElementById('rightSidebarBtn');
-        const closeLeftSidebarBtn = document.getElementById('closeLeftSidebarBtn');
-        const closeRightSidebarBtn = document.getElementById('closeRightSidebarBtn');
-        const searchContainer = document.getElementById('searchContainer');
-        const searchInput = document.getElementById('searchInput');
-        const themeToggle = document.getElementById('themeToggle');
-
-        const toggleSidebar = (sidebar, open) => {
-            sidebar.classList.toggle('active', open);
-            const anySidebarOpen = leftSidebar.classList.contains('active') || rightSidebar.classList.contains('active');
-            overlay.classList.toggle('active', anySidebarOpen);
-        };
-
-        leftSidebarBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleSidebar(leftSidebar, true); });
-        rightSidebarBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleSidebar(rightSidebar, true); });
-        closeLeftSidebarBtn.addEventListener('click', () => toggleSidebar(leftSidebar, false));
-        closeRightSidebarBtn.addEventListener('click', () => toggleSidebar(rightSidebar, false));
-        overlay.addEventListener('click', () => {
-            toggleSidebar(leftSidebar, false);
-            toggleSidebar(rightSidebar, false);
-        });
-
-        searchContainer.addEventListener('click', () => {
-            searchContainer.classList.add('active');
-            searchInput.focus();
-        });
-        document.addEventListener('click', (e) => {
-            if (!searchContainer.contains(e.target) && searchInput.value === '') searchContainer.classList.remove('active');
-        });
-        searchInput.addEventListener('blur', () => {
-            if (searchInput.value === '') searchContainer.classList.remove('active');
-        });
-        
-        // --- GESTIONE TEMA ---
-        if (themeToggle) {
-            themeToggle.addEventListener('change', () => {
-                if (window.applyGlobalTheme) {
-                    const newTheme = themeToggle.checked ? 'dark' : 'light';
-                    window.applyGlobalTheme(newTheme);
-                }
-            });
-        }
-        // Sincronizza il toggle con il tema attuale all'avvio
-        if (document.body.classList.contains('light-mode')) {
-             if (themeToggle) themeToggle.checked = false;
-        }
-
-
-        // --- GESTIONE PRODOTTI E MODALE ---
-        let allProducts = [];
-
-        const renderProducts = (filter = '') => {
-            const query = filter.toLowerCase();
-            const filteredProducts = allProducts.filter(product => 
-                product.nome.toLowerCase().includes(query) ||
-                product.descrizione.toLowerCase().includes(query)
-            );
-            if(productsGrid) {
-                productsGrid.innerHTML = filteredProducts.map(createProductCard).join('');
-            }
-        };
-
-        const createProductCard = (product) => {
-            const price = parseFloat(product.prezzo) || 0;
-            const isLiked = isProductInWishlist(product.id);
-            
-            return `
-                <div class="product-card glass">
-                    <div class="product-card-clickable" data-product-id="${product.id}">
-                        <img src="${product.img}" alt="${product.nome}" class="product-image">
-                    </div>
-                    <div class="product-info">
-                        <h4>${product.nome}</h4>
-                        <p class="price">€${price.toFixed(2)}</p>
-                        <div class="product-actions">
-                            <button class="details-btn" data-product-id="${product.id}">Dettagli</button>
-                            <button class="icon-btn ${isLiked ? 'active' : ''}" data-wishlist-id="${product.id}" aria-label="Aggiungi alla wishlist">
-                                <i class="ph ph-heart"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>`;
-        };
-
-        const showProductModal = (product) => {
-            const price = parseFloat(product.prezzo) || 0;
-            const originalPrice = parseFloat(product.prezzo_originale) || 0;
-            const isLiked = isProductInWishlist(product.id);
-
-            productModal.innerHTML = `
-                <div class="modal-content glass" onclick="event.stopPropagation()">
-                    <img src="${product.img}" alt="${product.nome}" class="modal-image">
-                    <div class="modal-info">
-                        <h2 class="modal-title">${product.nome}</h2>
-                        <p class="modal-description">${product.descrizione}</p>
-                        <div class="modal-price">
-                            €${price.toFixed(2)}
-                            ${originalPrice > price ? `<span class="original">€${originalPrice.toFixed(2)}</span>` : ''}
-                        </div>
-                        <div class="modal-actions">
-                             <a href="${product.link}" target="_blank" rel="noopener noreferrer" class="btn primary">Vai su Amazon</a>
-                             <button class="icon-btn ${isLiked ? 'active' : ''}" data-wishlist-id="${product.id}" style="width: 50px; height: 50px; font-size: 24px;"><i class="ph ph-heart"></i></button>
-                        </div>
-                    </div>
-                </div>`;
-            productModal.classList.add('visible');
-        };
-        
-        productModal.addEventListener('click', () => productModal.classList.remove('visible'));
-
-        // --- LOGICA INTERATTIVA (WISHLIST, ETC.) ---
-        const isProductInWishlist = (productId) => {
-            try {
-                const wishlist = JSON.parse(localStorage.getItem('cronoshop_wishlist') || '[]');
-                return wishlist.some(item => item.id === productId);
-            } catch { return false; }
-        };
-        
-        const toggleWishlist = (productId) => {
-            try {
-                let wishlist = JSON.parse(localStorage.getItem('cronoshop_wishlist') || '[]');
-                const product = allProducts.find(p => p.id === productId);
-                if (!product) return;
-                
-                const itemIndex = wishlist.findIndex(item => item.id === productId);
-                const buttons = document.querySelectorAll(`[data-wishlist-id="${productId}"]`);
-
-                if (itemIndex > -1) {
-                    wishlist.splice(itemIndex, 1);
-                    buttons.forEach(btn => btn.classList.remove('active'));
-                } else {
-                    wishlist.push(product);
-                    buttons.forEach(btn => btn.classList.add('active'));
-                }
-                localStorage.setItem('cronoshop_wishlist', JSON.stringify(wishlist));
-            } catch (e) { console.error("Wishlist Error:", e)}
-        };
-
-        document.body.addEventListener('click', (e) => {
-            const detailsBtn = e.target.closest('.details-btn');
-            const wishlistBtn = e.target.closest('[data-wishlist-id]');
-            
-            if (detailsBtn) {
-                 const product = allProducts.find(p => p.id === detailsBtn.dataset.productId);
-                 if (product) showProductModal(product);
-            }
-            
-            if (wishlistBtn) {
-                toggleWishlist(wishlistBtn.dataset.wishlistId);
-            }
-        });
-
-        // --- CARICAMENTO INIZIALE ---
-        const init = () => {
-            // Usa window.products definito in main.js
-            if (typeof window.products !== 'undefined') {
-                allProducts = window.products;
-                renderProducts();
-            } else {
-                console.error("Dati dei prodotti (main.js) non trovati.");
-                if(productsGrid) productsGrid.innerHTML = "<p>Errore nel caricamento dei prodotti.</p>";
-            }
-            searchInput.addEventListener('input', () => renderProducts(searchInput.value));
-        };
-
-        init();
-    });
-    </script>
+    <script src="index.js"></script>
 </body>
 </html>
