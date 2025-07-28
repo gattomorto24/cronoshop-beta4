@@ -9,340 +9,325 @@
     <link rel="canonical" href="https://www.cronoshop.eu/terms.html">
     <link rel="icon" type="image/png" href="assets/cronoshop-logo.png">
     <link rel="apple-touch-icon" href="assets/cronoshop-logo.png">
-    <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-</head>
-<body>
-    <div class="page-wrapper">
-        <div id="navigation-container"></div>
+    <script src="themes.js" defer></script>
+
+    <style>
+        /* --- [1] IMPOSTAZIONI GLOBALI E VARIABILI --- */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        :root {
+            /* Colori Tema Scuro (Default) */
+            --bg-main: #121212;
+            --bg-glass: rgba(28, 28, 30, 0.75);
+            --bg-interactive: rgba(44, 44, 46, 0.8);
+            --border-glass: rgba(255, 255, 255, 0.15);
+            --text-primary: #f5f5f7;
+            --text-secondary: #a0a0a5;
+            --accent-primary: #0A84FF;
+            --overlay-bg: rgba(0, 0, 0, 0.6);
+            --radius-main: 24px;
+            --radius-sub: 16px;
+            --transition-smooth: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            --font-main: 'Inter', -apple-system, sans-serif;
+            --font-size-base: 16px;
+        }
         
-        <main class="main-content">
-            <div class="main-card glass">
-                <div class="page-header">
-                    <h1>📋 Termini di Servizio</h1>
-                    <p>Condizioni d'uso e responsabilità per l'utilizzo di Cronoshop</p>
-                    <div class="document-meta" style="margin-top: 1rem; padding: 1rem; background: var(--glass-bg); border-radius: 12px; font-size: 0.9rem; color: var(--text-secondary);">
-                        <p><strong>Ultimo aggiornamento:</strong> 15 Gennaio 2025</p>
-                        <p><strong>Versione:</strong> 2.0</p>
-                        <p><strong>Entrata in vigore:</strong> 15 Gennaio 2025</p>
-                    </div>
-                </div>
+        body.light-mode {
+            --bg-main: #f0f2f5;
+            --bg-glass: rgba(255, 255, 255, 0.7);
+            --bg-interactive: rgba(229, 229, 234, 0.8);
+            --border-glass: rgba(0, 0, 0, 0.1);
+            --text-primary: #1d1d1f;
+            --text-secondary: #6e6e73;
+            --accent-primary: #007AFF;
+            --overlay-bg: rgba(0, 0, 0, 0.4);
+        }
 
-                <div class="document-toc glass" style="margin-bottom: 2rem; padding: 1.5rem; border-radius: 16px;">
-                    <h2 style="color: var(--text-primary); margin-bottom: 1rem;">📋 Indice</h2>
-                    <ol style="color: var(--text-secondary); line-height: 1.8;">
-                        <li><a href="#accettazione" style="color: var(--accent-primary); text-decoration: none;">Accettazione dei Termini</a></li>
-                        <li><a href="#servizio" style="color: var(--accent-primary); text-decoration: none;">Descrizione del Servizio</a></li>
-                        <li><a href="#utilizzo" style="color: var(--accent-primary); text-decoration: none;">Utilizzo del Servizio</a></li>
-                        <li><a href="#account" style="color: var(--accent-primary); text-decoration: none;">Account Utente</a></li>
-                        <li><a href="#contenuti" style="color: var(--accent-primary); text-decoration: none;">Contenuti e Proprietà</a></li>
-                        <li><a href="#affiliazione" style="color: var(--accent-primary); text-decoration: none;">Programma Affiliazione</a></li>
-                        <li><a href="#responsabilita" style="color: var(--accent-primary); text-decoration: none;">Limitazioni Responsabilità</a></li>
-                        <li><a href="#modifiche" style="color: var(--accent-primary); text-decoration: none;">Modifiche al Servizio</a></li>
-                        <li><a href="#controversie" style="color: var(--accent-primary); text-decoration: none;">Risoluzione Controversie</a></li>
-                        <li><a href="#disposizioni" style="color: var(--accent-primary); text-decoration: none;">Disposizioni Finali</a></li>
-                    </ol>
-                </div>
+        /* --- [2] RESET E STILI BASE --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-main);
+            font-size: var(--font-size-base);
+            background: var(--bg-main);
+            color: var(--text-primary);
+            transition: background 0.3s, color 0.3s;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .page-wrapper { padding-top: 80px; }
+        .glass {
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-main);
+            transition: background 0.3s, border 0.3s;
+        }
+        body.glass-disabled .glass { backdrop-filter: none; -webkit-backdrop-filter: none; }
+        a { color: var(--accent-primary); text-decoration: none; font-weight: 500; }
+        
+        /* --- [3] HEADER, SEARCH & SIDEBARS (STANDARD) --- */
+        .main-header { position: fixed; top: 20px; left: 20px; right: 20px; z-index: 1000; display: flex; align-items: center; gap: 20px; padding: 0 20px; height: 70px; }
+        .header-btn { background: none; border: none; color: var(--text-secondary); cursor: pointer; font-size: 28px; display: flex; align-items: center; padding: 8px; border-radius: 50%; transition: all 0.2s; z-index: 1002; }
+        .header-btn:hover { background-color: var(--bg-interactive); color: var(--text-primary); }
+        .search-container-wrapper { flex-grow: 1; display: flex; justify-content: center; }
+        .search-container { display: flex; align-items: center; gap: 15px; padding: 0 20px; width: 100%; max-width: 80px; height: 50px; border-radius: 25px; cursor: pointer; transition: all var(--transition-smooth); overflow: hidden; }
+        .search-container.active { max-width: 500px; cursor: text; }
+        .search-container i { font-size: 20px; color: var(--text-secondary); transition: color 0.3s; }
+        .search-container.active i { color: var(--accent-primary); }
+        .search-container input { background: none; border: none; outline: none; color: var(--text-primary); font-size: 16px; width: 100%; opacity: 0; transform: translateX(-20px); transition: opacity 0.3s ease, transform 0.3s ease; }
+        .search-container.active input { opacity: 1; transform: translateX(0); }
+        .search-container input::placeholder { color: var(--text-secondary); }
+        .sidebar { position: fixed; top: 0; height: 100%; width: 300px; z-index: 2000; padding: 20px; transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .left-sidebar { left: 0; transform: translateX(-105%); }
+        .right-sidebar { right: 0; transform: translateX(105%); }
+        .sidebar.active { transform: translateX(0); }
+        .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding: 10px 0; }
+        .sidebar-header h3 { font-size: 24px; font-weight: 700; }
+        .close-btn { background: rgba(255, 255, 255, 0.1); color: var(--text-primary); border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+        .close-btn:hover { background-color: rgba(255, 255, 255, 0.2); transform: rotate(90deg); }
+        .sidebar-nav ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+        .sidebar-nav a, .setting-item { display: flex; align-items: center; gap: 15px; padding: 12px 15px; border-radius: 12px; font-size: 16px; font-weight: 500; color: var(--text-secondary); text-decoration: none; transition: all 0.2s; }
+        .sidebar-nav a:hover, .setting-item:hover { background-color: var(--accent-primary); color: white; transform: translateX(5px); }
+        .sidebar-nav a i { font-size: 22px; min-width: 25px; text-align: center; }
+        .setting-item { justify-content: space-between; cursor: pointer; }
+        .toggle-switch { position: relative; display: inline-block; width: 50px; height: 30px; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; inset: 0; background-color: var(--bg-interactive); border-radius: 34px; transition: .4s; }
+        .slider:before { position: absolute; content: ""; height: 22px; width: 22px; left: 4px; bottom: 4px; background-color: white; border-radius: 50%; transition: .4s; }
+        input:checked + .slider { background-color: var(--accent-primary); }
+        input:checked + .slider:before { transform: translateX(20px); }
+        .overlay { position: fixed; inset: 0; background: var(--overlay-bg); z-index: 1999; opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s ease; }
+        .overlay.active { opacity: 1; visibility: visible; }
+        
+        /* --- [4] DESIGN PAGINA TERMINI --- */
+        .terms-container { max-width: 900px; margin: 0 auto; }
+        .page-header { text-align: center; padding: 40px 20px; border-radius: var(--radius-main); margin-bottom: 2rem; }
+        .page-header h1 { font-size: 2.8rem; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 1rem; }
+        .page-header p { font-size: 1.1rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
+        
+        .document-card { padding: 2rem; }
+        .document-section { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border-glass); }
+        .document-section:last-child { border-bottom: none; margin-bottom: 0; }
+        .document-section h2 { font-size: 1.8rem; font-weight: 600; display: flex; align-items: center; gap: 15px; margin-bottom: 1.5rem; color: var(--text-primary); }
+        .document-section h2 i { color: var(--accent-primary); }
+        .document-section h3 { font-size: 1.2rem; color: var(--text-primary); margin: 1.5rem 0 1rem 0; }
+        .document-section p, .document-section li { color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem; }
+        .document-section ul { list-style-position: inside; padding-left: 1rem; }
+        .document-section strong { color: var(--text-primary); font-weight: 600; }
 
+        .toc-card { padding: 2rem; margin-bottom: 2rem; }
+        .toc-card ol { list-style-position: inside; padding-left: 1rem; }
+        .toc-card li { margin-bottom: 0.8rem; }
+        .toc-card a:hover { text-decoration: underline; }
+
+        /* Mobile Optimization */
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .page-wrapper { padding-top: 70px; }
+            .main-header { top: 10px; left: 10px; right: 10px; }
+            .page-header { padding: 30px 15px; }
+            .page-header h1 { font-size: 2.2rem; }
+            .document-card { padding: 1.5rem; }
+            .document-section h2 { font-size: 1.5rem; }
+        }
+
+    </style>
+</head>
+<body class="dark-mode">
+
+    <header class="main-header glass" id="mainHeader"></header>
+    <aside class="sidebar left-sidebar glass" id="leftSidebar"></aside>
+    <aside class="sidebar right-sidebar glass" id="rightSidebar"></aside>
+    <div class="overlay" id="overlay"></div>
+
+    <div class="page-wrapper">
+        <main class="terms-container">
+            <header class="page-header glass">
+                <h1><i class="ph-bold ph-file-text"></i> Termini di Servizio</h1>
+                <p>Condizioni d'uso e responsabilità per l'utilizzo di Cronoshop. Ultimo aggiornamento: 15 Gennaio 2025</p>
+            </header>
+
+            <section class="toc-card glass">
+                <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">Indice dei Contenuti</h2>
+                <ol>
+                    <li><a href="#accettazione">Accettazione dei Termini</a></li>
+                    <li><a href="#servizio">Descrizione del Servizio</a></li>
+                    <li><a href="#utilizzo">Utilizzo del Servizio</a></li>
+                    <li><a href="#account">Account Utente</a></li>
+                    <li><a href="#contenuti">Contenuti e Proprietà</a></li>
+                    <li><a href="#affiliazione">Programma Affiliazione</a></li>
+                    <li><a href="#responsabilita">Limitazioni Responsabilità</a></li>
+                    <li><a href="#modifiche">Modifiche al Servizio</a></li>
+                    <li><a href="#controversie">Risoluzione Controversie</a></li>
+                    <li><a href="#disposizioni">Disposizioni Finali</a></li>
+                </ol>
+            </section>
+
+            <section class="document-card glass">
                 <div class="document-content">
                     <section id="accettazione" class="document-section">
-                        <h2>✅ 1. Accettazione dei Termini</h2>
-                        
+                        <h2><i class="ph-bold ph-check-square"></i> 1. Accettazione dei Termini</h2>
                         <h3>1.1 Accordo Vincolante</h3>
-                        <p>Utilizzando Cronoshop, accetti automaticamente questi Termini di Servizio e la nostra <a href="privacy.html" style="color: var(--accent-primary);">Privacy Policy</a>. Se non accetti questi termini, ti preghiamo di non utilizzare il nostro servizio.</p>
-
+                        <p>Utilizzando Cronoshop, accetti automaticamente questi Termini di Servizio e la nostra <a href="privacy.html">Privacy Policy</a>. Se non accetti questi termini, ti preghiamo di non utilizzare il nostro servizio.</p>
                         <h3>1.2 Capacità Legale</h3>
-                        <p>Per utilizzare Cronoshop devi:</p>
-                        <ul>
-                            <li>Avere almeno <strong>16 anni</strong> di età</li>
-                            <li>Avere la capacità legale di stipulare contratti</li>
-                            <li>Non essere stato precedentemente sospeso dal servizio</li>
-                        </ul>
-
-                        <h3>1.3 Aggiornamenti dei Termini</h3>
-                        <p>Ci riserviamo il diritto di modificare questi termini. Le modifiche sostanziali saranno comunicate con almeno <strong>30 giorni</strong> di preavviso.</p>
+                        <p>Per utilizzare Cronoshop devi avere almeno <strong>16 anni</strong> di età e la capacità legale di stipulare contratti.</p>
                     </section>
 
                     <section id="servizio" class="document-section">
-                        <h2>🛍️ 2. Descrizione del Servizio</h2>
-                        
-                        <h3>2.1 Cosa Offriamo</h3>
-                        <p>Cronoshop è una piattaforma che fornisce:</p>
-                        <ul>
-                            <li><strong>Aggregazione di Offerte:</strong> Selezione curata di offerte Amazon</li>
-                            <li><strong>Informazioni sui Prodotti:</strong> Prezzi, descrizioni e link diretti</li>
-                            <li><strong>Strumenti Utente:</strong> Wishlist, carrello, notifiche</li>
-                            <li><strong>Community:</strong> Gruppi WhatsApp e Telegram</li>
-                            <li><strong>Contenuti Informativi:</strong> Blog, guide e consigli</li>
-                        </ul>
-
-                        <div class="important-notice" style="background: rgba(255, 59, 48, 0.1); border: 1px solid rgba(255, 59, 48, 0.3); border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0;">
-                            <h4 style="color: #ff3b30; margin-bottom: 1rem;">⚠️ Cosa NON Siamo</h4>
-                            <p style="color: var(--text-primary);"><strong>Cronoshop NON è:</strong></p>
-                            <ul style="color: var(--text-secondary);">
-                                <li>❌ Un negozio online o e-commerce</li>
-                                <li>❌ Un venditore di prodotti</li>
-                                <li>❌ Un intermediario per pagamenti</li>
-                                <li>❌ Responsabile per transazioni con Amazon</li>
-                            </ul>
-                        </div>
-
-                        <h3>2.3 Natura del Servizio</h3>
-                        <p>Cronoshop è un <strong>servizio informativo gratuito</strong> che ti aiuta a trovare offerte su Amazon. Tutti gli acquisti avvengono direttamente su Amazon Italia.</p>
+                        <h2><i class="ph-bold ph-storefront"></i> 2. Descrizione del Servizio</h2>
+                        <p>Cronoshop è una piattaforma che fornisce una selezione curata di offerte Amazon, informazioni sui prodotti, strumenti per l'utente (wishlist, carrello), e contenuti informativi. <strong>Non siamo un negozio</strong>: tutti gli acquisti avvengono direttamente su Amazon.</p>
                     </section>
 
                     <section id="utilizzo" class="document-section">
-                        <h2>🎯 3. Utilizzo del Servizio</h2>
-                        
-                        <h3>3.1 Utilizzo Consentito</h3>
-                        <div class="usage-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 1rem 0;">
-                            <div class="usage-card" style="background: rgba(52, 199, 89, 0.1); border: 1px solid rgba(52, 199, 89, 0.3); border-radius: 12px; padding: 1rem;">
-                                <h4 style="color: #34c759; margin-bottom: 0.5rem;">✅ Permesso</h4>
-                                <ul style="color: var(--text-secondary); font-size: 0.9rem;">
-                                    <li>Cercare e visualizzare offerte</li>
-                                    <li>Salvare prodotti in wishlist</li>
-                                    <li>Partecipare alle community</li>
-                                    <li>Leggere contenuti del blog</li>
-                                    <li>Condividere offerte con amici</li>
-                                </ul>
-                            </div>
-                            <div class="usage-card" style="background: rgba(255, 59, 48, 0.1); border: 1px solid rgba(255, 59, 48, 0.3); border-radius: 12px; padding: 1rem;">
-                                <h4 style="color: #ff3b30; margin-bottom: 0.5rem;">❌ Vietato</h4>
-                                <ul style="color: var(--text-secondary); font-size: 0.9rem;">
-                                    <li>Utilizzare bot o scraper</li>
-                                    <li>Copiare contenuti senza autorizzazione</li>
-                                    <li>Interferire con il servizio</li>
-                                    <li>Attività illegali</li>
-                                    <li>Account multipli</li>
-                                </ul>
-                            </div>
-                        </div>
+                        <h2><i class="ph-bold ph-traffic-sign"></i> 3. Utilizzo del Servizio</h2>
+                        <p>È consentito utilizzare Cronoshop per scopi personali e non commerciali. È <strong>espressamente vietato</strong> utilizzare bot, scraper, copiare contenuti senza autorizzazione o interferire con il funzionamento del servizio.</p>
                     </section>
 
+                    <section id="account" class="document-section">
+                        <h2><i class="ph-bold ph-user-circle"></i> 4. Account Utente</h2>
+                        <p>La creazione di un account è opzionale. Sei responsabile della sicurezza delle tue credenziali e di tutte le attività svolte tramite il tuo account. Puoi cancellare il tuo account in qualsiasi momento.</p>
+                    </section>
+                    
+                    <section id="contenuti" class="document-section">
+                        <h2><i class="ph-bold ph-copyright"></i> 5. Contenuti e Proprietà</h2>
+                        <p>Tutti i contenuti di Cronoshop (testi, design, logo) sono di nostra proprietà intellettuale. I contenuti di terze parti, come quelli di Amazon, sono utilizzati nel rispetto delle loro linee guida.</p>
+                    </section>
+                    
                     <section id="affiliazione" class="document-section">
-                        <h2>🤝 6. Programma di Affiliazione Amazon</h2>
-                        
-                        <div class="transparency-notice" style="background: rgba(66, 153, 225, 0.1); border: 1px solid rgba(66, 153, 225, 0.3); border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0;">
-                            <h4 style="color: var(--accent-primary); margin-bottom: 1rem;">🔍 Trasparenza Totale</h4>
-                            <p style="color: var(--text-primary);">Cronoshop partecipa al Programma Affiliazione Amazon EU. Quando acquisti tramite i nostri link, potremmo ricevere una commissione senza costi aggiuntivi per te.</p>
-                        </div>
-
-                        <h3>6.2 Come Funziona</h3>
-                        <ul>
-                            <li>I nostri link contengono un codice di affiliazione</li>
-                            <li>Se acquisti entro 24 ore dal click, riceviamo una piccola commissione</li>
-                            <li>Il prezzo per te rimane <strong>identico</strong></li>
-                            <li>La commissione ci permette di mantenere il servizio gratuito</li>
-                        </ul>
-
-                        <h3>6.3 Indipendenza Editoriale</h3>
-                        <p>Le commissioni <strong>NON influenzano</strong>:</p>
-                        <ul>
-                            <li>La selezione delle offerte</li>
-                            <li>Le nostre recensioni e opinioni</li>
-                            <li>L'ordine di presentazione dei prodotti</li>
-                            <li>I consigli che forniamo</li>
-                        </ul>
-
-                        <h3>6.4 Disclaimer Amazon</h3>
-                        <p style="font-style: italic; color: var(--text-secondary);">"In qualità di Affiliato Amazon io ricevo un guadagno dagli acquisti idonei"</p>
+                        <h2><i class="ph-bold ph-handshake"></i> 6. Programma di Affiliazione Amazon</h2>
+                        <p>Cronoshop partecipa al Programma di Affiliazione Amazon EU. Questo significa che potremmo ricevere una commissione quando effettui un acquisto tramite i nostri link, <strong>senza alcun costo aggiuntivo per te</strong>. Questo supporto ci aiuta a mantenere il servizio gratuito. La nostra selezione di offerte rimane imparziale e non è influenzata dalle commissioni.</p>
+                    </section>
+                    
+                    <section id="responsabilita" class="document-section">
+                        <h2><i class="ph-bold ph-scales"></i> 7. Limitazioni di Responsabilità</h2>
+                        <p>Il servizio è fornito "così com'è". Non siamo responsabili per variazioni di prezzo su Amazon, problemi con le transazioni, spedizioni o resi, in quanto questi sono gestiti interamente da Amazon.</p>
                     </section>
 
-                    <section id="responsabilita" class="document-section">
-                        <h2>⚖️ 7. Limitazioni di Responsabilità</h2>
-                        
-                        <h3>7.1 Servizio "Come È"</h3>
-                        <p>Cronoshop è fornito <strong>"così com'è"</strong> senza garanzie di alcun tipo. Non garantiamo:</p>
-                        <ul>
-                            <li>Disponibilità continua del servizio</li>
-                            <li>Accuratezza al 100% delle informazioni</li>
-                            <li>Assenza di errori o interruzioni</li>
-                            <li>Compatibilità con tutti i dispositivi</li>
-                        </ul>
-
-                        <div class="limitations-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
-                            <div class="limitation-card" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1rem;">
-                                <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">💰 Prezzi e Disponibilità</h4>
-                                <p style="color: var(--text-secondary); font-size: 0.9rem;">I prezzi su Amazon possono cambiare rapidamente. Non siamo responsabili per variazioni di prezzo o esaurimento scorte.</p>
-                            </div>
-                            <div class="limitation-card" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1rem;">
-                                <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">🛒 Transazioni</h4>
-                                <p style="color: var(--text-secondary); font-size: 0.9rem;">Tutti gli acquisti avvengono su Amazon. Non siamo parte della transazione e non siamo responsabili per problemi di acquisto.</p>
-                            </div>
-                            <div class="limitation-card" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1rem;">
-                                <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">📦 Spedizioni e Resi</h4>
-                                <p style="color: var(--text-secondary); font-size: 0.9rem;">Spedizioni, resi e assistenza post-vendita sono gestiti esclusivamente da Amazon secondo le loro politiche.</p>
-                            </div>
-                            <div class="limitation-card" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1rem;">
-                                <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">🔗 Link Esterni</h4>
-                                <p style="color: var(--text-secondary); font-size: 0.9rem;">Non siamo responsabili per il contenuto di siti web di terze parti raggiungibili tramite i nostri link.</p>
-                            </div>
-                        </div>
+                    <section id="modifiche" class="document-section">
+                         <h2><i class="ph-bold ph-arrows-clockwise"></i> 8. Modifiche al Servizio</h2>
+                        <p>Ci riserviamo il diritto di modificare, sospendere o interrompere il servizio in qualsiasi momento. Per modifiche sostanziali, forniremo un preavviso adeguato.</p>
                     </section>
 
                     <section id="controversie" class="document-section">
-                        <h2>⚖️ 9. Risoluzione delle Controversie</h2>
-                        
-                        <h3>9.1 Legge Applicabile</h3>
-                        <p>Questi termini sono regolati dalla <strong>legge italiana</strong> e dalle normative dell'Unione Europea.</p>
-
-                        <h3>9.2 Foro Competente</h3>
-                        <p>Per qualsiasi controversia sarà competente il <strong>Tribunale di Roma</strong>, salvo diversa competenza per legge.</p>
-
-                        <h3>9.3 Risoluzione Amichevole</h3>
-                        <p>Prima di intraprendere azioni legali, ci impegniamo a:</p>
-                        <ul>
-                            <li>Tentare una risoluzione amichevole</li>
-                            <li>Rispondere entro <strong>15 giorni</strong> alle comunicazioni</li>
-                            <li>Considerare la mediazione per controversie complesse</li>
-                        </ul>
+                         <h2><i class="ph-bold ph-gavel"></i> 9. Risoluzione delle Controversie</h2>
+                        <p>Questi termini sono regolati dalla legge italiana. Per qualsiasi controversia, il foro competente è quello di Roma.</p>
                     </section>
 
                     <section id="disposizioni" class="document-section">
-                        <h2>📋 10. Disposizioni Finali</h2>
-                        
-                        <h3>10.1 Integrità dell'Accordo</h3>
-                        <p>Questi Termini, insieme alla Privacy Policy, costituiscono l'accordo completo tra te e Cronoshop.</p>
-
-                        <h3>10.2 Contatti Legali</h3>
-                        <p>Per questioni legali contatta: <strong>legal@cronoshop.eu</strong></p>
-
-                        <h3>10.3 Disclaimer Amazon</h3>
-                        <p style="font-style: italic; color: var(--text-secondary); background: var(--glass-bg); padding: 1rem; border-radius: 8px; margin: 1rem 0;">"In qualità di Affiliato Amazon io ricevo un guadagno dagli acquisti idonei"</p>
+                        <h2><i class="ph-bold ph-scroll"></i> 10. Disposizioni Finali</h2>
+                        <p>Questi Termini, insieme alla Privacy Policy, costituiscono l'accordo completo tra te e Cronoshop. Per questioni legali, puoi contattarci a <strong>legal@cronoshop.eu</strong>.</p>
                     </section>
                 </div>
-
-                <div class="document-summary glass" style="margin-top: 3rem; padding: 2rem; border-radius: 16px; text-align: center;">
-                    <h3 style="color: var(--text-primary); margin-bottom: 1.5rem;">📋 Riassunto dei Termini</h3>
-                    <div class="summary-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; text-align: left;">
-                        <div class="summary-item">
-                            <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">✅ Cronoshop è un <strong style="color: var(--text-primary);">servizio informativo gratuito</strong></p>
-                        </div>
-                        <div class="summary-item">
-                            <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">✅ Non vendiamo prodotti, solo <strong style="color: var(--text-primary);">informazioni su offerte</strong></p>
-                        </div>
-                        <div class="summary-item">
-                            <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">✅ Siamo <strong style="color: var(--text-primary);">affiliati Amazon</strong> (trasparenza totale)</p>
-                        </div>
-                        <div class="summary-item">
-                            <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">✅ Tutti gli acquisti avvengono su <strong style="color: var(--text-primary);">Amazon</strong></p>
-                        </div>
-                    </div>
-                    
-                    <div class="document-actions" style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                        <a href="index.html" class="action-btn primary">
-                            <i class="ph ph-house"></i>
-                            Torna alla Home
-                        </a>
-                        <a href="privacy.html" class="action-btn secondary">
-                            <i class="ph ph-shield-check"></i>
-                            Privacy Policy
-                        </a>
-                        <a href="faq.html" class="action-btn secondary">
-                            <i class="ph ph-question"></i>
-                            FAQ
-                        </a>
-                        <a href="mailto:legal@cronoshop.eu" class="action-btn secondary">
-                            <i class="ph ph-envelope"></i>
-                            Contatti Legali
-                        </a>
-                    </div>
-                </div>
-            </div>
+            </section>
         </main>
     </div>
-
-    <style>
-        .document-section {
-            margin-bottom: 3rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid var(--glass-border);
-        }
-
-        .document-section:last-child {
-            border-bottom: none;
-        }
-
-        .document-section h2 {
-            color: var(--text-primary);
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .document-section h3 {
-            color: var(--text-primary);
-            font-size: 1.2rem;
-            margin: 1.5rem 0 1rem 0;
-        }
-
-        .document-section p {
-            color: var(--text-secondary);
-            line-height: 1.7;
-            margin-bottom: 1rem;
-        }
-
-        .document-section ul {
-            color: var(--text-secondary);
-            margin-left: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .document-section li {
-            margin-bottom: 0.5rem;
-            line-height: 1.6;
-        }
-
-        .document-section strong {
-            color: var(--text-primary);
-        }
-
-        .document-section a {
-            color: var(--accent-primary);
-            text-decoration: none;
-        }
-
-        .document-section a:hover {
-            text-decoration: underline;
-        }
-
-        @media (max-width: 768px) {
-            .usage-grid,
-            .limitations-grid,
-            .summary-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .document-actions {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-    </style>
-
-    <script src="script.js"></script>
+    
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Load navigation
-            fetch('nav.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('navigation-container').innerHTML = data;
-                })
-                .catch(error => console.error('Error loading navigation:', error));
+            
+            // --- LOGICA UI STANDARD (MENU, RICERCA, OVERLAY) ---
+            const leftSidebar = document.getElementById('leftSidebar');
+            const rightSidebar = document.getElementById('rightSidebar');
+            const overlay = document.getElementById('overlay');
+            const mainHeader = document.getElementById('mainHeader');
 
-            // Smooth scrolling for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
+            mainHeader.innerHTML = `
+                <button class="header-btn" id="leftSidebarBtn" aria-label="Apri menu"><i class="ph-bold ph-list"></i></button>
+                <div class="search-container-wrapper"><div class="search-container glass" id="searchContainer"><i class="ph ph-magnifying-glass"></i><input type="text" id="searchInput" placeholder="Cerca nei termini..."></div></div>
+                <button class="header-btn" id="rightSidebarBtn" aria-label="Apri impostazioni"><i class="ph-bold ph-gear"></i></button>`;
+            
+            leftSidebar.innerHTML = `
+                <div class="sidebar-header"><h3>Menu</h3><button class="close-btn" id="closeLeftSidebarBtn"><i class="ph-bold ph-x"></i></button></div>
+                <nav class="sidebar-nav">
+                    <ul>
+                        <li><a href="index.html"><i class="ph ph-house"></i> Home</a></li>
+                        <li><a href="account.html"><i class="ph ph-user-circle"></i> Account</a></li>
+                        <li><a href="products.html"><i class="ph ph-shopping-bag"></i> Prodotti</a></li>
+                        <li><a href="wishlist.html"><i class="ph ph-heart"></i> Wishlist</a></li>
+                        <li><a href="cart.html"><i class="ph ph-shopping-cart"></i> Carrello</a></li>
+                        <li><a href="chisiamo.html"><i class="ph ph-info"></i> Chi Siamo</a></li>
+                        <li><a href="blog.html"><i class="ph ph-newspaper"></i> Blog</a></li>
+                        <li><a href="stats.html"><i class="ph ph-chart-bar"></i> Statistiche</a></li>
+                        <li><a href="themes.html"><i class="ph ph-palette"></i> Temi</a></li>
+                        <li><a href="faq.html"><i class="ph ph-question"></i> FAQ</a></li>
+                        <li><a href="privacy.html"><i class="ph ph-shield-check"></i> Privacy</a></li>
+                        <li><a href="terms.html"><i class="ph ph-file-text"></i> Termini</a></li>
+                    </ul>
+                </nav>`;
+
+            rightSidebar.innerHTML = `
+                <div class="sidebar-header"><h3>Impostazioni</h3><button class="close-btn" id="closeRightSidebarBtn"><i class="ph-bold ph-x"></i></button></div>
+                <nav class="sidebar-nav">
+                    <ul>
+                        <li><label class="setting-item" for="themeToggle"><span><i class="ph ph-moon"></i> Tema Scuro</span><div class="toggle-switch"><input type="checkbox" id="themeToggle" checked><span class="slider"></span></div></label></li>
+                        <li><a href="#"><i class="ph ph-bell"></i> Notifiche</a></li>
+                    </ul>
+                </nav>`;
+            
+            // Ricollega gli elementi dopo averli creati dinamicamente
+            const leftSidebarBtn = document.getElementById('leftSidebarBtn');
+            const rightSidebarBtn = document.getElementById('rightSidebarBtn');
+            const closeLeftSidebarBtn = document.getElementById('closeLeftSidebarBtn');
+            const closeRightSidebarBtn = document.getElementById('closeRightSidebarBtn');
+            const searchContainer = document.getElementById('searchContainer');
+            const searchInput = document.getElementById('searchInput');
+
+            const toggleSidebar = (sidebar, open) => {
+                sidebar.classList.toggle('active', open);
+                const anySidebarOpen = leftSidebar.classList.contains('active') || rightSidebar.classList.contains('active');
+                overlay.classList.toggle('active', anySidebarOpen);
+            };
+
+            leftSidebarBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleSidebar(leftSidebar, true); });
+            rightSidebarBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleSidebar(rightSidebar, true); });
+            closeLeftSidebarBtn.addEventListener('click', () => toggleSidebar(leftSidebar, false));
+            closeRightSidebarBtn.addEventListener('click', () => toggleSidebar(rightSidebar, false));
+            overlay.addEventListener('click', () => { toggleSidebar(leftSidebar, false); toggleSidebar(rightSidebar, false); });
+            
+            searchContainer.addEventListener('click', () => searchContainer.classList.add('active'));
+            document.addEventListener('click', (e) => {
+                if (!searchContainer.contains(e.target) && searchInput.value === '') searchContainer.classList.remove('active');
+            });
+             searchInput.addEventListener('blur', () => {
+                if(searchInput.value === '') searchContainer.classList.remove('active');
+            });
+
+            // --- LOGICA SPECIFICA PAGINA TERMINI ---
+            const sections = document.querySelectorAll('.document-section');
+
+            const highlightText = (text, query) => {
+                if (!query) return text;
+                const regex = new RegExp(`(${query})`, 'gi');
+                return text.replace(regex, '<mark>$1</mark>');
+            };
+
+            const removeHighlights = () => {
+                sections.forEach(section => {
+                    section.innerHTML = section.innerHTML.replace(/<\/?mark>/g, '');
+                });
+            };
+
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.trim();
+                removeHighlights(); // Rimuove evidenziazioni precedenti
+
+                if (query.length < 2) {
+                    sections.forEach(section => section.style.display = 'block');
+                    return;
+                }
+
+                sections.forEach(section => {
+                    const title = section.querySelector('h2').textContent;
+                    const content = section.textContent;
+                    const found = title.toLowerCase().includes(query.toLowerCase()) || content.toLowerCase().includes(query.toLowerCase());
+                    
+                    section.style.display = found ? 'block' : 'none';
+
+                    if (found) {
+                        section.innerHTML = highlightText(section.innerHTML, query);
                     }
                 });
             });
