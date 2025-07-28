@@ -9,14 +9,13 @@
     <meta name="author" content="Cronoshop Team">
     <link rel="canonical" href="https://www.cronoshop.eu/products.html">
     
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="assets/cronoshop-logo.png">
     <link rel="apple-touch-icon" href="assets/cronoshop-logo.png">
     
-    <!-- Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     
     <style>
+        /* --- [BASE] Stili dal codice v0.dev --- */
         :root {
             --background-gradient: linear-gradient(105deg, #2d3748 0%, #1a202c 100%);
             --glass-bg: rgba(255, 255, 255, 0.05);
@@ -53,6 +52,7 @@
             display: flex;
             gap: 20px;
             min-height: calc(100vh - 40px);
+            padding-top: 80px; /* Spazio per la navbar fissa */
         }
 
         main {
@@ -345,45 +345,253 @@
             transform: translateY(-2px);
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             body { padding: 10px; }
-            
             .page-wrapper { 
                 flex-direction: column;
                 min-height: calc(100vh - 20px);
+                padding-top: 70px; /* Spazio per la navbar fissa */
             }
-            
             .products-grid { 
                 grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
             }
-
-            .filter-chips {
-                justify-content: center;
-            }
-
-            .sort-controls {
+            .filter-chips, .sort-controls {
                 justify-content: center;
                 flex-wrap: wrap;
             }
         }
 
         @media (max-width: 480px) {
-            .products-grid {
-                grid-template-columns: 1fr;
-            }
+            .products-grid { grid-template-columns: 1fr; }
+            .page-title h1 { font-size: 2rem; }
+        }
 
-            .page-title h1 {
-                font-size: 2rem;
-            }
+        /* --- [NUOVO] Stili per Header e Menu Animato --- */
+        .main-header {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 0 20px;
+            height: 70px;
+            transition: all 0.3s ease;
+        }
+
+        .header-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            border-radius: 50%;
+            transition: background-color 0.2s, color 0.2s;
+            z-index: 1002;
+        }
+
+        .header-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+        }
+
+        .search-container-wrapper {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 0 20px;
+            width: 100%;
+            max-width: 80px;
+            height: 50px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all var(--transition-smooth);
+            overflow: hidden;
+        }
+
+        .search-container.active {
+            max-width: 500px;
+            cursor: text;
+        }
+
+        .search-container i {
+            font-size: 20px;
+            color: var(--text-secondary);
+            transition: color 0.3s;
+        }
+
+        .search-container.active i {
+            color: var(--accent-primary);
+        }
+
+        .search-container input {
+            background: none;
+            border: none;
+            outline: none;
+            color: var(--text-primary);
+            font-size: 16px;
+            width: 100%;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .search-container.active input {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .search-container input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            height: 100%;
+            width: 300px;
+            z-index: 2000;
+            padding: 20px;
+            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .left-sidebar {
+            left: 0;
+            transform: translateX(-105%);
+        }
+
+        .sidebar.active {
+            transform: translateX(0);
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 10px 0;
+        }
+
+        .sidebar-header h3 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .close-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+        .close-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .sidebar-nav ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 15px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: background-color 0.2s, color 0.2s, transform 0.2s;
+        }
+
+        .sidebar-nav a:hover {
+            background-color: var(--accent-primary);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .sidebar-nav a i {
+            font-size: 22px;
+            min-width: 25px;
+            text-align: center;
+        }
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
         }
     </style>
 </head>
 <body>
+    
+    <header class="main-header glass" id="mainHeader">
+        <button class="header-btn" id="menuBtn" aria-label="Apri menu"><i class="ph-bold ph-list"></i></button>
+        <div class="search-container-wrapper">
+            <div class="search-container glass" id="searchContainer">
+                <i class="ph ph-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="Cerca un'offerta...">
+            </div>
+        </div>
+    </header>
+
+    <aside class="sidebar left-sidebar glass" id="leftSidebar">
+        <div class="sidebar-header">
+            <h3>Cronoshop</h3>
+            <button class="close-btn" id="closeMenuBtn" aria-label="Chiudi menu"><i class="ph-bold ph-x"></i></button>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="account.html"><i class="ph ph-user-circle"></i> Account</a></li>
+                <li><a href="wishlist.html"><i class="ph ph-heart"></i> Wishlist</a></li>
+                <li><a href="cart.html"><i class="ph ph-shopping-cart"></i> Carrello</a></li>
+                <li><a href="chisiamo.html"><i class="ph ph-info"></i> Chi Siamo</a></li>
+                <li><a href="stats.html"><i class="ph ph-chart-bar"></i> Statistiche</a></li>
+                <li><a href="themes.html"><i class="ph ph-palette"></i> Temi</a></li>
+                <li><a href="faq.html"><i class="ph ph-question"></i> FAQ</a></li>
+                <li><a href="privacy.html"><i class="ph ph-shield-check"></i> Privacy</a></li>
+                <li><a href="terms.html"><i class="ph ph-file-text"></i> Termini</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="overlay" id="overlay"></div>
+
     <div class="page-wrapper">
         <main>
-            <div id="navbar-placeholder"></div>
-
             <div class="page-title">
                 <h1>
                     <i class="ph ph-shopping-bag"></i>
@@ -415,8 +623,7 @@
             </div>
 
             <div class="products-grid" id="productsGrid">
-                <!-- Products will be loaded here -->
-            </div>
+                </div>
 
             <div class="empty-state" id="emptyState" style="display: none;">
                 <div class="empty-state-icon">
@@ -431,361 +638,175 @@
             </div>
         </main>
     </div>
-
+    
     <script src="main.js"></script>
-    <script src="script.js"></script>
+
     <script>
-        class ProductsPage {
-            constructor() {
-                this.products = [];
-                this.filteredProducts = [];
-                this.currentFilter = 'all';
-                this.currentSort = 'relevance';
-                this.init();
-            }
+        // --- [UNIONE] LOGICA UI E GESTIONE PRODOTTI ---
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- Logica per animazioni UI (barra ricerca e menu) ---
+            const menuBtn = document.getElementById('menuBtn');
+            const closeMenuBtn = document.getElementById('closeMenuBtn');
+            const leftSidebar = document.getElementById('leftSidebar');
+            const overlay = document.getElementById('overlay');
+            const searchContainer = document.getElementById('searchContainer');
+            const searchInput = document.getElementById('searchInput');
 
-            init() {
-                this.loadNavigation();
-                this.loadProducts();
-                this.setupEventListeners();
-                this.setupSearch();
-            }
+            menuBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                leftSidebar.classList.add('active');
+                overlay.classList.add('active');
+            });
 
-            loadNavigation() {
-                fetch('nav.html')
-                    .then(response => response.text())
-                    .then(data => {
-                        document.getElementById('navbar-placeholder').innerHTML = data;
-                    })
-                    .catch(error => console.error('Error loading navigation:', error));
-            }
+            const closeMenu = () => {
+                leftSidebar.classList.remove('active');
+                overlay.classList.remove('active');
+            };
+            closeMenuBtn.addEventListener('click', closeMenu);
+            overlay.addEventListener('click', closeMenu);
 
-            loadProducts() {
-                // Load products from main.js or fallback
-                if (window.products && Array.isArray(window.products)) {
-                    this.products = [...window.products];
-                } else if (typeof products !== 'undefined' && Array.isArray(products)) {
-                    this.products = [...products];
-                } else {
-                    // Fallback products
-                    this.products = [
-                        {
-                            id: "prod1",
-                            nome: "Samsung Galaxy S25 Ultra",
-                            prezzo: 1199.0,
-                            prezzo_originale: 1599.0,
-                            sconto: 25,
-                            descrizione: 'Smartphone AI con display 6.9" QHD+',
-                            categoria: "smartphone",
-                            img: "/placeholder.svg?height=150&width=250&text=Samsung+Galaxy",
-                            link: "https://amzn.to/3Z551fa",
-                        },
-                        {
-                            id: "prod2",
-                            nome: "Apple iPhone 15 Pro",
-                            prezzo: 899.0,
-                            prezzo_originale: 1199.0,
-                            sconto: 25,
-                            descrizione: "iPhone 15 Pro con chip A17 Pro",
-                            categoria: "smartphone",
-                            img: "/placeholder.svg?height=150&width=250&text=iPhone+15",
-                            link: "https://amzn.to/iphone15",
-                        },
-                        {
-                            id: "prod3",
-                            nome: "MacBook Air M3",
-                            prezzo: 1299.0,
-                            prezzo_originale: 1599.0,
-                            sconto: 19,
-                            descrizione: "MacBook Air con chip M3",
-                            categoria: "tech",
-                            img: "/placeholder.svg?height=150&width=250&text=MacBook+Air",
-                            link: "https://amzn.to/macbook",
-                        },
-                        {
-                            id: "prod4",
-                            nome: "AirPods Pro 2",
-                            prezzo: 229.0,
-                            prezzo_originale: 279.0,
-                            sconto: 18,
-                            descrizione: "AirPods Pro di 2ª generazione",
-                            categoria: "tech",
-                            img: "/placeholder.svg?height=150&width=250&text=AirPods+Pro",
-                            link: "https://amzn.to/airpods",
-                        },
-                        {
-                            id: "prod5",
-                            nome: "Nike Air Max 270",
-                            prezzo: 89.99,
-                            prezzo_originale: 150.0,
-                            sconto: 40,
-                            descrizione: "Scarpe sportive Nike Air Max",
-                            categoria: "fashion",
-                            img: "/placeholder.svg?height=150&width=250&text=Nike+Air+Max",
-                            link: "https://amzn.to/nike270",
-                        },
-                        {
-                            id: "prod6",
-                            nome: "De'Longhi Macchina Caffè",
-                            prezzo: 129.99,
-                            prezzo_originale: 199.99,
-                            sconto: 35,
-                            descrizione: "Macchina per caffè espresso",
-                            categoria: "casa",
-                            img: "/placeholder.svg?height=150&width=250&text=DeLonghi",
-                            link: "https://amzn.to/delonghi",
-                        }
-                    ];
+            searchContainer.addEventListener('click', () => {
+                searchContainer.classList.add('active');
+                searchInput.focus();
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!searchContainer.contains(e.target) && searchInput.value === '') {
+                    searchContainer.classList.remove('active');
+                }
+            });
+            searchInput.addEventListener('blur', () => {
+                if(searchInput.value === '') {
+                    searchContainer.classList.remove('active');
+                }
+            });
+
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value;
+                const searchEvent = new CustomEvent('custom:search', { detail: { query } });
+                document.dispatchEvent(searchEvent);
+            });
+
+
+            // --- Logica per gestione prodotti (codice v0.dev adattato) ---
+            class ProductsPage {
+                constructor() {
+                    this.products = [];
+                    this.filteredProducts = [];
+                    this.currentFilter = 'all';
+                    this.currentSort = 'relevance';
+                    this.searchQuery = '';
+                    this.init();
                 }
 
-                this.filterAndRenderProducts();
-            }
+                init() {
+                    this.loadProducts();
+                    this.setupEventListeners();
+                }
 
-            setupEventListeners() {
-                // Filter chips
-                document.querySelectorAll('.filter-chip').forEach(chip => {
-                    chip.addEventListener('click', () => {
-                        this.setFilter(chip.dataset.category);
-                    });
-                });
-
-                // Sort select
-                document.getElementById('sortSelect').addEventListener('change', (e) => {
-                    this.currentSort = e.target.value;
+                loadProducts() {
+                    // MODIFICA: Ora carica i prodotti dalla variabile globale `products` definita in main.js
+                    if (typeof window.products !== 'undefined' && Array.isArray(window.products)) {
+                        this.products = [...window.products];
+                    } else {
+                        console.error("Dati prodotti non trovati. Assicurati che main.js sia caricato correttamente.");
+                    }
                     this.filterAndRenderProducts();
-                });
-            }
-
-            setupSearch() {
-                // Listen for search events from navigation
-                document.addEventListener('cronoshop:search', (e) => {
-                    this.handleSearch(e.detail.query);
-                });
-            }
-
-            setFilter(category) {
-                this.currentFilter = category;
-                
-                // Update active chip
-                document.querySelectorAll('.filter-chip').forEach(chip => {
-                    chip.classList.remove('active');
-                });
-                document.querySelector(`[data-category="${category}"]`).classList.add('active');
-                
-                this.filterAndRenderProducts();
-            }
-
-            handleSearch(query) {
-                this.searchQuery = query;
-                this.filterAndRenderProducts();
-            }
-
-            filterAndRenderProducts() {
-                let filtered = [...this.products];
-
-                // Apply category filter
-                if (this.currentFilter !== 'all') {
-                    filtered = filtered.filter(product => product.categoria === this.currentFilter);
                 }
 
-                // Apply search filter
-                if (this.searchQuery && this.searchQuery.trim()) {
-                    const query = this.searchQuery.toLowerCase();
-                    filtered = filtered.filter(product =>
-                        product.nome.toLowerCase().includes(query) ||
-                        product.descrizione?.toLowerCase().includes(query) ||
-                        product.categoria.toLowerCase().includes(query)
-                    );
+                setupEventListeners() {
+                    document.querySelectorAll('.filter-chip').forEach(chip => {
+                        chip.addEventListener('click', () => this.setFilter(chip.dataset.category));
+                    });
+                    document.getElementById('sortSelect').addEventListener('change', (e) => {
+                        this.currentSort = e.target.value;
+                        this.filterAndRenderProducts();
+                    });
+                    // Il listener per la ricerca ora ascolta l'evento personalizzato
+                    document.addEventListener('custom:search', (e) => {
+                        this.handleSearch(e.detail.query);
+                    });
                 }
 
-                // Apply sorting
-                switch (this.currentSort) {
-                    case 'price-low':
-                        filtered.sort((a, b) => this.getPrice(a) - this.getPrice(b));
-                        break;
-                    case 'price-high':
-                        filtered.sort((a, b) => this.getPrice(b) - this.getPrice(a));
-                        break;
-                    case 'discount':
-                        filtered.sort((a, b) => (b.sconto || 0) - (a.sconto || 0));
-                        break;
-                    case 'name':
-                        filtered.sort((a, b) => a.nome.localeCompare(b.nome));
-                        break;
+                setFilter(category) {
+                    this.currentFilter = category;
+                    document.querySelectorAll('.filter-chip').forEach(chip => chip.classList.remove('active'));
+                    document.querySelector(`[data-category="${category}"]`).classList.add('active');
+                    this.filterAndRenderProducts();
                 }
 
-                this.filteredProducts = filtered;
-                this.renderProducts();
-            }
-
-            getPrice(product) {
-                return typeof product.prezzo === 'number' ? product.prezzo : parseFloat(product.prezzo) || 0;
-            }
-
-            renderProducts() {
-                const grid = document.getElementById('productsGrid');
-                const emptyState = document.getElementById('emptyState');
-
-                if (this.filteredProducts.length === 0) {
-                    grid.style.display = 'none';
-                    emptyState.style.display = 'block';
-                    return;
+                handleSearch(query) {
+                    this.searchQuery = query;
+                    this.filterAndRenderProducts();
                 }
 
-                emptyState.style.display = 'none';
-                grid.style.display = 'grid';
+                filterAndRenderProducts() {
+                    let filtered = [...this.products];
 
-                grid.innerHTML = this.filteredProducts.map(product => this.createProductCard(product)).join('');
-            }
+                    if (this.currentFilter !== 'all') {
+                        filtered = filtered.filter(p => p.categoria === this.currentFilter);
+                    }
 
-            createProductCard(product) {
-                const price = this.getPrice(product);
-                const originalPrice = product.prezzo_originale ? 
-                    (typeof product.prezzo_originale === 'number' ? product.prezzo_originale : parseFloat(product.prezzo_originale)) 
-                    : null;
+                    if (this.searchQuery.trim()) {
+                        const query = this.searchQuery.toLowerCase();
+                        filtered = filtered.filter(p =>
+                            p.nome.toLowerCase().includes(query) ||
+                            p.descrizione?.toLowerCase().includes(query)
+                        );
+                    }
 
-                return `
-                    <div class="product-card" data-product-id="${product.id}">
-                        ${product.img ? 
-                            `<img src="${product.img}" alt="${product.nome}" class="product-image" onerror="this.src='/placeholder.svg?height=150&width=250&text=Prodotto'">` :
-                            `<div class="image-placeholder">Immagine prodotto</div>`
-                        }
-                        <div class="product-category">${this.getCategoryName(product.categoria)}</div>
-                        <div class="product-title">${product.nome}</div>
-                        <div class="product-description">${product.descrizione || ''}</div>
-                        <div class="product-price-section">
-                            <div>
-                                <span class="product-price" onclick="window.open('${product.link}', '_blank')">€${price.toFixed(2)}</span>
-                                ${originalPrice ? `<span class="original-price">€${originalPrice.toFixed(2)}</span>` : ''}
-                                ${product.sconto ? `<span class="discount-badge">-${product.sconto}%</span>` : ''}
-                            </div>
-                            <div class="product-actions">
-                                <button class="action-btn" onclick="productsPage.addToWishlist('${product.id}')" title="Aggiungi alla wishlist">
-                                    <i class="ph ph-heart"></i>
-                                </button>
-                                <button class="action-btn" onclick="productsPage.addToCart('${product.id}')" title="Aggiungi al carrello">
-                                    <i class="ph ph-shopping-cart"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }
+                    switch (this.currentSort) {
+                        case 'price-low': filtered.sort((a, b) => a.prezzo - b.prezzo); break;
+                        case 'price-high': filtered.sort((a, b) => b.prezzo - a.prezzo); break;
+                        case 'discount': filtered.sort((a, b) => (b.sconto || 0) - (a.sconto || 0)); break;
+                        case 'name': filtered.sort((a, b) => a.nome.localeCompare(b.nome)); break;
+                    }
 
-            getCategoryName(category) {
-                const categoryNames = {
-                    smartphone: 'Smartphone',
-                    tech: 'Tecnologia',
-                    fashion: 'Moda',
-                    casa: 'Casa & Cucina',
-                    salute: 'Salute & Bellezza',
-                    sport: 'Sport & Tempo Libero'
-                };
-                return categoryNames[category] || category.charAt(0).toUpperCase() + category.slice(1);
-            }
+                    this.filteredProducts = filtered;
+                    this.renderProducts();
+                }
 
-            addToWishlist(productId) {
-                const product = this.products.find(p => p.id === productId);
-                if (!product) return;
+                renderProducts() {
+                    const grid = document.getElementById('productsGrid');
+                    const emptyState = document.getElementById('emptyState');
 
-                try {
-                    let wishlist = JSON.parse(localStorage.getItem('cronoshop_wishlist') || '[]');
-                    const existingItem = wishlist.find(item => item.id === productId);
-                    
-                    if (existingItem) {
-                        this.showNotification('Prodotto già nella wishlist', 'info');
+                    if (this.filteredProducts.length === 0) {
+                        grid.style.display = 'none';
+                        emptyState.style.display = 'block';
                         return;
                     }
-                    
-                    wishlist.push(product);
-                    localStorage.setItem('cronoshop_wishlist', JSON.stringify(wishlist));
-                    this.showNotification('Prodotto aggiunto alla wishlist!', 'success');
-                } catch (error) {
-                    console.error('Error adding to wishlist:', error);
-                    this.showNotification('Errore nell\'aggiungere alla wishlist', 'error');
+                    emptyState.style.display = 'none';
+                    grid.style.display = 'grid';
+                    grid.innerHTML = this.filteredProducts.map(p => this.createProductCard(p)).join('');
+                }
+
+                createProductCard(product) {
+                    const originalPrice = product.prezzo_originale ? `€${product.prezzo_originale.toFixed(2)}` : null;
+                    return `
+                        <div class="product-card" data-product-id="${product.id}">
+                            <img src="${product.img}" alt="${product.nome}" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="image-placeholder" style="display:none;">Immagine non trovata</div>
+                            <div class="product-category">${product.categoria}</div>
+                            <div class="product-title">${product.nome}</div>
+                            <div class="product-description">${product.descrizione || ''}</div>
+                            <div class="product-price-section">
+                                <div>
+                                    <span class="product-price" onclick="window.open('${product.link}', '_blank')">€${product.prezzo.toFixed(2)}</span>
+                                    ${originalPrice ? `<span class="original-price">${originalPrice}</span>` : ''}
+                                    ${product.sconto ? `<span class="discount-badge">-${product.sconto}%</span>` : ''}
+                                </div>
+                                <div class="product-actions">
+                                    <button class="action-btn" title="Aggiungi alla wishlist"><i class="ph ph-heart"></i></button>
+                                    <button class="action-btn" title="Aggiungi al carrello"><i class="ph ph-shopping-cart"></i></button>
+                                </div>
+                            </div>
+                        </div>`;
                 }
             }
 
-            addToCart(productId) {
-                const product = this.products.find(p => p.id === productId);
-                if (!product) return;
-
-                try {
-                    let cart = JSON.parse(localStorage.getItem('cronoshop_cart') || '[]');
-                    const existingItem = cart.find(item => item.id === productId);
-                    
-                    if (existingItem) {
-                        existingItem.quantity = (existingItem.quantity || 1) + 1;
-                    } else {
-                        cart.push({...product, quantity: 1});
-                    }
-                    
-                    localStorage.setItem('cronoshop_cart', JSON.stringify(cart));
-                    this.showNotification('Prodotto aggiunto al carrello!', 'success');
-                } catch (error) {
-                    console.error('Error adding to cart:', error);
-                    this.showNotification('Errore nell\'aggiungere al carrello', 'error');
-                }
-            }
-
-            showNotification(message, type = 'info') {
-                const notification = document.createElement('div');
-                const colors = {
-                    success: '#48bb78',
-                    error: '#ff4757',
-                    info: '#4299e1',
-                    warning: '#ed8936'
-                };
-
-                notification.style.cssText = `
-                    position: fixed;
-                    top: 100px;
-                    right: 20px;
-                    background: ${colors[type]};
-                    color: white;
-                    padding: 12px 20px;
-                    border-radius: 8px;
-                    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-                    z-index: 10000;
-                    transform: translateX(100%);
-                    transition: transform 0.3s ease;
-                    font-size: 14px;
-                    font-weight: 500;
-                    max-width: 280px;
-                `;
-
-                const icons = {
-                    success: 'check-circle',
-                    error: 'x-circle', 
-                    info: 'info',
-                    warning: 'warning'
-                };
-
-                notification.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <i class="ph ph-${icons[type]}"></i>
-                        <span>${message}</span>
-                    </div>
-                `;
-
-                document.body.appendChild(notification);
-
-                setTimeout(() => {
-                    notification.style.transform = 'translateX(0)';
-                }, 100);
-
-                setTimeout(() => {
-                    notification.style.transform = 'translateX(100%)';
-                    setTimeout(() => notification.remove(), 300);
-                }, 3000);
-            }
-        }
-
-        // Initialize when DOM is loaded
-        let productsPage;
-        document.addEventListener('DOMContentLoaded', () => {
-            productsPage = new ProductsPage();
-            window.productsPage = productsPage;
+            // Inizializza la logica della pagina
+            new ProductsPage();
         });
     </script>
 </body>
