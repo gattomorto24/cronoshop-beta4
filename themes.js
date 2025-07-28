@@ -1,12 +1,25 @@
 // ===================================================================================
 //   THEMES.JS - GESTORE GLOBALE DI TEMI E PERSONALIZZAZIONE PER CRONOSHOP
-//   Versione: 2.1 - Aggiunta logica per il cambio logo
-//   Autore: Il Tuo Main Coder ;)
+//   Versione: 3.0 (Completa e Robusta)
+//   Autore: Il Tuo Main Coder
+//   Descrizione: Questo script gestisce l'intero sistema di temi, la personalizzazione
+//   avanzata, l'iniezione dell'UI (header/menu) e l'interattività di base
+//   per tutte le pagine del sito Cronoshop.
 // ===================================================================================
 
 class ThemeManager {
+    /**
+     * Inizializza il gestore dei temi.
+     * Definisce i temi, carica le impostazioni e avvia l'applicazione.
+     */
     constructor() {
         // --- 1. DEFINIZIONE DEI DATI ---
+
+        /**
+         * @property {Array<Object>} themes - Lista di tutti i temi preimpostati.
+         * Ogni tema ha un ID, nome, descrizione, icona, un flag 'isLight' per la logica del logo,
+         * e un oggetto 'css' con le variabili CSS da applicare.
+         */
         this.themes = [
             { id: 'dark', name: 'Cronoshop Scuro', description: 'Il tema originale, elegante e riposante.', icon: '🌙', isLight: false, css: { '--bg-main': '#121212', '--bg-glass': 'rgba(28, 28, 30, 0.75)', '--text-primary': '#f5f5f7', '--text-secondary': '#a0a0a5', '--accent-primary': '#0A84FF', '--border-glass': 'rgba(255, 255, 255, 0.15)' } },
             { id: 'light', name: 'Cronoshop Chiaro', description: 'Un look pulito, fresco e tradizionale.', icon: '☀️', isLight: true, css: { '--bg-main': '#f0f2f5', '--bg-glass': 'rgba(255, 255, 255, 0.7)', '--text-primary': '#1d1d1f', '--text-secondary': '#6e6e73', '--accent-primary': '#007AFF', '--border-glass': 'rgba(0, 0, 0, 0.1)' } },
@@ -38,12 +51,16 @@ class ThemeManager {
         this.applySettings();
         this.attachGlobalListeners();
 
+        // Esegui la logica specifica della pagina se ci troviamo in themes.html
         if (document.getElementById('themesGrid')) {
             this.initThemesPage();
         }
     }
 
-    // --- 3. METODI DI GESTIONE SETTINGS ---
+    /**
+     * Carica le impostazioni salvate dal localStorage.
+     * @returns {Object} Le impostazioni dell'utente o quelle di default.
+     */
     loadSettings() {
         try {
             const saved = localStorage.getItem('cronoshop_settings');
@@ -53,62 +70,119 @@ class ThemeManager {
         }
     }
 
+    /**
+     * Salva le impostazioni correnti nel localStorage.
+     */
     saveSettings() {
         localStorage.setItem('cronoshop_settings', JSON.stringify(this.settings));
     }
 
+    /**
+     * Applica tutte le impostazioni visive alla pagina.
+     * Questa è la funzione centrale che modifica il CSS.
+     */
     applySettings() {
         const root = document.documentElement;
         const body = document.body;
         const currentTheme = this.themes.find(t => t.id === this.settings.themeId) || this.themes[0];
+        let isCurrentlyLight = false;
 
+        // Applica il tema preimpostato o lo sfondo personalizzato
         if (this.settings.customBg) {
             root.style.setProperty('--bg-main', this.settings.customBg);
+            // Se c'è uno sfondo custom, consideriamo il tema "scuro" di base per il testo, a meno che non si implementi una logica di contrasto
+            isCurrentlyLight = false; 
         } else {
             Object.entries(currentTheme.css).forEach(([key, value]) => {
                 root.style.setProperty(key, value);
             });
+            isCurrentlyLight = currentTheme.isLight;
         }
         
+        // Applica le personalizzazioni aggiuntive
         root.style.setProperty('--font-main', this.settings.fontFamily);
         root.style.setProperty('--font-size-base', `${this.settings.fontSize}px`);
-        
-        const isCurrentlyLight = this.settings.customBg ? false : currentTheme.isLight;
         body.classList.toggle('light-mode', isCurrentlyLight);
         body.classList.toggle('glass-disabled', !this.settings.glassEffect);
         
-        // **NUOVA LOGICA PER IL LOGO**
+        // Aggiorna il logo in base al tema
         this.updateLogo(isCurrentlyLight);
 
+        // Sincronizza il toggle nel menu delle impostazioni
         if (this.themeToggle) {
             this.themeToggle.checked = !isCurrentlyLight;
         }
     }
 
-    // --- 4. GESTIONE DINAMICA DELL'HTML E DEGLI ELEMENTI ---
+    /**
+     * Inietta dinamicamente l'HTML per header e sidebars.
+     * Garantisce coerenza in tutto il sito.
+     */
     injectHTML() {
         const mainHeader = document.getElementById('mainHeader');
         const leftSidebar = document.getElementById('leftSidebar');
         const rightSidebar = document.getElementById('rightSidebar');
-        
-        // Aggiungo la classe 'logo-image' all'immagine per identificarla facilmente
+
         if (mainHeader) {
             mainHeader.innerHTML = `
-                <a href="index.html" style="display:flex; align-items:center; gap:10px; text-decoration:none;">
-                    <img src="assets/cronoshop-logo-black.png" alt="Cronoshop Logo" class="logo-image" style="height:35px">
-                </a>
                 <button class="header-btn" id="leftSidebarBtn" aria-label="Apri menu"><i class="ph-bold ph-list"></i></button>
-                <div class="search-container-wrapper"><div class="search-container glass" id="searchContainer"><i class="ph ph-magnifying-glass"></i><input type="text" id="searchInput" placeholder="Cerca..."></div></div>
+                <div class="search-container-wrapper">
+                    <div class="search-container glass" id="searchContainer">
+                        <i class="ph ph-magnifying-glass"></i>
+                        <input type="text" id="searchInput" placeholder="Cerca...">
+                    </div>
+                </div>
                 <button class="header-btn" id="rightSidebarBtn" aria-label="Apri impostazioni"><i class="ph-bold ph-gear"></i></button>`;
         }
         if (leftSidebar) {
-            leftSidebar.innerHTML = `...`; // Il contenuto del menu rimane invariato
+            leftSidebar.innerHTML = `
+                <div class="sidebar-header">
+                    <h3>Menu</h3>
+                    <button class="close-btn" id="closeLeftSidebarBtn"><i class="ph-bold ph-x"></i></button>
+                </div>
+                <nav class="sidebar-nav">
+                    <ul>
+                        <li><a href="index.html"><i class="ph ph-house"></i> Home</a></li>
+                        <li><a href="account.html"><i class="ph ph-user-circle"></i> Account</a></li>
+                        <li><a href="products.html"><i class="ph ph-shopping-bag"></i> Prodotti</a></li>
+                        <li><a href="wishlist.html"><i class="ph ph-heart"></i> Wishlist</a></li>
+                        <li><a href="cart.html"><i class="ph ph-shopping-cart"></i> Carrello</a></li>
+                        <li><a href="chisiamo.html"><i class="ph ph-info"></i> Chi Siamo</a></li>
+                        <li><a href="blog.html"><i class="ph ph-newspaper"></i> Blog</a></li>
+                        <li><a href="stats.html"><i class="ph ph-chart-bar"></i> Statistiche</a></li>
+                        <li><a href="themes.html"><i class="ph ph-palette"></i> Temi</a></li>
+                        <li><a href="faq.html"><i class="ph ph-question"></i> FAQ</a></li>
+                        <li><a href="privacy.html"><i class="ph ph-shield-check"></i> Privacy</a></li>
+                        <li><a href="terms.html"><i class="ph ph-file-text"></i> Termini</a></li>
+                    </ul>
+                </nav>`;
         }
         if (rightSidebar) {
-            rightSidebar.innerHTML = `...`; // Il contenuto del menu rimane invariato
+            rightSidebar.innerHTML = `
+                <div class="sidebar-header">
+                    <h3>Impostazioni</h3>
+                    <button class="close-btn" id="closeRightSidebarBtn"><i class="ph-bold ph-x"></i></button>
+                </div>
+                <nav class="sidebar-nav">
+                    <ul>
+                        <li>
+                            <label class="setting-item" for="themeToggle">
+                                <span><i class="ph ph-moon"></i> Tema Scuro</span>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="themeToggle">
+                                    <span class="slider"></span>
+                                </div>
+                            </label>
+                        </li>
+                         <li><a href="#"><i class="ph ph-bell"></i> Notifiche</a></li>
+                    </ul>
+                </nav>`;
         }
     }
     
+    /**
+     * Collega le proprietà della classe agli elementi del DOM dopo l'iniezione.
+     */
     bindGlobalElements() {
         this.leftSidebarBtn = document.getElementById('leftSidebarBtn');
         this.rightSidebarBtn = document.getElementById('rightSidebarBtn');
@@ -122,9 +196,12 @@ class ThemeManager {
         this.themeToggle = document.getElementById('themeToggle');
     }
 
-    // **NUOVA FUNZIONE PER CAMBIARE IL LOGO**
+    /**
+     * Aggiorna dinamicamente il logo del sito in base al tema.
+     * @param {boolean} isLight - True se il tema è chiaro, false altrimenti.
+     */
     updateLogo(isLight) {
-        const logoImages = document.querySelectorAll('.logo-image');
+        const logoImages = document.querySelectorAll('.logo-image'); // Seleziona tutti i loghi
         const logoPath = isLight ? 'assets/cronoshop-logo.png' : 'assets/cronoshop-logo-black.png';
         logoImages.forEach(img => {
             if (img.src !== logoPath) {
@@ -133,17 +210,133 @@ class ThemeManager {
         });
     }
 
-    // --- 5. LISTENER GLOBALI ---
+    /**
+     * Attacca i listener per gli eventi globali (menu, ricerca, ecc.).
+     */
     attachGlobalListeners() {
-        const toggleSidebar = (sidebar, open) => { /* ... */ };
-        // ... tutti gli altri listener rimangono invariati ...
+        const toggleSidebar = (sidebar, open) => {
+            if (!sidebar) return;
+            sidebar.classList.toggle('active', open);
+            const anySidebarOpen = this.leftSidebar?.classList.contains('active') || this.rightSidebar?.classList.contains('active');
+            this.overlay.classList.toggle('active', anySidebarOpen);
+        };
+
+        this.leftSidebarBtn?.addEventListener('click', (e) => { e.stopPropagation(); toggleSidebar(this.leftSidebar, true); });
+        this.rightSidebarBtn?.addEventListener('click', (e) => { e.stopPropagation(); toggleSidebar(this.rightSidebar, true); });
+        this.closeLeftSidebarBtn?.addEventListener('click', () => toggleSidebar(this.leftSidebar, false));
+        this.closeRightSidebarBtn?.addEventListener('click', () => toggleSidebar(this.rightSidebar, false));
+        this.overlay?.addEventListener('click', () => {
+            toggleSidebar(this.leftSidebar, false);
+            toggleSidebar(this.rightSidebar, false);
+        });
+        
+        this.searchContainer?.addEventListener('click', () => this.searchContainer.classList.add('active'));
+        document.addEventListener('click', (e) => {
+            if (this.searchContainer && !this.searchContainer.contains(e.target) && this.searchInput.value === '') {
+                this.searchContainer.classList.remove('active');
+            }
+        });
+        this.searchInput?.addEventListener('blur', () => {
+            if(this.searchInput.value === '') this.searchContainer.classList.remove('active');
+        });
+
+        this.themeToggle?.addEventListener('change', () => {
+            this.settings.themeId = this.themeToggle.checked ? 'dark' : 'light';
+            this.settings.customBg = null; // Rimuove lo sfondo custom se si usa il toggle
+            this.saveSettings();
+            this.applySettings();
+            if (typeof this.updateUI === 'function') this.updateUI();
+        });
     }
 
-    // --- 6. LOGICA SPECIFICA PER themes.html ---
+    /**
+     * Inizializza la logica specifica della pagina dei temi.
+     */
     initThemesPage() {
-        // ... tutta la logica della pagina temi rimane invariata ...
+        this.themesGrid = document.getElementById('themesGrid');
+        this.fontSelector = document.getElementById('fontSelector');
+        this.fontSizeSlider = document.getElementById('fontSizeSlider');
+        this.fontSizeValue = document.getElementById('fontSizeValue');
+        this.glassEffectToggle = document.getElementById('glassEffectToggle');
+        this.bgColorPicker = document.getElementById('bgColorPicker');
+
+        this.renderThemeCards();
+        this.updateUI();
+        this.attachThemesPageListeners();
+    }
+    
+    /**
+     * Aggiorna l'interfaccia utente nella pagina dei temi per riflettere le impostazioni correnti.
+     */
+    updateUI() {
+        document.querySelectorAll('.theme-card').forEach(card => {
+            card.classList.toggle('active', card.dataset.theme === this.settings.themeId && !this.settings.customBg);
+        });
+        this.fontSelector.value = this.settings.fontFamily;
+        this.fontSizeSlider.value = this.settings.fontSize;
+        this.fontSizeValue.textContent = `${this.settings.fontSize}px`;
+        this.glassEffectToggle.checked = this.settings.glassEffect;
+    }
+
+    /**
+     * Genera e visualizza le card dei temi preimpostati.
+     */
+    renderThemeCards() {
+        this.themesGrid.innerHTML = this.themes.map(theme => `
+            <div class="theme-card glass" data-theme="${theme.id}">
+                <div class="theme-preview" style="background: ${theme.css['--bg-main']};">
+                    <span style="color: ${theme.css['--text-primary']}">${theme.icon}</span>
+                </div>
+                <h3>${theme.name}</h3>
+                <p>${theme.description}</p>
+            </div>`).join('');
+    }
+    
+    /**
+     * Attacca i listener per gli eventi specifici della pagina dei temi.
+     */
+    attachThemesPageListeners() {
+        this.themesGrid.addEventListener('click', (e) => {
+            const card = e.target.closest('.theme-card');
+            if (card) {
+                this.settings.themeId = card.dataset.theme;
+                this.settings.customBg = null; // Rimuove lo sfondo custom quando si sceglie un tema
+                this.saveSettings();
+                this.applySettings();
+                this.updateUI();
+            }
+        });
+
+        this.fontSelector.addEventListener('change', (e) => {
+            this.settings.fontFamily = e.target.value;
+            this.saveSettings();
+            this.applySettings();
+        });
+
+        this.fontSizeSlider.addEventListener('input', (e) => {
+            const newSize = parseInt(e.target.value);
+            this.settings.fontSize = newSize;
+            this.fontSizeValue.textContent = `${newSize}px`;
+            this.saveSettings();
+            this.applySettings();
+        });
+        
+        this.glassEffectToggle.addEventListener('change', (e) => {
+            this.settings.glassEffect = e.target.checked;
+            this.saveSettings();
+            this.applySettings();
+        });
+
+        this.bgColorPicker.addEventListener('input', (e) => {
+            this.settings.customBg = e.target.value;
+            this.saveSettings();
+            this.applySettings();
+            this.updateUI(); // Deseleziona le card dei temi
+        });
     }
 }
 
 // Inizializza il gestore di temi non appena il DOM è pronto
-new ThemeManager();
+document.addEventListener('DOMContentLoaded', () => {
+    new ThemeManager();
+});
