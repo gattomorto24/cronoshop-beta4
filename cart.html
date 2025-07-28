@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrello - Cronoshop</title>
+    
+    <meta name="description" content="Visualizza e gestisci i prodotti nel tuo carrello Cronoshop.">
+    <meta name="author" content="Cronoshop Team">
+    <link rel="canonical" href="https://www.cronoshop.eu/cart.html">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/cronoshop-logo.png">
+    <link rel="apple-touch-icon" href="assets/cronoshop-logo.png">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+    <header class="glass-header" id="navigation-container"></header>
+    
+    <main class="container">
+        <section class="cart-page">
+            <div class="page-header">
+                <h1>
+                    <i class="ph ph-shopping-cart"></i>
+                    Il tuo Carrello
+                </h1>
+                <p>Gestisci i prodotti che hai selezionato</p>
+            </div>
+
+            <div class="cart-layout">
+                <!-- Cart Items -->
+                <div class="cart-items-section">
+                    <div class="cart-header">
+                        <h2>Prodotti nel Carrello (<span id="cartItemsCount">0</span>)</h2>
+                        <button class="btn-danger" id="clearCartBtn">
+                            <i class="ph ph-trash"></i>
+                            Svuota Carrello
+                        </button>
+                    </div>
+                    
+                    <div class="cart-items-container" id="cartItemsContainer">
+                        <!-- Cart items will be loaded here -->
+                    </div>
+                    
+                    <!-- Empty Cart State -->
+                    <div class="empty-cart-state" id="emptyCartState" style="display: none;">
+                        <div class="empty-state-icon">
+                            <i class="ph ph-shopping-cart"></i>
+                        </div>
+                        <h3>Il tuo carrello è vuoto</h3>
+                        <p>Aggiungi prodotti dalle nostre offerte per iniziare lo shopping!</p>
+                        <div class="empty-state-actions">
+                            <a href="products.html" class="btn-primary">
+                                <i class="ph ph-shopping-bag"></i>
+                                Scopri le Offerte
+                            </a>
+                            <a href="index.html" class="btn-secondary">
+                                <i class="ph ph-house"></i>
+                                Torna alla Home
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cart Summary -->
+                <div class="cart-summary-section">
+                    <div class="cart-summary-card">
+                        <div class="summary-header">
+                            <h3>
+                                <i class="ph ph-receipt"></i>
+                                Riepilogo Ordine
+                            </h3>
+                        </div>
+                        
+                        <div class="summary-content">
+                            <div class="summary-row">
+                                <span>Prodotti (<span id="summaryItemsCount">0</span>)</span>
+                                <span id="subtotalAmount">€0.00</span>
+                            </div>
+                            
+                            <div class="summary-row">
+                                <span>Spedizione</span>
+                                <span class="free-shipping">Gratuita</span>
+                            </div>
+                            
+                            <div class="summary-row discount-row" id="discountRow" style="display: none;">
+                                <span>Sconto totale</span>
+                                <span class="discount-amount" id="discountAmount">-€0.00</span>
+                            </div>
+                            
+                            <hr class="summary-divider">
+                            
+                            <div class="summary-row total-row">
+                                <span>Totale</span>
+                                <span class="total-amount" id="totalAmount">€0.00</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Promo Code Section -->
+                        <div class="promo-section">
+                            <div class="promo-input-group">
+                                <input type="text" id="promoInput" placeholder="Codice promozionale" class="promo-input">
+                                <button id="applyPromoBtn" class="btn-secondary">
+                                    <i class="ph ph-tag"></i>
+                                    Applica
+                                </button>
+                            </div>
+                            <div class="promo-suggestions">
+                                <small>Prova: <code>SCONTO10</code> per il 10% di sconto</small>
+                            </div>
+                        </div>
+                        
+                        <!-- Checkout Actions -->
+                        <div class="checkout-actions">
+                            <button class="btn-primary btn-large" id="checkoutBtn">
+                                <i class="ph ph-credit-card"></i>
+                                Procedi all'Acquisto
+                            </button>
+                            
+                            <div class="checkout-info">
+                                <p>
+                                    <i class="ph ph-shield-check"></i>
+                                    Verrai reindirizzato ad Amazon per completare l'acquisto in sicurezza
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recommended Products -->
+                    <div class="recommended-section" id="recommendedSection" style="display: none;">
+                        <h3>
+                            <i class="ph ph-lightbulb"></i>
+                            Prodotti Consigliati
+                        </h3>
+                        <div class="recommended-products" id="recommendedProducts">
+                            <!-- Recommended products will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Continue Shopping -->
+            <div class="continue-shopping-section">
+                <div class="continue-shopping-card">
+                    <div class="continue-shopping-content">
+                        <h3>Continua lo Shopping</h3>
+                        <p>Scopri altre offerte imperdibili selezionate dal nostro team</p>
+                    </div>
+                    <div class="continue-shopping-actions">
+                        <a href="products.html" class="btn-outline">
+                            <i class="ph ph-arrow-left"></i>
+                            Continua lo Shopping
+                        </a>
+                        <a href="cronoai.html" class="btn-outline">
+                            <i class="ph ph-robot"></i>
+                            Chiedi a CronoAI
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="glass-footer" id="footer-container"></footer>
+
+    <!-- Scripts -->
+    <script src="main.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Cart functionality
+        class CartManager {
+            constructor() {
+                this.cart = [];
+                this.appliedPromo = null;
+                this.init();
+            }
+
+            init() {
+                this.loadCart();
+                this.setupEventListeners();
+                this.renderCart();
+                this.loadRecommendedProducts();
+            }
+
+            loadCart() {
+                try {
+                    const cartData = localStorage.getItem('cronoshop_cart');
+                    this.cart = cartData ? JSON.parse(cartData) : [];
+                    console.log(`Loaded ${this.cart.length} items from cart`);
+                } catch (error) {
+                    console.error('Error loading cart:', error);
+                    this.cart = [];
+                }
+            }
+
+            saveCart() {
+                try {
+                    localStorage.setItem('cronoshop_cart', JSON.stringify(this.cart));
+                    this.updateCartBadge();
+                } catch (error) {
+                    console.error('Error saving cart:', error);
+                }
+            }
+
+            setupEventListeners() {
+                // Clear cart button
+                document.getElementById('clearCartBtn').addEventListener('click', () => {
+                    if (this.cart.length > 0 && confirm('Sei sicuro di voler svuotare il carrello?')) {
+                        this.clearCart();
+                    }
+                });
+
+                // Apply promo button
+                document.getElementById('applyPromoBtn').addEventListener('click', () => {
+                    this.applyPromoCode();
+                });
+
+                // Checkout button
+                document.getElementById('checkoutBtn').addEventListener('click', () => {
+                    this.proceedToCheckout();
+                });
+
+                // Promo input enter key
+                document.getElementById('promoInput').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        this.applyPromoCode();
+                    }
+                });
+            }
+
+            renderCart() {
+                const container = document.getElementById('cartItemsContainer');
+                const emptyState = document.getElementById('emptyCartState');
+                const cartItemsCount = document.getElementById('cartItemsCount');
+                
+                if (!container || !emptyState) return;
+
+                // Update items count
+                cartItemsCount.textContent = this.cart.length;
+
+                if (this.cart.length === 0) {
+                    container.style.display = 'none';
+                    emptyState.style.display = 'block';
+                    document.querySelector('.cart-summary-section').style.display = 'none';
+                    this.updateSummary();
+                    return;
+                }
+
+                container.style.display = 'block';
+                emptyState.style.display = 'none';
+                document.querySelector('.cart-summary-section').style.display = 'block';
+
+                container.innerHTML = this.cart.map(item => this.createCartItemHTML(item)).join('');
+                this.updateSummary();
+            }
+
+            createCartItemHTML(item) {
+                const price = typeof item.prezzo === 'number' ? item.prezzo : parseFloat(item.prezzo) || 0;
+                const originalPrice = typeof item.prezzo_originale === 'number' 
+                    ? item.prezzo_originale 
+                    : parseFloat(item.prezzo_originale) || null;
+                const quantity = item.quantity || 1;
+                const totalPrice = price * quantity;
+                
+                return `
+                    <div class="cart-item" data-product-id="${item.id}">
+                        <div class="item-image">
+                            <img src="${item.img}" alt="${item.nome}" onerror="this.src='/placeholder.svg?height=100&width=100&text=Prodotto'">
+                            ${item.sconto ? `<div class="item-discount">-${item.sconto}%</div>` : ''}
+                        </div>
+                        
+                        <div class="item-details">
+                            <div class="item-info">
+                                <h3 class="item-title">${item.nome}</h3>
+                                <p class="item-description">${item.descrizione || ''}</p>
+                                <div class="item-category">${this.getCategoryName(item.categoria)}</div>
+                            </div>
+                            
+                            <div class="item-price">
+                                <span class="current-price">€${price.toFixed(2)}</span>
+                                ${originalPrice ? `<span class="original-price">€${originalPrice.toFixed(2)}</span>` : ''}
+                            </div>
+                        </div>
+                        
+                        <div class="item-controls">
+                            <div class="quantity-controls">
+                                <button class="quantity-btn" onclick="cartManager.decreaseQuantity('${item.id}')">
+                                    <i class="ph ph-minus"></i>
+                                </button>
+                                <span class="quantity-display">${quantity}</span>
+                                <button class="quantity-btn" onclick="cartManager.increaseQuantity('${item.id}')">
+                                    <i class="ph ph-plus"></i>
+                                </button>
+                            </div>
+                            
+                            <div class="item-total">
+                                €${totalPrice.toFixed(2)}
+                            </div>
+                            
+                            <div class="item-actions">
+                                <button class="btn-icon" onclick="cartManager.moveToWishlist('${item.id}')" title="Sposta nella wishlist">
+                                    <i class="ph ph-heart"></i>
+                                </button>
+                                <button class="btn-icon btn-danger" onclick="cartManager.removeFromCart('${item.id}')" title="Rimuovi dal carrello">
+                                    <i class="ph ph-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            updateSummary() {
+                const summaryItemsCount = document.getElementById('summaryItemsCount');
+                const subtotalAmount = document.getElementById('subtotalAmount');
+                const discountRow = document.getElementById('discountRow');
+                const discountAmount = document.getElementById('discountAmount');
+                const totalAmount = document.getElementById('totalAmount');
+                
+                if (!summaryItemsCount || !subtotalAmount || !totalAmount) return;
+
+                const totalItems = this.cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+                const subtotal = this.cart.reduce((sum, item) => {
+                    const price = typeof item.prezzo === 'number' ? item.prezzo : parseFloat(item.prezzo) || 0;
+                    const quantity = item.quantity || 1;
+                    return sum + (price * quantity);
+                }, 0);
+
+                summaryItemsCount.textContent = totalItems;
+                subtotalAmount.textContent = `€${subtotal.toFixed(2)}`;
+
+                // Calculate discount
+                let totalDiscount = 0;
+                this.cart.forEach(item => {
+                    if (item.prezzo_originale && item.prezzo_originale > item.prezzo) {
+                        const itemDiscount = (item.prezzo_originale - item.prezzo) * (item.quantity || 1);
+                        totalDiscount += itemDiscount;
+                    }
+                });
+
+                // Apply promo discount
+                let promoDiscount = 0;
+                if (this.appliedPromo) {
+                    promoDiscount = subtotal * (this.appliedPromo.percentage / 100);
+                    totalDiscount += promoDiscount;
+                }
+
+                if (totalDiscount > 0) {
+                    discountRow.style.display = 'flex';
+                    discountAmount.textContent = `-€${totalDiscount.toFixed(2)}`;
+                } else {
+                    discountRow.style.display = 'none';
+                }
+
+                const finalTotal = Math.max(0, subtotal - promoDiscount);
+                totalAmount.textContent = `€${finalTotal.toFixed(2)}`;
+            }
+
+            getCategoryName(category) {
+                const categoryNames = {
+                    smartphone: 'Smartphone',
+                    tech: 'Tecnologia',
+                    fashion: 'Moda',
+                    casa: 'Casa & Cucina',
+                    salute: 'Salute & Bellezza',
+                    sport: 'Sport & Tempo Libero'
+                };
+                return categoryNames[category] || category.charAt(0).toUpperCase() + category.slice(1);
+            }
+
+            increaseQuantity(productId) {
+                const item = this.cart.find(item => item.id === productId);
+                if (item) {
+                    item.quantity = (item.quantity || 1) + 1;
+                    this.saveCart();
+                    this.renderCart();
+                    this.showNotification('Quantità aggiornata', 'success');
+                }
+            }
+
+            decreaseQuantity(productId) {
+                const item = this.cart.find(item => item.id === productId);
+                if (item && (item.quantity || 1) > 1) {
+                    item.quantity = (item.quantity || 1) - 1;
+                    this.saveCart();
+                    this.renderCart();
+                    this.showNotification('Quantità aggiornata', 'success');
+                } else if (item && (item.quantity || 1) === 1) {
+                    this.removeFromCart(productId);
+                }
+            }
+
+            removeFromCart(productId) {
+                if (confirm('Sei sicuro di voler rimuovere questo prodotto dal carrello?')) {
+                    this.cart = this.cart.filter(item => item.id !== productId);
+                    this.saveCart();
+                    this.renderCart();
+                    this.showNotification('Prodotto rimosso dal carrello', 'success');
+                }
+            }
+
+            moveToWishlist(productId) {
+                const item = this.cart.find(item => item.id === productId);
+                if (!item) return;
+
+                try {
+                    // Add to wishlist
+                    let wishlist = JSON.parse(localStorage.getItem('cronoshop_wishlist') || '[]');
+                    const existingItem = wishlist.find(wishItem => wishItem.id === productId);
+                    
+                    if (!existingItem) {
+                        wishlist.push(item);
+                        localStorage.setItem('cronoshop_wishlist', JSON.stringify(wishlist));
+                    }
+                    
+                    // Remove from cart
+                    this.cart = this.cart.filter(cartItem => cartItem.id !== productId);
+                    this.saveCart();
+                    this.renderCart();
+                    this.showNotification('Prodotto spostato nella wishlist', 'success');
+                } catch (error) {
+                    console.error('Error moving to wishlist:', error);
+                    this.showNotification('Errore nello spostare il prodotto', 'error');
+                }
+            }
+
+            clearCart() {
+                this.cart = [];
+                this.appliedPromo = null;
+                this.saveCart();
+                this.renderCart();
+                document.getElementById('promoInput').value = '';
+                this.showNotification('Carrello svuotato', 'success');
+            }
+
+            applyPromoCode() {
+                const promoInput = document.getElementById('promoInput');
+                const promoCode = promoInput.value.trim().toUpperCase();
+                
+                if (!promoCode) {
+                    this.showNotification('Inserisci un codice promozionale', 'warning');
+                    return;
+                }
+
+                // Available promo codes
+                const promoCodes = {
+                    'SCONTO10': { percentage: 10, description: '10% di sconto' },
+                    'WELCOME': { percentage: 5, description: '5% di sconto di benvenuto' },
+                    'SAVE20': { percentage: 20, description: '20% di sconto speciale' }
+                };
+
+                if (promoCodes[promoCode]) {
+                    this.appliedPromo = promoCodes[promoCode];
+                    this.updateSummary();
+                    this.showNotification(`Codice applicato: ${this.appliedPromo.description}`, 'success');
+                    promoInput.value = '';
+                } else {
+                    this.showNotification('Codice promozionale non valido', 'error');
+                }
+            }
+
+            proceedToCheckout() {
+                if (this.cart.length === 0) {
+                    this.showNotification('Il carrello è vuoto', 'warning');
+                    return;
+                }
+
+                // In a real application, this would redirect to a checkout page
+                // For now, we'll simulate redirecting to Amazon
+                this.showNotification('Reindirizzamento ad Amazon...', 'info');
+                
+                setTimeout(() => {
+                    // Open Amazon in a new tab for each product
+                    this.cart.forEach(item => {
+                        window.open(item.link, '_blank');
+                    });
+                }, 1500);
+            }
+
+            loadRecommendedProducts() {
+                if (typeof products === 'undefined' || !Array.isArray(products)) return;
+                
+                // Show recommended products only if cart is not empty
+                if (this.cart.length > 0) {
+                    const recommendedSection = document.getElementById('recommendedSection');
+                    const recommendedContainer = document.getElementById('recommendedProducts');
+                    
+                    // Get random products not in cart
+                    const cartProductIds = this.cart.map(item => item.id);
+                    const availableProducts = products.filter(product => !cartProductIds.includes(product.id));
+                    const shuffled = [...availableProducts].sort(() => 0.5 - Math.random());
+                    const recommended = shuffled.slice(0, 3);
+                    
+                    if (recommended.length > 0) {
+                        recommendedSection.style.display = 'block';
+                        recommendedContainer.innerHTML = recommended.map(product => this.createRecommendedProductHTML(product)).join('');
+                    }
+                }
+            }
+
+            createRecommendedProductHTML(product) {
+                const price = typeof product.prezzo === 'number' ? product.prezzo : parseFloat(product.prezzo) || 0;
+                
+                return `
+                    <div class="recommended-product">
+                        <div class="recommended-image">
+                            <img src="${product.img}" alt="${product.nome}" onerror="this.src='/placeholder.svg?height=80&width=80&text=Prodotto'">
+                            ${product.sconto ? `<div class="recommended-discount">-${product.sconto}%</div>` : ''}
+                        </div>
+                        <div class="recommended-info">
+                            <h4>${product.nome}</h4>
+                            <div class="recommended-price">€${price.toFixed(2)}</div>
+                            <button class="btn-small btn-primary" onclick="cartManager.addRecommendedToCart('${product.id}')">
+                                <i class="ph ph-plus"></i>
+                                Aggiungi
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            addRecommendedToCart(productId) {
+                if (typeof products === 'undefined') return;
+                
+                const product = products.find(p => p.id === productId);
+                if (!product) return;
+
+                const existingItem = this.cart.find(item => item.id === productId);
+                
+                if (existingItem) {
+                    existingItem.quantity = (existingItem.quantity || 1) + 1;
+                } else {
+                    this.cart.push({...product, quantity: 1});
+                }
+                
+                this.saveCart();
+                this.renderCart();
+                this.loadRecommendedProducts();
+                this.showNotification('Prodotto aggiunto al carrello', 'success');
+            }
+
+            updateCartBadge() {
+                try {
+                    const totalItems = this.cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+                    const badge = document.querySelector('.cart-badge');
+                    if (badge) {
+                        badge.textContent = totalItems;
+                        badge.style.display = totalItems > 0 ? 'block' : 'none';
+                    }
+                } catch (error) {
+                    console.error('Error updating cart badge:', error);
+                }
+            }
+
+            showNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                notification.className = `notification notification-${type}`;
+                notification.innerHTML = `
+                    <div class="notification-content">
+                        <i class="ph ph-${type === 'success' ? 'check-circle' : type === 'error' ? 'x-circle' : type === 'warning' ? 'warning' : 'info'}"></i>
+                        <span>${message}</span>
+                    </div>
+                `;
+
+                document.body.appendChild(notification);
+
+                setTimeout(() => notification.classList.add('show'), 100);
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                    setTimeout(() => notification.remove(), 300);
+                }, 3000);
+            }
+        }
+
+        // Initialize cart manager
+        let cartManager;
+        document.addEventListener('DOMContentLoaded', () => {
+            cartManager = new CartManager();
+        });
+    </script>
+    <script src="src/utils/nav-loader.js"></script>
+</body>
+</html>
+</merged_code>

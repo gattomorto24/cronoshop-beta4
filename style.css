@@ -1,0 +1,1612 @@
+/*
+ * ===================================================================
+ * CRONOSHOP - iOS DESIGN SYSTEM (Replicato dalle Immagini)
+ * ===================================================================
+ * Design fedele al 100% alle specifiche iOS mostrate nelle immagini
+ * ===================================================================
+ */
+
+/* --- [1] RESET E IMPOSTAZIONI BASE --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+  background-color: #f0f0f0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* --- [2] VARIABILI COLORE iOS --- */
+:root {
+  /* iOS System Colors - Light Mode */
+  --ios-blue: #007aff;
+  --ios-green: #34c759;
+  --ios-red: #ff3b30;
+  --ios-orange: #ff9500;
+  --ios-purple: #af52de;
+  --ios-pink: #ff2d92;
+  --ios-yellow: #ffcc00;
+  --ios-indigo: #5856d6;
+  --ios-teal: #5ac8fa;
+  --ios-mint: #00c7be;
+
+  /* iOS Backgrounds */
+  --ios-bg-primary: #f2f2f7;
+  --ios-bg-secondary: #ffffff;
+  --ios-bg-tertiary: #f2f2f7;
+  --ios-bg-grouped: #f2f2f7;
+  --ios-bg-elevated: #ffffff;
+
+  /* iOS Text Colors */
+  --ios-text-primary: #000000;
+  --ios-text-secondary: #3c3c43;
+  --ios-text-tertiary: rgba(60, 60, 67, 0.6);
+  --ios-text-quaternary: rgba(60, 60, 67, 0.3);
+
+  /* iOS Fill Colors */
+  --ios-fill-primary: rgba(120, 120, 128, 0.2);
+  --ios-fill-secondary: rgba(120, 120, 128, 0.16);
+  --ios-fill-tertiary: rgba(118, 118, 128, 0.12);
+  --ios-fill-quaternary: rgba(116, 116, 128, 0.08);
+
+  /* iOS Separators */
+  --ios-separator-opaque: #c6c6c8;
+  --ios-separator-non-opaque: rgba(60, 60, 67, 0.29);
+
+  /* iOS Spacing */
+  --ios-spacing-xs: 4px;
+  --ios-spacing-sm: 8px;
+  --ios-spacing-md: 16px;
+  --ios-spacing-lg: 24px;
+  --ios-spacing-xl: 32px;
+  --ios-spacing-xxl: 48px;
+
+  /* iOS Border Radius */
+  --ios-radius-sm: 8px;
+  --ios-radius-md: 12px;
+  --ios-radius-lg: 16px;
+  --ios-radius-xl: 20px;
+  --ios-radius-full: 50px;
+
+  /* iOS Shadows */
+  --ios-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --ios-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --ios-shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.15);
+
+  /* iOS Transitions */
+  --ios-transition-fast: 0.15s ease-out;
+  --ios-transition-normal: 0.25s ease-out;
+  --ios-transition-slow: 0.4s ease-out;
+}
+
+/* --- [3] DARK MODE --- */
+body.ios-dark-mode {
+  color: #ffffff;
+  background-color: #000000;
+}
+
+.ios-dark-mode {
+  --ios-blue: #0a84ff;
+  --ios-green: #30d158;
+  --ios-red: #ff453a;
+  --ios-orange: #ff9f0a;
+  --ios-purple: #bf5af2;
+  --ios-pink: #ff375f;
+  --ios-yellow: #ffd60a;
+  --ios-indigo: #5e5ce6;
+  --ios-teal: #64d2ff;
+  --ios-mint: #63e6e2;
+
+  --ios-bg-primary: #000000;
+  --ios-bg-secondary: #1c1c1e;
+  --ios-bg-tertiary: #2c2c2e;
+  --ios-bg-grouped: #000000;
+  --ios-bg-elevated: #1c1c1e;
+
+  --ios-text-primary: #ffffff;
+  --ios-text-secondary: #ebebf5;
+  --ios-text-tertiary: rgba(235, 235, 245, 0.6);
+  --ios-text-quaternary: rgba(235, 235, 245, 0.3);
+
+  --ios-fill-primary: rgba(120, 120, 128, 0.36);
+  --ios-fill-secondary: rgba(120, 120, 128, 0.32);
+  --ios-fill-tertiary: rgba(118, 118, 128, 0.24);
+  --ios-fill-quaternary: rgba(116, 116, 128, 0.18);
+
+  --ios-separator-opaque: #38383a;
+  --ios-separator-non-opaque: rgba(84, 84, 88, 0.65);
+}
+
+/* --- [4] NAVBAR iOS (Fixed and Enhanced) --- */
+.ios-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 88px;
+  background: rgba(242, 242, 247, 0.8);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 0.5px solid var(--ios-separator-non-opaque);
+  z-index: 1000;
+  transition: all var(--ios-transition-fast);
+}
+
+.ios-dark-mode .ios-navbar {
+  background: rgba(28, 28, 30, 0.8);
+}
+
+.ios-navbar-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  padding: 0 var(--ios-spacing-md);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.ios-navbar-left {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  flex: 1;
+}
+
+.ios-navbar-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 2;
+  margin: 0 var(--ios-spacing-md);
+}
+
+.ios-navbar-right {
+  display: flex;
+  align-items: center;
+  gap: var(--ios-spacing-sm);
+  min-width: 0;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.ios-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--ios-spacing-sm);
+  text-decoration: none;
+  color: var(--ios-text-primary);
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.ios-logo-image {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--ios-radius-sm);
+}
+
+.ios-logo-text {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* Desktop Navigation Links */
+.ios-nav-desktop {
+  display: flex;
+  align-items: center;
+  gap: var(--ios-spacing-xs);
+  margin-right: var(--ios-spacing-md);
+}
+
+.ios-nav-link {
+  display: flex;
+  align-items: center;
+  gap: var(--ios-spacing-xs);
+  padding: var(--ios-spacing-sm) var(--ios-spacing-md);
+  text-decoration: none;
+  color: var(--ios-text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: var(--ios-radius-sm);
+  transition: all var(--ios-transition-fast);
+  white-space: nowrap;
+}
+
+.ios-nav-link:hover {
+  background: var(--ios-fill-tertiary);
+  color: var(--ios-text-primary);
+}
+
+.ios-nav-link.active {
+  background: var(--ios-blue);
+  color: white;
+}
+
+.ios-nav-link i {
+  font-size: 16px;
+}
+
+.ios-nav-link span {
+  font-size: 14px;
+}
+
+/* --- [6] NAVIGATION ACTIONS --- */
+.ios-nav-action {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--ios-radius-full);
+  background: var(--ios-fill-tertiary);
+  border: none;
+  cursor: pointer;
+  transition: all var(--ios-transition-fast);
+  color: var(--ios-text-primary);
+  text-decoration: none;
+}
+
+.ios-nav-action:hover {
+  background: var(--ios-fill-secondary);
+  transform: scale(1.05);
+}
+
+.ios-nav-action:active {
+  transform: scale(0.95);
+}
+
+.ios-nav-action i {
+  font-size: 18px;
+}
+
+.ios-badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background: var(--ios-red);
+  color: white;
+  border-radius: var(--ios-radius-full);
+  padding: 2px 6px;
+  font-size: 12px;
+  font-weight: 600;
+  min-width: 18px;
+  text-align: center;
+  display: none;
+}
+
+/* --- [7] MOBILE MENU iOS (Fixed) --- */
+.ios-mobile-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  max-width: 320px;
+  background: var(--ios-bg-elevated);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  z-index: 1002;
+  transform: translateX(100%);
+  transition: transform var(--ios-transition-slow);
+  border-left: 0.5px solid var(--ios-separator-non-opaque);
+  box-shadow: var(--ios-shadow-lg);
+  overflow-y: auto;
+}
+
+.ios-mobile-menu.active {
+  transform: translateX(0);
+}
+
+.ios-mobile-menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--ios-spacing-md);
+  height: 88px;
+  border-bottom: 0.5px solid var(--ios-separator-non-opaque);
+  background: var(--ios-bg-secondary);
+}
+
+.ios-mobile-menu-header h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--ios-text-primary);
+}
+
+.ios-close-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--ios-radius-full);
+  background: var(--ios-fill-tertiary);
+  border: none;
+  cursor: pointer;
+  color: var(--ios-text-primary);
+  transition: all var(--ios-transition-fast);
+}
+
+.ios-close-btn:hover {
+  background: var(--ios-fill-secondary);
+}
+
+.ios-mobile-menu-content {
+  flex: 1;
+  padding: var(--ios-spacing-md);
+}
+
+.ios-menu-section {
+  margin-bottom: var(--ios-spacing-xl);
+}
+
+.ios-menu-section h4 {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ios-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--ios-spacing-md);
+}
+
+.ios-menu-item {
+  display: flex;
+  align-items: center;
+  gap: var(--ios-spacing-md);
+  padding: var(--ios-spacing-md);
+  border-radius: var(--ios-radius-md);
+  color: var(--ios-text-primary);
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all var(--ios-transition-fast);
+  margin-bottom: var(--ios-spacing-sm);
+}
+
+.ios-menu-item:hover {
+  background: var(--ios-fill-tertiary);
+}
+
+.ios-menu-item.active {
+  background: var(--ios-blue);
+  color: white;
+}
+
+.ios-menu-item.active:hover {
+  background: color-mix(in srgb, var(--ios-blue) 90%, black);
+}
+
+.ios-menu-item i {
+  font-size: 22px;
+  width: 28px;
+  text-align: center;
+  color: var(--ios-blue);
+}
+
+.ios-menu-item.active i {
+  color: inherit;
+}
+
+/* --- [8] OVERLAY --- */
+.ios-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1001;
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--ios-transition-fast);
+}
+
+.ios-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* --- [9] MAIN CONTENT --- */
+.ios-main {
+  padding-top: 88px;
+  min-height: 100vh;
+}
+
+.ios-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--ios-spacing-md);
+}
+
+.ios-section {
+  padding: var(--ios-spacing-xxl) 0;
+}
+
+.ios-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--ios-spacing-xl);
+}
+
+.ios-section-header h2 {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--ios-text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--ios-spacing-sm);
+}
+
+.ios-section-header p {
+  color: var(--ios-text-secondary);
+  font-size: 18px;
+  margin-top: var(--ios-spacing-sm);
+}
+
+/* --- [10] HERO SECTION --- */
+.hero {
+  text-align: center;
+  padding: 50px 0;
+}
+
+.hero h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+.ios-hero {
+  padding: var(--ios-spacing-xxl) 0;
+  background: linear-gradient(135deg, var(--ios-purple) 0%, var(--ios-pink) 50%, var(--ios-orange) 100%);
+  color: white;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.ios-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 70% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+}
+
+.ios-hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 var(--ios-spacing-md);
+}
+
+.ios-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ios-spacing-sm);
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: var(--ios-spacing-sm) var(--ios-spacing-md);
+  border-radius: var(--ios-radius-full);
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: var(--ios-spacing-lg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ios-hero-title {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: var(--ios-spacing-lg);
+  letter-spacing: -0.02em;
+}
+
+.ios-gradient-text {
+  background: linear-gradient(45deg, #ff2d92, #ffcc00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ios-hero-description {
+  font-size: 20px;
+  font-weight: 400;
+  opacity: 0.9;
+  margin-bottom: var(--ios-spacing-xl);
+  line-height: 1.4;
+}
+
+.ios-hero-actions {
+  display: flex;
+  gap: var(--ios-spacing-md);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: var(--ios-spacing-xl);
+}
+
+.ios-hero-stats {
+  display: flex;
+  gap: var(--ios-spacing-xl);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.ios-stat-item {
+  text-align: center;
+}
+
+.ios-stat-number {
+  display: block;
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: var(--ios-spacing-xs);
+}
+
+.ios-stat-label {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+/* --- [11] BUTTONS iOS (Replicati dalle Immagini) --- */
+.ios-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ios-spacing-sm);
+  padding: var(--ios-spacing-md) var(--ios-spacing-lg);
+  border-radius: var(--ios-radius-md);
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all var(--ios-transition-fast);
+  min-height: 44px;
+  position: relative;
+  overflow: hidden;
+}
+
+.ios-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ios-btn-primary {
+  background: var(--ios-blue);
+  color: white;
+  box-shadow: var(--ios-shadow-sm);
+}
+
+.ios-btn-primary:hover {
+  background: color-mix(in srgb, var(--ios-blue) 90%, black);
+  transform: translateY(-2px);
+  box-shadow: var(--ios-shadow-md);
+}
+
+.ios-btn-secondary {
+  background: var(--ios-fill-secondary);
+  color: var(--ios-text-primary);
+  border: 1px solid var(--ios-separator-non-opaque);
+}
+
+.ios-btn-secondary:hover {
+  background: var(--ios-fill-primary);
+  transform: translateY(-1px);
+}
+
+.ios-btn-success {
+  background: var(--ios-green);
+  color: white;
+}
+
+.ios-btn-success:hover {
+  background: color-mix(in srgb, var(--ios-green) 90%, black);
+}
+
+.ios-btn-info {
+  background: var(--ios-blue);
+  color: white;
+}
+
+.ios-btn-info:hover {
+  background: color-mix(in srgb, var(--ios-blue) 90%, black);
+}
+
+.ios-btn-white {
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--ios-purple);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.ios-btn-white:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: translateY(-2px);
+  box-shadow: var(--ios-shadow-md);
+}
+
+.ios-btn-small {
+  padding: var(--ios-spacing-sm) var(--ios-spacing-md);
+  font-size: 14px;
+  min-height: 36px;
+}
+
+.ios-btn-icon {
+  width: 36px;
+  padding: var(--ios-spacing-sm);
+}
+
+/* Text Button (Come nelle immagini iOS) */
+.ios-text-btn {
+  background: none;
+  border: none;
+  color: var(--ios-blue);
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: var(--ios-spacing-sm);
+  border-radius: var(--ios-radius-sm);
+  transition: all var(--ios-transition-fast);
+}
+
+.ios-text-btn:hover {
+  background: var(--ios-fill-tertiary);
+  opacity: 0.8;
+}
+
+/* --- [12] CATEGORIES GRID --- */
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.ios-categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--ios-spacing-md);
+}
+
+.ios-category-card {
+  background: var(--ios-bg-secondary);
+  border-radius: var(--ios-radius-lg);
+  padding: var(--ios-spacing-lg);
+  text-align: center;
+  text-decoration: none;
+  color: var(--ios-text-primary);
+  box-shadow: var(--ios-shadow-sm);
+  transition: all var(--ios-transition-fast);
+  border: 1px solid var(--ios-separator-non-opaque);
+}
+
+.ios-category-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--ios-shadow-md);
+}
+
+.ios-category-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--ios-radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--ios-spacing-md);
+  color: white;
+  font-size: 28px;
+}
+
+.ios-category-card h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: var(--ios-spacing-xs);
+}
+
+.ios-category-card p {
+  color: var(--ios-text-secondary);
+  font-size: 14px;
+}
+
+/* --- [13] PROMO SECTION --- */
+.ios-section-accent {
+  background: linear-gradient(135deg, var(--ios-purple), var(--ios-indigo));
+  color: white;
+}
+
+.ios-promo-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--ios-spacing-xl);
+  align-items: center;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.ios-promo-icon {
+  width: 80px;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: var(--ios-radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--ios-spacing-md);
+  font-size: 36px;
+  color: var(--ios-yellow);
+}
+
+.ios-promo-content h2 {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: var(--ios-spacing-md);
+}
+
+.ios-promo-content p {
+  font-size: 20px;
+  margin-bottom: var(--ios-spacing-md);
+  opacity: 0.9;
+}
+
+.ios-promo-description {
+  font-size: 16px !important;
+  margin-bottom: var(--ios-spacing-lg) !important;
+}
+
+.ios-promo-demo {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: var(--ios-radius-lg);
+  padding: var(--ios-spacing-lg);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.ios-chat-bubble {
+  padding: var(--ios-spacing-md);
+  border-radius: var(--ios-radius-md);
+  margin-bottom: var(--ios-spacing-sm);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.ios-chat-user {
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--ios-purple);
+  margin-left: auto;
+  max-width: 80%;
+}
+
+.ios-chat-ai {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  margin-right: auto;
+  max-width: 80%;
+}
+
+/* --- [14] FILTER CHIPS iOS --- */
+.ios-filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ios-spacing-sm);
+  justify-content: center;
+  margin-bottom: var(--ios-spacing-lg);
+}
+
+.ios-filter-chip {
+  display: flex;
+  align-items: center;
+  gap: var(--ios-spacing-xs);
+  padding: var(--ios-spacing-sm) var(--ios-spacing-md);
+  background: var(--ios-fill-tertiary);
+  border: none;
+  border-radius: var(--ios-radius-full);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--ios-transition-fast);
+  color: var(--ios-text-primary);
+}
+
+.ios-filter-chip:hover {
+  background: var(--ios-fill-secondary);
+}
+
+.ios-filter-chip.active {
+  background: var(--ios-blue);
+  color: white;
+}
+
+.ios-filter-chip.active:hover {
+  background: color-mix(in srgb, var(--ios-blue) 90%, black);
+}
+
+/* --- [15] PRODUCTS GRID --- */
+.ios-products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--ios-spacing-md);
+}
+
+.cart-items,
+.wishlist-items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ios-product-card {
+  background: var(--ios-bg-secondary);
+  border-radius: var(--ios-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--ios-shadow-sm);
+  border: 1px solid var(--ios-separator-non-opaque);
+  transition: all var(--ios-transition-fast);
+}
+
+.ios-product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--ios-shadow-md);
+}
+
+.ios-product-image {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+
+.ios-product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ios-product-info {
+  padding: var(--ios-spacing-md);
+}
+
+.ios-product-category {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ios-blue);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--ios-spacing-xs);
+}
+
+.ios-product-title {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: var(--ios-spacing-sm);
+  color: var(--ios-text-primary);
+}
+
+.ios-product-price {
+  display: flex;
+  align-items: baseline;
+  gap: var(--ios-spacing-sm);
+  margin-bottom: var(--ios-spacing-md);
+}
+
+.ios-price-current {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ios-green);
+}
+
+.ios-price-original {
+  font-size: 14px;
+  color: var(--ios-text-tertiary);
+  text-decoration: line-through;
+}
+
+.ios-discount-badge {
+  background: var(--ios-red);
+  color: white;
+  padding: 2px var(--ios-spacing-xs);
+  border-radius: var(--ios-radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.ios-product-actions {
+  display: flex;
+  gap: var(--ios-spacing-sm);
+  margin-top: auto;
+}
+
+/* --- [16] COMMUNITY SECTION --- */
+.ios-section-green {
+  background: linear-gradient(135deg, var(--ios-green), var(--ios-teal));
+  color: white;
+}
+
+.ios-community-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--ios-spacing-xl);
+  align-items: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.ios-community-icons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ios-spacing-md);
+}
+
+.ios-community-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--ios-radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  color: white;
+}
+
+.ios-whatsapp {
+  background: #25d366;
+}
+
+.ios-telegram {
+  background: #0088cc;
+}
+
+.ios-community-content h2 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: var(--ios-spacing-md);
+}
+
+.ios-community-content p {
+  font-size: 18px;
+  margin-bottom: var(--ios-spacing-lg);
+  opacity: 0.9;
+}
+
+.ios-community-actions {
+  display: flex;
+  gap: var(--ios-spacing-md);
+  flex-wrap: wrap;
+}
+
+/* --- [17] STEPS GRID --- */
+.ios-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--ios-spacing-lg);
+}
+
+.ios-step-card {
+  text-align: center;
+  padding: var(--ios-spacing-lg);
+}
+
+.ios-step-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: var(--ios-radius-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--ios-spacing-md);
+  color: white;
+  font-size: 32px;
+}
+
+.ios-step-card h3 {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: var(--ios-spacing-sm);
+  color: var(--ios-text-primary);
+}
+
+.ios-step-card p {
+  color: var(--ios-text-secondary);
+  line-height: 1.6;
+}
+
+/* --- [18] FAQ SECTION --- */
+.ios-section-gray {
+  background: var(--ios-bg-tertiary);
+}
+
+.faq-list {
+  /* Add FAQ list styling here */
+}
+
+.ios-faq-list {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.ios-faq-item {
+  background: var(--ios-bg-secondary);
+  border-radius: var(--ios-radius-md);
+  margin-bottom: var(--ios-spacing-sm);
+  overflow: hidden;
+  border: 1px solid var(--ios-separator-non-opaque);
+}
+
+.ios-faq-question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--ios-spacing-md) var(--ios-spacing-lg);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ios-text-primary);
+  text-align: left;
+  transition: all var(--ios-transition-fast);
+}
+
+.ios-faq-question:hover {
+  background: var(--ios-fill-quaternary);
+}
+
+.ios-faq-question i {
+  color: var(--ios-text-secondary);
+  transition: transform var(--ios-transition-fast);
+}
+
+.ios-faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height var(--ios-transition-normal);
+  background: var(--ios-fill-quaternary);
+}
+
+.ios-faq-item.active .ios-faq-answer {
+  max-height: 200px;
+}
+
+.ios-faq-item.active .ios-faq-question i {
+  transform: rotate(45deg);
+}
+
+.ios-faq-answer p {
+  padding: 0 var(--ios-spacing-lg) var(--ios-spacing-lg);
+  color: var(--ios-text-secondary);
+  line-height: 1.6;
+}
+
+/* --- [19] FOOTER --- */
+.ios-footer {
+  background: var(--ios-bg-secondary);
+  border-top: 1px solid var(--ios-separator-non-opaque);
+  padding: var(--ios-spacing-xxl) 0;
+  margin-top: var(--ios-spacing-xxl);
+}
+
+.glass-footer {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.ios-footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--ios-spacing-xl);
+  margin-bottom: var(--ios-spacing-xl);
+}
+
+.ios-footer-section h4 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: var(--ios-spacing-md);
+  color: var(--ios-text-primary);
+}
+
+.ios-footer-section p {
+  color: var(--ios-text-secondary);
+  font-size: 14px;
+  margin-bottom: var(--ios-spacing-md);
+}
+
+.ios-footer-section ul {
+  list-style: none;
+}
+
+.ios-footer-section li {
+  margin-bottom: var(--ios-spacing-xs);
+}
+
+.ios-footer-section a {
+  color: var(--ios-text-secondary);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color var(--ios-transition-fast);
+}
+
+.ios-footer-section a:hover {
+  color: var(--ios-blue);
+}
+
+.ios-social-links {
+  display: flex;
+  gap: var(--ios-spacing-sm);
+}
+
+.ios-social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--ios-radius-full);
+  background: var(--ios-fill-tertiary);
+  color: var(--ios-text-secondary);
+  text-decoration: none;
+  font-size: 18px;
+  transition: all var(--ios-transition-fast);
+}
+
+.ios-social-link:hover {
+  background: var(--ios-blue);
+  color: white;
+  transform: scale(1.1);
+}
+
+.ios-footer-bottom {
+  text-align: center;
+  padding-top: var(--ios-spacing-lg);
+  border-top: 1px solid var(--ios-separator-non-opaque);
+  color: var(--ios-text-tertiary);
+  font-size: 14px;
+}
+
+/* --- [20] NOTIFICATIONS --- */
+.ios-notification {
+  position: fixed;
+  top: calc(88px + var(--ios-spacing-md));
+  left: 50%;
+  transform: translateX(-50%) translateY(-100px);
+  background: var(--ios-bg-secondary);
+  color: var(--ios-text-primary);
+  padding: var(--ios-spacing-md) var(--ios-spacing-lg);
+  border-radius: var(--ios-radius-md);
+  box-shadow: var(--ios-shadow-lg);
+  border: 1px solid var(--ios-separator-non-opaque);
+  z-index: 2000;
+  opacity: 0;
+  transition: all var(--ios-transition-normal);
+  max-width: 400px;
+  min-width: 250px;
+}
+
+.ios-notification.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.ios-notification-content {
+  display: flex;
+  align-items: center;
+  gap: var(--ios-spacing-sm);
+}
+
+.ios-notification-content i {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.ios-notification-success {
+  border-left: 4px solid var(--ios-green);
+}
+
+.ios-notification-success i {
+  color: var(--ios-green);
+}
+
+.ios-notification-error {
+  border-left: 4px solid var(--ios-red);
+}
+
+.ios-notification-error i {
+  color: var(--ios-red);
+}
+
+.ios-notification-info {
+  border-left: 4px solid var(--ios-blue);
+}
+
+.ios-notification-info i {
+  color: var(--ios-blue);
+}
+
+/* --- [21] RESPONSIVE DESIGN --- */
+@media (max-width: 768px) {
+  .ios-navbar-center {
+    display: none;
+  }
+
+  .ios-navbar.search-active .ios-navbar-left,
+  .ios-navbar.search-active .ios-navbar-right {
+    display: none;
+  }
+
+  .ios-navbar.search-active .ios-navbar-center {
+    display: flex;
+    flex: 1;
+  }
+
+  .ios-logo-text {
+    display: none;
+  }
+
+  .ios-hero-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .ios-btn {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .ios-promo-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .ios-community-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .ios-community-icons {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .ios-steps-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ios-categories-grid,
+  .ios-products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--ios-spacing-sm);
+  }
+
+  .container {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ios-container {
+    padding: 0 var(--ios-spacing-sm);
+  }
+
+  .ios-categories-grid,
+  .ios-products-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ios-hero-title {
+    font-size: 2.5rem;
+  }
+
+  .ios-section {
+    padding: var(--ios-spacing-lg) 0;
+  }
+
+  .ios-filter-chips {
+    justify-content: flex-start;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: var(--ios-spacing-xs);
+  }
+
+  .ios-filter-chip {
+    flex-shrink: 0;
+  }
+}
+
+/* --- [22] UTILITIES --- */
+.ios-hidden {
+  display: none !important;
+}
+
+.ios-visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* --- [23] ANIMATIONS --- */
+@keyframes ios-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ios-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.ios-animate-fade-in {
+  animation: ios-fade-in 0.5s ease-out;
+}
+
+.ios-animate-scale-in {
+  animation: ios-scale-in 0.3s ease-out;
+}
+
+/* --- [24] ACCESSIBILITY --- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.ios-focus-visible:focus-visible {
+  outline: 2px solid var(--ios-blue);
+  outline-offset: 2px;
+}
+
+/* --- [25] PRINT STYLES --- */
+@media print {
+  .ios-navbar,
+  .ios-mobile-menu,
+  .ios-overlay,
+  .ios-nav-action,
+  .ios-btn,
+  .ios-footer {
+    display: none !important;
+  }
+
+  .ios-main {
+    padding-top: 0 !important;
+  }
+
+  .ios-hero {
+    background: none !important;
+    color: black !important;
+  }
+}
+
+/* --- [26] THEME SYSTEM ENHANCEMENTS --- */
+.theme-blue {
+  --ios-blue: #0066cc;
+  --ios-bg-primary: linear-gradient(135deg, #e3f2fd, #bbdefb);
+}
+
+.theme-green {
+  --ios-green: #2e7d32;
+  --ios-bg-primary: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+}
+
+.theme-purple {
+  --ios-purple: #7b1fa2;
+  --ios-bg-primary: linear-gradient(135deg, #f3e5f5, #e1bee7);
+}
+
+.theme-orange {
+  --ios-orange: #ef6c00;
+  --ios-bg-primary: linear-gradient(135deg, #fff3e0, #ffe0b2);
+}
+
+.glass-effect .ios-navbar,
+.glass-effect .ios-mobile-menu,
+.glass-effect .ios-product-card {
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+}
+
+.reduced-motion *,
+.reduced-motion *::before,
+.reduced-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+.high-contrast {
+  --ios-text-primary: #000000;
+  --ios-text-secondary: #333333;
+  --ios-separator-non-opaque: #000000;
+}
+
+.ios-dark-mode.high-contrast {
+  --ios-text-primary: #ffffff;
+  --ios-text-secondary: #cccccc;
+  --ios-separator-non-opaque: #ffffff;
+}
+
+/* Custom properties support */
+body {
+  font-size: var(--custom-font-size, 16px);
+}
+
+.ios-btn,
+.ios-product-card,
+.ios-category-card {
+  border-radius: var(--custom-border-radius, var(--ios-radius-md));
+}
+
+.ios-btn-primary {
+  background: var(--custom-primary-color, var(--ios-blue));
+}
+
+body[style*="--custom-bg-color"] {
+  background: var(--custom-bg-color) !important;
+}
+
+/* --- [27] NAVIGATION CONTAINER --- */
+#navigation-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+#footer-container {
+  margin-top: var(--ios-spacing-xxl);
+  padding: var(--ios-spacing-lg);
+  background: var(--ios-bg-secondary);
+  border-top: 1px solid var(--ios-separator-non-opaque);
+  text-align: center;
+  color: var(--ios-text-secondary);
+}
+
+/* --- [28] ENHANCED PRODUCT CARDS --- */
+.ios-product-description {
+  font-size: 14px;
+  color: var(--ios-text-secondary);
+  line-height: 1.4;
+  margin-bottom: var(--ios-spacing-sm);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* --- [29] LOADING STATES --- */
+.loading-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--ios-fill-tertiary) 25%,
+    var(--ios-fill-secondary) 50%,
+    var(--ios-fill-tertiary) 75%
+  );
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* --- [30] RESPONSIVE ENHANCEMENTS --- */
+@media (max-width: 1024px) {
+  .ios-container {
+    padding: 0 var(--ios-spacing-md);
+  }
+
+  .ios-hero-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+  }
+}
+
+@media (max-width: 640px) {
+  .ios-section {
+    padding: var(--ios-spacing-lg) 0;
+  }
+
+  .ios-hero-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .ios-btn {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+/* Responsive Navigation */
+@media (max-width: 1024px) {
+  .ios-nav-desktop {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .ios-navbar-center {
+    display: none;
+  }
+
+  .ios-navbar.search-active .ios-navbar-left,
+  .ios-navbar.search-active .ios-navbar-right {
+    display: none;
+  }
+
+  .ios-navbar.search-active .ios-navbar-center {
+    display: flex;
+    flex: 1;
+  }
+
+  .ios-logo-text {
+    display: none;
+  }
+
+  .ios-mobile-menu {
+    width: 280px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ios-navbar-content {
+    padding: 0 var(--ios-spacing-sm);
+  }
+
+  .ios-mobile-menu {
+    width: 100%;
+    max-width: none;
+  }
+}

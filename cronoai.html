@@ -1,0 +1,1647 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CronoAI - Assistente AI per Shopping | Cronoshop</title>
+    <meta name="description" content="CronoAI è l'assistente AI di Cronoshop che ti aiuta a trovare le migliori offerte Amazon. Chiedi consigli personalizzati e scopri prodotti perfetti per te.">
+    <meta name="keywords" content="cronoai, assistente ai, shopping ai, offerte amazon, consigli acquisti, intelligenza artificiale">
+    <link rel="canonical" href="https://www.cronoshop.eu/cronoai.html">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/cronoshop-logo.png">
+    <link rel="apple-touch-icon" href="assets/cronoshop-logo.png">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="CronoAI - Assistente AI per Shopping">
+    <meta property="og:description" content="L'intelligenza artificiale che rivoluziona il tuo modo di fare shopping su Amazon.">
+    <meta property="og:image" content="https://www.cronoshop.eu/assets/cronoshop-logo.png">
+    <meta property="og:url" content="https://www.cronoshop.eu/cronoai.html">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        /* CronoAI Page Styles */
+        :root {
+            --primary-color: #007aff;
+            --secondary-color: #5856d6;
+            --success-color: #34c759;
+            --warning-color: #ff9500;
+            --error-color: #ff3b30;
+            --text-primary: #1d1d1f;
+            --text-secondary: #6e6e73;
+            --bg-primary: #f2f2f7;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #e5e5ea;
+            --glass-white: rgba(255, 255, 255, 0.1);
+            --glass-white-strong: rgba(255, 255, 255, 0.2);
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.2);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --transition-fast: 0.2s ease;
+            --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .dark-mode {
+            --text-primary: #f5f5f7;
+            --text-secondary: #8d8d92;
+            --bg-primary: #000000;
+            --bg-secondary: #1c1c1e;
+            --bg-tertiary: #2c2c2e;
+            --glass-white: rgba(255, 255, 255, 0.05);
+            --glass-white-strong: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding-top: 80px;
+        }
+
+        .animated-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* AI Hero Section */
+        .ai-hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            padding: 80px 0;
+            min-height: 70vh;
+        }
+
+        .ai-hero-content {
+            text-align: left;
+        }
+
+        .ai-hero-icon {
+            font-size: 4rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .ai-hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .ai-hero-description {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .ai-hero-actions {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .ai-hero-demo {
+            background: var(--glass-white);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl);
+            padding: 30px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .demo-chat {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .demo-message {
+            padding: 15px 20px;
+            border-radius: var(--radius-lg);
+            max-width: 80%;
+        }
+
+        .demo-message.user {
+            background: var(--primary-color);
+            color: white;
+            align-self: flex-end;
+        }
+
+        .demo-message.ai {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            align-self: flex-start;
+        }
+
+        /* Introduction Section */
+        .ai-intro {
+            padding: 60px 0;
+            background: var(--glass-white);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl);
+            margin: 40px 0;
+            border: 1px solid var(--glass-border);
+        }
+
+        .intro-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .intro-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: var(--text-primary);
+        }
+
+        .intro-content p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        /* Chat Section */
+        .ai-chat-section {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+
+        .chat-container {
+            background: var(--glass-white);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--glass-border);
+            overflow: hidden;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .message {
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .user-message .message-avatar {
+            background: var(--secondary-color);
+        }
+
+        .message-content {
+            background: var(--bg-secondary);
+            padding: 15px 20px;
+            border-radius: var(--radius-lg);
+            max-width: 70%;
+            line-height: 1.5;
+        }
+
+        .user-message {
+            flex-direction: row-reverse;
+        }
+
+        .user-message .message-content {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .chat-suggestions {
+            padding: 20px 30px;
+            border-top: 1px solid var(--glass-border);
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .suggestion-chip {
+            background: var(--bg-secondary);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .suggestion-chip:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .chat-input-container {
+            padding: 30px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .chat-input-wrapper {
+            display: flex;
+            align-items: flex-end;
+            gap: 15px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            padding: 15px;
+        }
+
+        #chatInput {
+            flex: 1;
+            border: none;
+            background: transparent;
+            color: var(--text-primary);
+            font-size: 1rem;
+            resize: none;
+            outline: none;
+            min-height: 24px;
+            max-height: 120px;
+        }
+
+        .chat-input-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .char-count {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .send-button {
+            background: var(--primary-color);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .send-button:hover {
+            background: var(--secondary-color);
+        }
+
+        .chat-controls {
+            padding: 20px 30px;
+            border-top: 1px solid var(--glass-border);
+            text-align: center;
+        }
+
+        .chat-control-btn {
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            padding: 10px 20px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .chat-control-btn:hover {
+            background: var(--error-color);
+            color: white;
+            border-color: var(--error-color);
+        }
+
+        /* Features Section */
+        .ai-features-section {
+            padding: 80px 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .feature-card {
+            background: var(--glass-white);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl);
+            padding: 40px;
+            border: 1px solid var(--glass-border);
+            transition: var(--transition-smooth);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .feature-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .feature-content p {
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .feature-demo {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .demo-input, .demo-textarea {
+            background: var(--bg-secondary);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            padding: 12px 16px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            outline: none;
+            transition: var(--transition-fast);
+        }
+
+        .demo-input:focus, .demo-textarea:focus {
+            border-color: var(--primary-color);
+        }
+
+        .demo-result {
+            margin-top: 15px;
+            padding: 15px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--glass-border);
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Quick Tools Section */
+        .quick-tools-section {
+            padding: 80px 0;
+            background: var(--glass-white);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl);
+            margin: 40px 0;
+            border: 1px solid var(--glass-border);
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .tool-card {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .tool-icon {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+
+        .tool-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .tool-content p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .tool-demo {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* Promo Banners */
+        .promo-banner {
+            margin: 60px 0;
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+        }
+
+        .whatsapp-banner {
+            background: linear-gradient(135deg, #25d366, #128c7e);
+        }
+
+        .products-banner {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .banner-content {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            padding: 40px;
+            color: white;
+        }
+
+        .banner-icon {
+            font-size: 3rem;
+        }
+
+        .banner-text {
+            flex: 1;
+        }
+
+        .banner-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .banner-text p {
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .banner-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        /* FAQ Section */
+        .ai-faq-section {
+            padding: 80px 0;
+        }
+
+        .faq-list {
+            max-width: 800px;
+            margin: 50px auto 0;
+        }
+
+        .faq-item {
+            background: var(--glass-white);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-lg);
+            margin-bottom: 15px;
+            border: 1px solid var(--glass-border);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            width: 100%;
+            background: transparent;
+            border: none;
+            padding: 25px 30px;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            transition: var(--transition-fast);
+        }
+
+        .faq-question:hover {
+            background: var(--glass-white-strong);
+        }
+
+        .faq-question i {
+            font-size: 1.2rem;
+            transition: var(--transition-fast);
+        }
+
+        .faq-answer {
+            padding: 0 30px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all var(--transition-smooth);
+        }
+
+        .faq-answer.open {
+            max-height: 200px;
+            padding: 0 30px 25px;
+        }
+
+        .faq-answer p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Disclaimer Section */
+        .disclaimer-section {
+            padding: 60px 0;
+            background: var(--glass-white);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl);
+            margin: 40px 0;
+            border: 1px solid var(--glass-border);
+        }
+
+        .disclaimer-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .disclaimer-content h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--warning-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .disclaimer-content p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Buttons */
+        .btn-primary, .btn-secondary, .btn-white, .btn-outline, .btn-small {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary-color);
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .btn-white {
+            background: white;
+            color: var(--text-primary);
+        }
+
+        .btn-white:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 1px solid white;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: var(--text-primary);
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+        }
+
+        /* Typing Indicator */
+        .typing-indicator .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dots span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--text-secondary);
+            animation: typing 1.4s infinite ease-in-out;
+        }
+
+        .typing-dots span:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dots span:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        /* Analysis Results */
+        .analysis-result, .comparison-result, .gift-result, .deals-result, .color-result, .offer-name {
+            padding: 15px;
+            border-radius: var(--radius-md);
+            background: var(--bg-secondary);
+            border: 1px solid var(--glass-border);
+        }
+
+        .positive { color: var(--success-color); }
+        .error { color: var(--error-color); }
+        .loading { color: var(--text-secondary); }
+        .winner { color: var(--success-color); font-weight: 600; }
+
+        .comparison-table {
+            width: 100%;
+            margin: 10px 0;
+            border-collapse: collapse;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .ai-hero {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                text-align: center;
+            }
+
+            .ai-hero-title {
+                font-size: 2.5rem;
+            }
+
+            .features-grid, .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .banner-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+
+            .banner-actions {
+                justify-content: center;
+            }
+
+            .chat-input-wrapper {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .chat-input-actions {
+                align-self: flex-end;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .ai-hero {
+                padding: 40px 0;
+            }
+
+            .ai-hero-title {
+                font-size: 2rem;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            .feature-card, .tool-card {
+                padding: 25px;
+            }
+
+            .banner-content {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-background"></div>
+    
+    <div id="navbar-placeholder"></div>
+
+    <main class="container">
+        <!-- Hero Section -->
+        <section class="ai-hero">
+            <div class="ai-hero-content">
+                <div class="ai-hero-icon">
+                    <i class="ph ph-robot"></i>
+                </div>
+                <h1 class="ai-hero-title">
+                    Benvenuto in <span class="gradient-text">CronoAI 2.0</span>
+                </h1>
+                <p class="ai-hero-description">
+                    Il tuo copilota per lo shopping. Sfrutta la vera intelligenza artificiale per fare acquisti più intelligenti, veloci e convenienti su Amazon.
+                </p>
+                <div class="ai-hero-actions">
+                    <button class="btn-primary" onclick="scrollToChat()">
+                        <i class="ph ph-chat-circle"></i>
+                        Inizia a Chattare
+                    </button>
+                    <button class="btn-secondary" onclick="scrollToFeatures()">
+                        <i class="ph ph-list"></i>
+                        Scopri le Funzioni
+                    </button>
+                </div>
+            </div>
+            
+            <div class="ai-hero-demo">
+                <div class="demo-chat">
+                    <div class="demo-message user">
+                        Trovami uno smartphone sotto i 500€
+                    </div>
+                    <div class="demo-message ai">
+                        Ho trovato 3 ottimi smartphone per te! Il Samsung Galaxy A54 a €399 ha ottime recensioni...
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Introduction -->
+        <section class="ai-intro">
+            <div class="intro-content">
+                <h2>Che cos'è CronoAI?</h2>
+                <p>
+                    <strong>CronoAI</strong> è l'ecosistema di intelligenza artificiale sviluppato da 
+                    <a href="index.html">Cronoshop</a> per rivoluzionare la tua esperienza di acquisto. 
+                    Dimentica i dubbi e le ricerche infinite: i nostri strumenti analizzano per te dati complessi 
+                    e ti forniscono risposte chiare e immediate.
+                </p>
+                <p>
+                    Prima di iniziare, ti invitiamo a leggere la nostra 
+                    <a href="chisiamo.html">pagina di presentazione</a> e a unirti ai nostri 
+                    <a href="groups.html">canali di offerte</a> per non perdere nessuna occasione. 
+                    Ricorda che questo è uno strumento di supporto: verifica sempre il prezzo finale su Amazon.
+                </p>
+            </div>
+        </section>
+
+        <!-- AI Chat Interface -->
+        <section class="ai-chat-section" id="ai-chat">
+            <div class="section-header">
+                <h2>
+                    <i class="ph ph-chat-circle"></i>
+                    Chatta con CronoAI
+                </h2>
+                <p>Fai una domanda e ricevi consigli personalizzati sui migliori prodotti</p>
+            </div>
+
+            <div class="chat-container">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message ai-message">
+                        <div class="message-avatar">
+                            <i class="ph ph-robot"></i>
+                        </div>
+                        <div class="message-content">
+                            Ciao! Sono CronoAI, il tuo assistente per lo shopping intelligente. 
+                            Dimmi cosa stai cercando e ti aiuterò a trovare le migliori offerte! 🛍️
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-suggestions">
+                    <button class="suggestion-chip" onclick="sendSuggestion('Smartphone sotto 500€')">
+                        📱 Smartphone sotto 500€
+                    </button>
+                    <button class="suggestion-chip" onclick="sendSuggestion('Cuffie wireless migliori')">
+                        🎧 Cuffie wireless migliori
+                    </button>
+                    <button class="suggestion-chip" onclick="sendSuggestion('Laptop per lavoro')">
+                        💻 Laptop per lavoro
+                    </button>
+                    <button class="suggestion-chip" onclick="sendSuggestion('Regalo San Valentino')">
+                        💝 Regalo San Valentino
+                    </button>
+                </div>
+
+                <div class="chat-input-container">
+                    <div class="chat-input-wrapper">
+                        <textarea 
+                            id="chatInput" 
+                            placeholder="Scrivi la tua domanda qui..." 
+                            rows="1"
+                            maxlength="500"
+                        ></textarea>
+                        <div class="chat-input-actions">
+                            <span class="char-count">0/500</span>
+                            <button id="sendButton" class="send-button" onclick="sendMessage()">
+                                <i class="ph ph-paper-plane-tilt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-controls">
+                    <button class="chat-control-btn" onclick="clearChat()">
+                        <i class="ph ph-trash"></i>
+                        Cancella Chat
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Features -->
+        <section class="ai-features-section" id="ai-features">
+            <div class="section-header">
+                <h2>Intelligenza Avanzata: Funzioni Esclusive</h2>
+                <p>Strumenti AI potenti per decisioni di acquisto intelligenti</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="ph ph-chart-line"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Analizzatore Trend di Prezzo</h3>
+                        <p>Incolla l'URL di un prodotto Amazon per visualizzarne lo storico dei prezzi e ricevere una previsione AI sulla probabilità di un futuro ribasso.</p>
+                        <div class="feature-demo">
+                            <input type="text" id="priceTrendInput" placeholder="Incolla URL Amazon..." class="demo-input">
+                            <button class="btn-primary btn-small" onclick="analyzePriceTrend()">
+                                <i class="ph ph-magnifying-glass"></i>
+                                Analizza
+                            </button>
+                            <div class="demo-result" id="priceTrendResult"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="ph ph-scales"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Confronto Prodotti Smart</h3>
+                        <p>Inserisci due o più URL Amazon. L'AI genererà una tabella comparativa, riassumerà i pro e i contro dalle recensioni e ti consiglierà il miglior acquisto.</p>
+                        <div class="feature-demo">
+                            <textarea id="compareInput" placeholder="Incolla un URL per riga..." rows="3" class="demo-textarea"></textarea>
+                            <button class="btn-primary btn-small" onclick="compareProducts()">
+                                <i class="ph ph-scales"></i>
+                                Confronta
+                            </button>
+                            <div class="demo-result" id="compareResult"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="ph ph-gift"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Generatore Idee Regalo</h3>
+                        <p>Descrivi la persona e l'occasione (es. "Regalo per papà 60 anni, ama giardinaggio, budget 50€"). L'AI troverà i regali perfetti per te.</p>
+                        <div class="feature-demo">
+                            <input type="text" id="giftInput" placeholder="Descrivi qui il regalo che cerchi..." class="demo-input">
+                            <button class="btn-primary btn-small" onclick="generateGiftIdeas()">
+                                <i class="ph ph-gift"></i>
+                                Trova Regalo
+                            </button>
+                            <div class="demo-result" id="giftResult"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="ph ph-magnifying-glass-plus"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Cacciatore Offerte Nascoste</h3>
+                        <p>L'AI scandaglia Amazon alla ricerca di coupon nascosti, offerte Warehouse e sconti applicati al checkout. Inserisci una categoria.</p>
+                        <div class="feature-demo">
+                            <input type="text" id="hiddenDealInput" placeholder="Es. Cuffie Bluetooth" class="demo-input">
+                            <button class="btn-primary btn-small" onclick="findHiddenDeals()">
+                                <i class="ph ph-detective"></i>
+                                Scova Offerte
+                            </button>
+                            <div class="demo-result" id="hiddenDealResult"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Tools -->
+        <section class="quick-tools-section">
+            <div class="section-header">
+                <h2>Strumenti di Analisi Rapida</h2>
+                <p>Funzioni veloci per decisioni immediate</p>
+            </div>
+
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="ph ph-palette"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>Analizzatore Colore Sconto</h3>
+                        <p>Un modo rapido per interpretare i nostri codici colore. Inserisci un colore e ti diremo che tipo di sconto rappresenta!</p>
+                        <div class="tool-demo">
+                            <input type="text" id="colorInput" placeholder="Es. verde, blu, arancione..." class="demo-input">
+                            <button class="btn-secondary btn-small" onclick="analyzeColor()">Analizza</button>
+                            <div class="demo-result" id="colorResult"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="ph ph-shuffle"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>Generatore Nome Offerta</h3>
+                        <p>Sei a caccia di ispirazione? Clicca per generare un nome accattivante per un'offerta. Perfetto per i nostri partner e affiliati!</p>
+                        <div class="tool-demo">
+                            <button class="btn-secondary" onclick="generateOfferName()">
+                                <i class="ph ph-sparkle"></i>
+                                Genera Nome
+                            </button>
+                            <div class="demo-result" id="offerNameResult"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Promo Banners -->
+        <section class="promo-banner whatsapp-banner">
+            <div class="banner-content">
+                <div class="banner-icon">
+                    <i class="ph ph-whatsapp-logo"></i>
+                </div>
+                <div class="banner-text">
+                    <h3>Offerte Esclusive su WhatsApp</h3>
+                    <p>L'AI è potente, ma le offerte lampo sono veloci! Unisciti al nostro canale per ricevere le migliori occasioni selezionate dal nostro team in tempo reale.</p>
+                </div>
+                <div class="banner-action">
+                    <a href="groups.html" class="btn-white">
+                        <i class="ph ph-whatsapp-logo"></i>
+                        Unisciti Ora
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="promo-banner products-banner">
+            <div class="banner-content">
+                <div class="banner-icon">
+                    <i class="ph ph-shopping-bag"></i>
+                </div>
+                <div class="banner-text">
+                    <h3>Stanco di Analizzare? Passa all'Azione!</h3>
+                    <p>L'intelligenza artificiale ti ha dato i consigli giusti. Ora trova il prodotto perfetto tra centinaia di offerte reali e verificate dal nostro team.</p>
+                </div>
+                <div class="banner-actions">
+                    <a href="products.html?category=tech" class="btn-primary">Vai a Tecnologia</a>
+                    <a href="products.html?category=casa" class="btn-primary">Vai a Casa</a>
+                    <a href="products.html" class="btn-secondary">Vedi Tutte</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="ai-faq-section">
+            <div class="section-header">
+                <h2>Domande Frequenti su CronoAI</h2>
+                <p>Tutto quello che devi sapere sul nostro assistente AI</p>
+            </div>
+
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>CronoAI è gratuito?</span>
+                        <i class="ph ph-plus"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sì, CronoAI è completamente gratuito per tutti gli utenti di Cronoshop. Non ci sono limiti di utilizzo o costi nascosti.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Come funziona l'analisi dei prezzi?</span>
+                        <i class="ph ph-plus"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>CronoAI analizza i dati storici dei prezzi Amazon e utilizza algoritmi di machine learning per prevedere le tendenze future e identificare i momenti migliori per acquistare.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Le raccomandazioni sono affidabili?</span>
+                        <i class="ph ph-plus"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>CronoAI basa le sue raccomandazioni su dati reali e algoritmi avanzati, ma ti consigliamo sempre di verificare personalmente le informazioni prima di effettuare un acquisto.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Posso usare CronoAI su mobile?</span>
+                        <i class="ph ph-plus"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Assolutamente! CronoAI è ottimizzato per tutti i dispositivi e funziona perfettamente su smartphone, tablet e desktop.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Disclaimer -->
+        <section class="disclaimer-section">
+            <div class="disclaimer-content">
+                <h2>
+                    <i class="ph ph-warning"></i>
+                    Disclaimer e Descrizione del Servizio
+                </h2>
+                <p>
+                    <strong>CronoAI è un servizio sperimentale basato su modelli linguistici di grandi dimensioni.</strong> 
+                    Le risposte, sebbene avanzate, sono generate artificialmente e potrebbero contenere imprecisioni. 
+                    Le analisi, le previsioni di prezzo e i suggerimenti non costituiscono una consulenza d'acquisto o finanziaria. 
+                    Le offerte, i prezzi e la disponibilità dei prodotti non sono garantiti e devono <strong>sempre</strong> 
+                    essere verificati sulla pagina ufficiale di Amazon prima di procedere all'acquisto. 
+                    <strong>Cronoshop e CronoAI non si assumono alcuna responsabilità per le decisioni di acquisto dell'utente.</strong>
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script>
+        // CronoAI functionality
+        let chatHistory = [];
+        let isTyping = false;
+
+        class CronoAI {
+            constructor() {
+                this.setupEventListeners();
+                this.loadChatHistory();
+            }
+
+            setupEventListeners() {
+                // Chat input
+                const chatInput = document.getElementById('chatInput');
+                chatInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        this.sendMessage();
+                    }
+                });
+
+                chatInput.addEventListener('input', () => {
+                    this.updateCharCount();
+                    this.autoResize();
+                });
+
+                // Send button
+                document.getElementById('sendButton').addEventListener('click', () => {
+                    this.sendMessage();
+                });
+            }
+
+            loadChatHistory() {
+                try {
+                    const saved = localStorage.getItem('cronoai_chat_history');
+                    if (saved) {
+                        chatHistory = JSON.parse(saved);
+                        this.renderChatHistory();
+                    }
+                } catch (error) {
+                    console.error('Error loading chat history:', error);
+                }
+            }
+
+            saveChatHistory() {
+                try {
+                    localStorage.setItem('cronoai_chat_history', JSON.stringify(chatHistory));
+                } catch (error) {
+                    console.error('Error saving chat history:', error);
+                }
+            }
+
+            renderChatHistory() {
+                const messagesContainer = document.getElementById('chatMessages');
+                // Keep the initial AI message and add history
+                chatHistory.forEach(message => {
+                    this.addMessageToDOM(message.content, message.sender, false);
+                });
+            }
+
+            sendMessage() {
+                const input = document.getElementById('chatInput');
+                const message = input.value.trim();
+                
+                if (!message || isTyping) return;
+                
+                this.addMessage(message, 'user');
+                input.value = '';
+                this.updateCharCount();
+                this.autoResize();
+                
+                // Simulate AI response
+                this.simulateAIResponse(message);
+            }
+
+            sendSuggestion(suggestion) {
+                const input = document.getElementById('chatInput');
+                input.value = suggestion;
+                this.sendMessage();
+            }
+
+            addMessage(content, sender) {
+                const message = { content, sender, timestamp: new Date() };
+                chatHistory.push(message);
+                this.addMessageToDOM(content, sender, true);
+                this.saveChatHistory();
+            }
+
+            addMessageToDOM(content, sender, scroll = true) {
+                const messagesContainer = document.getElementById('chatMessages');
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${sender}-message`;
+                
+                const avatar = document.createElement('div');
+                avatar.className = 'message-avatar';
+                avatar.innerHTML = sender === 'ai' ? '<i class="ph ph-robot"></i>' : '<i class="ph ph-user"></i>';
+                
+                const messageContent = document.createElement('div');
+                messageContent.className = 'message-content';
+                messageContent.innerHTML = content;
+                
+                messageDiv.appendChild(avatar);
+                messageDiv.appendChild(messageContent);
+                messagesContainer.appendChild(messageDiv);
+                
+                if (scroll) {
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }
+            }
+
+            simulateAIResponse(userMessage) {
+                isTyping = true;
+                const sendButton = document.getElementById('sendButton');
+                sendButton.disabled = true;
+                
+                // Show typing indicator
+                this.addTypingIndicator();
+                
+                setTimeout(() => {
+                    this.removeTypingIndicator();
+                    const response = this.generateAIResponse(userMessage);
+                    this.addMessage(response, 'ai');
+                    isTyping = false;
+                    sendButton.disabled = false;
+                }, 2000 + Math.random() * 1000);
+            }
+
+            addTypingIndicator() {
+                const messagesContainer = document.getElementById('chatMessages');
+                const typingDiv = document.createElement('div');
+                typingDiv.className = 'message ai-message typing-indicator';
+                typingDiv.id = 'typing-indicator';
+                
+                typingDiv.innerHTML = `
+                    <div class="message-avatar">
+                        <i class="ph ph-robot"></i>
+                    </div>
+                    <div class="message-content">
+                        <div class="typing-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                `;
+                
+                messagesContainer.appendChild(typingDiv);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+
+            removeTypingIndicator() {
+                const indicator = document.getElementById('typing-indicator');
+                if (indicator) {
+                    indicator.remove();
+                }
+            }
+
+            generateAIResponse(userMessage) {
+                const message = userMessage.toLowerCase();
+                
+                if (message.includes('smartphone') || message.includes('telefono')) {
+                    return `📱 <strong>Smartphone consigliati per te:</strong><br><br>
+                        🥇 <strong>Samsung Galaxy A54</strong> - €399 (era €499)<br>
+                        🥈 <strong>iPhone 13</strong> - €629 (era €729)<br>
+                        🥉 <strong>Xiaomi Redmi Note 12</strong> - €249 (era €299)<br><br>
+                        Tutti hanno ottime recensioni e sono in offerta! Vuoi che analizzi le specifiche di uno in particolare?`;
+                }
+                
+                if (message.includes('cuffie') || message.includes('auricolari')) {
+                    return `🎧 <strong>Cuffie wireless top 2025:</strong><br><br>
+                        🎵 <strong>Sony WH-1000XM5</strong> - €299 (era €399)<br>
+                        ⭐ Cancellazione rumore eccellente<br>
+                        🔋 30h di autonomia<br><br>
+                        🎵 <strong>AirPods Pro 2</strong> - €229 (era €279)<br>
+                        ⭐ Perfette per iPhone<br>
+                        🔋 6h + 24h con custodia<br><br>
+                        Quale preferisci? Posso fare un confronto dettagliato!`;
+                }
+                
+                if (message.includes('laptop') || message.includes('computer')) {
+                    return `💻 <strong>Laptop perfetti per te:</strong><br><br>
+                        Per <strong>studenti</strong>:<br>
+                        • ASUS VivoBook 15 - €549 (era €699)<br>
+                        • Lenovo IdeaPad 3 - €479 (era €599)<br><br>
+                        Per <strong>lavoro</strong>:<br>
+                        • MacBook Air M2 - €1199 (era €1399)<br>
+                        • Dell XPS 13 - €999 (era €1199)<br><br>
+                        Dimmi per cosa lo userai principalmente e ti darò consigli più specifici!`;
+                }
+                
+                if (message.includes('regalo') || message.includes('san valentino')) {
+                    return `💝 <strong>Idee regalo romantiche:</strong><br><br>
+                        👩 <strong>Per lei:</strong><br>
+                        • Profumo Chanel - €89 (era €120)<br>
+                        • Gioielli Pandora - da €39<br>
+                        • Set skincare Clinique - €79 (era €99)<br><br>
+                        👨 <strong>Per lui:</strong><br>
+                        • Smartwatch Apple Watch - €299 (era €399)<br>
+                        • Profumo Dior Sauvage - €79 (era €99)<br>
+                        • Cuffie Bose - €199 (era €249)<br><br>
+                        Che budget hai in mente? Posso personalizzare i suggerimenti!`;
+                }
+                
+                // Default response
+                return `Grazie per la tua domanda! 🤔<br><br>
+                    Sto analizzando le migliori opzioni per te. Ecco cosa posso fare:<br><br>
+                    🔍 <strong>Cercare prodotti specifici</strong><br>
+                    💰 <strong>Confrontare prezzi e offerte</strong><br>
+                    ⭐ <strong>Analizzare recensioni</strong><br>
+                    📊 <strong>Mostrarti l'andamento dei prezzi</strong><br><br>
+                    Puoi essere più specifico su cosa stai cercando? Ad esempio:<br>
+                    • "Smartphone sotto 500€"<br>
+                    • "Laptop per gaming"<br>
+                    • "Regalo per compleanno"<br><br>
+                    Così potrò aiutarti meglio! 😊`;
+            }
+
+            updateCharCount() {
+                const input = document.getElementById('chatInput');
+                const charCount = document.querySelector('.char-count');
+                if (charCount) {
+                    charCount.textContent = `${input.value.length}/500`;
+                }
+            }
+
+            autoResize() {
+                const input = document.getElementById('chatInput');
+                input.style.height = 'auto';
+                input.style.height = Math.min(input.scrollHeight, 120) + 'px';
+            }
+        }
+
+        // Feature functions
+        function analyzePriceTrend() {
+            const input = document.getElementById('priceTrendInput');
+            const result = document.getElementById('priceTrendResult');
+            const url = input.value.trim();
+            
+            if (!url) {
+                result.innerHTML = '<span class="error">Inserisci un URL Amazon valido</span>';
+                return;
+            }
+            
+            result.innerHTML = '<span class="loading">Analizzando...</span>';
+            
+            setTimeout(() => {
+                result.innerHTML = `
+                    <div class="analysis-result">
+                        <strong>📈 Analisi Completata</strong><br>
+                        Prezzo attuale: €299<br>
+                        Prezzo medio (30gg): €349<br>
+                        <span class="positive">Probabilità ribasso: 75%</span><br>
+                        <small>Consiglio: Ottimo momento per acquistare!</small>
+                    </div>
+                `;
+            }, 2000);
+        }
+
+        function compareProducts() {
+            const input = document.getElementById('compareInput');
+            const result = document.getElementById('compareResult');
+            const urls = input.value.trim();
+            
+            if (!urls) {
+                result.innerHTML = '<span class="error">Inserisci almeno 2 URL Amazon</span>';
+                return;
+            }
+            
+            result.innerHTML = '<span class="loading">Confrontando prodotti...</span>';
+            
+            setTimeout(() => {
+                result.innerHTML = `
+                    <div class="comparison-result">
+                        <strong>⚖️ Confronto Completato</strong><br>
+                        <table class="comparison-table">
+                            <tr><th>Prodotto A</th><th>Prodotto B</th></tr>
+                            <tr><td>€299</td><td>€349</td></tr>
+                            <tr><td>4.5⭐</td><td>4.2⭐</td></tr>
+                        </table>
+                        <span class="winner">🏆 Vincitore: Prodotto A</span>
+                    </div>
+                `;
+            }, 3000);
+        }
+
+        function generateGiftIdeas() {
+            const input = document.getElementById('giftInput');
+            const result = document.getElementById('giftResult');
+            const description = input.value.trim();
+            
+            if (!description) {
+                result.innerHTML = '<span class="error">Descrivi il regalo che cerchi</span>';
+                return;
+            }
+            
+            result.innerHTML = '<span class="loading">Generando idee regalo...</span>';
+            
+            setTimeout(() => {
+                result.innerHTML = `
+                    <div class="gift-result">
+                        <strong>🎁 Idee Regalo Perfette</strong><br>
+                        1. Set da giardinaggio premium - €45<br>
+                        2. Libro di botanica illustrato - €29<br>
+                        3. Vaso smart con sensori - €39<br>
+                        <small>Tutte le opzioni rispettano il tuo budget!</small>
+                    </div>
+                `;
+            }, 2000);
+        }
+
+        function findHiddenDeals() {
+            const input = document.getElementById('hiddenDealInput');
+            const result = document.getElementById('hiddenDealResult');
+            const category = input.value.trim();
+            
+            if (!category) {
+                result.innerHTML = '<span class="error">Inserisci una categoria</span>';
+                return;
+            }
+            
+            result.innerHTML = '<span class="loading">Cercando offerte nascoste...</span>';
+            
+            setTimeout(() => {
+                result.innerHTML = `
+                    <div class="deals-result">
+                        <strong>🕵️ Offerte Nascoste Trovate</strong><br>
+                        • Coupon 15% su Sony WH-1000XM4<br>
+                        • Sconto checkout 20€ su Bose QC45<br>
+                        • Warehouse Deal: AirPods Pro -30%<br>
+                        <small>3 offerte speciali disponibili ora!</small>
+                    </div>
+                `;
+            }, 2500);
+        }
+
+        function analyzeColor() {
+            const input = document.getElementById('colorInput');
+            const result = document.getElementById('colorResult');
+            const color = input.value.trim().toLowerCase();
+            
+            if (!color) {
+                result.innerHTML = '<span class="error">Inserisci un colore</span>';
+                return;
+            }
+            
+            const colorMeanings = {
+                'rosso': 'Sconto superiore al 50% - Offerta eccezionale!',
+                'arancione': 'Sconto 30-50% - Ottima occasione',
+                'giallo': 'Sconto 20-30% - Buon affare',
+                'verde': 'Sconto 10-20% - Prezzo conveniente',
+                'blu': 'Sconto fino al 10% - Leggero risparmio',
+                'viola': 'Offerta limitata nel tempo'
+            };
+            
+            const meaning = colorMeanings[color] || 'Colore non riconosciuto nel nostro sistema';
+            result.innerHTML = `<div class="color-result"><strong>🎨 ${color.toUpperCase()}:</strong> ${meaning}</div>`;
+        }
+
+        function generateOfferName() {
+            const result = document.getElementById('offerNameResult');
+            const names = [
+                '🔥 MEGA SALDI TECH',
+                '⚡ FLASH DEAL WEEKEND',
+                '💎 OFFERTE PREMIUM',
+                '🎯 SUPER SCONTO LAMPO',
+                '🚀 DEAL SPAZIALE',
+                '💥 BOMBA DI RISPARMIO',
+                '🌟 STELLE CADENTI PREZZI',
+                '🎪 CIRCO DEGLI SCONTI'
+            ];
+            
+            const randomName = names[Math.floor(Math.random() * names.length)];
+            result.innerHTML = `<div class="offer-name"><strong>Nome generato:</strong> ${randomName}</div>`;
+        }
+
+        // Global functions
+        function scrollToChat() {
+            document.getElementById('ai-chat').scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => {
+                document.getElementById('chatInput').focus();
+            }, 500);
+        }
+
+        function scrollToFeatures() {
+            document.getElementById('ai-features').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function clearChat() {
+            if (confirm('Sei sicuro di voler cancellare tutta la conversazione?')) {
+                const messagesContainer = document.getElementById('chatMessages');
+                // Keep only the initial AI message
+                const initialMessage = messagesContainer.firstElementChild;
+                messagesContainer.innerHTML = '';
+                messagesContainer.appendChild(initialMessage);
+                chatHistory = [];
+                localStorage.removeItem('cronoai_chat_history');
+                showNotification('Chat cancellata', 'success');
+            }
+        }
+
+        function toggleFAQ(element) {
+            const answer = element.nextElementSibling;
+            const icon = element.querySelector('i');
+            
+            const isOpen = answer.classList.contains('open');
+            
+            // Close all other FAQs
+            document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
+            document.querySelectorAll('.faq-question i').forEach(i => i.className = 'ph ph-plus');
+            
+            if (!isOpen) {
+                answer.classList.add('open');
+                icon.className = 'ph ph-minus';
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <div class="notification-content">
+                    <i class="ph ph-${type === 'success' ? 'check-circle' : type === 'error' ? 'x-circle' : 'info'}"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+
+            document.body.appendChild(notification);
+
+            setTimeout(() => notification.classList.add('show'), 100);
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        function sendSuggestion(suggestion) {
+            const input = document.getElementById('chatInput');
+            input.value = suggestion;
+            sendMessage();
+        }
+
+        function sendMessage() {
+            if (window.cronoAI) {
+                window.cronoAI.sendMessage();
+            }
+        }
+
+        // Load components
+        function loadComponent(url, placeholderId) {
+            fetch(url)
+                .then(response => response.ok ? response.text() : Promise.reject('Errore nel caricamento'))
+                .then(data => {
+                    const placeholder = document.getElementById(placeholderId);
+                    if (!placeholder) return;
+                    
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = data;
+                    
+                    const script = tempDiv.querySelector('script');
+                    placeholder.innerHTML = tempDiv.innerHTML;
+
+                    if (script) {
+                        const newScript = document.createElement('script');
+                        newScript.textContent = script.textContent;
+                        document.body.appendChild(newScript).remove();
+                    }
+                })
+                .catch(error => console.error(`Impossibile caricare ${url}: ${error}`));
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            loadComponent('nav.html', 'navbar-placeholder');
+            loadComponent('footer.html', 'footer-placeholder');
+            window.cronoAI = new CronoAI();
+        });
+    </script>
+</body>
+</html>

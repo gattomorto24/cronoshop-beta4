@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account - Cronoshop</title>
+    <meta name="description" content="Gestisci il tuo account Cronoshop.">
+    <meta name="author" content="Cronoshop Team" />
+    <link rel="canonical" href="https://www.cronoshop.eu/account.html">
+    <link rel="icon" type="image/png" href="assets/cronoshop-logo.png">
+    <link rel="apple-touch-icon" href="assets/cronoshop-logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        /* --- [1] STILE NAVBAR (STATICO) --- */
+        :root {
+            --nav-bg-color: rgba(255, 255, 255, 0.7);
+            --nav-text-color: #1d1d1f;
+            --nav-text-secondary: #6e6e73;
+            --nav-accent-color: #007aff;
+            --nav-divider-color: #d1d1d6;
+            --nav-hover-bg: rgba(0, 0, 0, 0.05);
+            --nav-transition-fast: 0.2s ease;
+            --nav-transition-smooth: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        html.dark-theme {
+            --nav-bg-color: rgba(28, 28, 30, 0.75);
+            --nav-text-color: #f5f5f7;
+            --nav-text-secondary: #86868b;
+            --nav-accent-color: #0a84ff;
+            --nav-divider-color: #424245;
+            --nav-hover-bg: rgba(255, 255, 255, 0.1);
+        }
+        .glass-header {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            background-color: var(--nav-bg-color); backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 1px solid var(--nav-divider-color);
+        }
+        .nav-container {
+            display: flex; justify-content: space-between; align-items: center;
+            max-width: 1200px; margin: 0 auto; padding: 0 20px; height: 60px;
+        }
+        .logo-link { display: flex; align-items: center; text-decoration: none; color: var(--nav-text-color); }
+        .logo-image { height: 32px; margin-right: 8px; }
+        .logo-dark { display: none; }
+        html.dark-theme .logo-light { display: none; }
+        html.dark-theme .logo-dark { display: block; }
+        .logo-text { font-size: 20px; font-weight: 600; }
+        .nav-desktop-list { display: flex; gap: 8px; list-style: none; }
+        .nav-desktop-link {
+            padding: 8px 12px; text-decoration: none; color: var(--nav-text-secondary);
+            font-size: 14px; font-weight: 500; border-radius: 8px;
+            transition: background-color var(--nav-transition-fast), color var(--nav-transition-fast);
+        }
+        .nav-desktop-link:hover { background-color: var(--nav-hover-bg); color: var(--nav-text-color); }
+        .nav-desktop-link.active { color: var(--nav-text-color); font-weight: 600; }
+        .nav-actions { display: flex; align-items: center; gap: 8px; }
+        .glass-btn {
+            background: transparent; border: none; cursor: pointer; padding: 8px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;
+        }
+        .glass-btn:hover { background-color: var(--nav-hover-bg); }
+        .glass-btn i { font-size: 22px; color: var(--nav-text-color); }
+        .mobile-menu-btn { display: none; }
+        @media (max-width: 992px) { .nav-desktop { display: none; } .mobile-menu-btn { display: flex; } }
+
+        /* --- [2] IMPOSTAZIONI GLOBALI E VARIABILI (STILE iOS - PAGINA) --- */
+        :root {
+            --primary-color: #007aff;
+            --secondary-color: #5856d6;
+            --success-color: #34c759;
+            --warning-color: #ff9500;
+            --error-color: #ff3b30;
+            --text-primary: #1d1d1f;
+            --text-secondary: #6e6e73;
+            --bg-primary: #f2f2f7;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #e5e5ea;
+            --glass-white: rgba(255, 255, 255, 0.1);
+            --glass-white-strong: rgba(255, 255, 255, 0.2);
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.2);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --transition-fast: 0.2s ease;
+            --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .dark-mode {
+            --text-primary: #f5f5f7;
+            --text-secondary: #8d8d92;
+            --bg-primary: #000000;
+            --bg-secondary: #1c1c1e;
+            --bg-tertiary: #2c2c2e;
+            --glass-white: rgba(255, 255, 255, 0.05);
+            --glass-white-strong: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding-top: 80px;
+        }
+
+        .animated-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            padding: 60px 0;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Account Section */
+        .account-section {
+            padding: 40px 0;
+        }
+
+        .account-details {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Profile Card */
+        .profile-card {
+            background: var(--glass-white);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl);
+            padding: 40px;
+            margin-bottom: 30px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-md);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .profile-avatar {
+            text-align: center;
+        }
+
+        .avatar-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--bg-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            border: 3px solid var(--glass-border);
+        }
+
+        .avatar-circle i {
+            font-size: 3rem;
+            color: var(--text-secondary);
+        }
+
+        .profile-info {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .profile-info h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .profile-info p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .profile-stat {
+            text-align: center;
+        }
+
+        .profile-stat-number {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .profile-stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .profile-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        /* Account Options */
+        .account-options {
+            background: var(--glass-white);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--glass-border);
+        }
+
+        .option-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 25px 30px;
+            cursor: pointer;
+            border-bottom: 1px solid var(--glass-border);
+            transition: var(--transition-fast);
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .option-card:last-child {
+            border-bottom: none;
+        }
+
+        .option-card:hover {
+            background: var(--glass-white-strong);
+            transform: translateX(5px);
+        }
+
+        .option-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .option-content {
+            flex: 1;
+        }
+
+        .option-content h4 {
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color: var(--text-primary);
+        }
+
+        .option-content p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .option-arrow {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+        }
+
+        /* Login/Logout Section */
+        .auth-section {
+            background: var(--glass-white);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl);
+            padding: 40px;
+            margin-bottom: 30px;
+            border: 1px solid var(--glass-border);
+            text-align: center;
+        }
+
+        .auth-section.logged-out {
+            border: 2px solid var(--primary-color);
+        }
+
+        .auth-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .auth-section p {
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .auth-form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: var(--transition-fast);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .btn-danger {
+            background: var(--error-color);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #d70015;
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+        }
+
+        /* User Status */
+        .user-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .user-status.online {
+            background: rgba(52, 199, 89, 0.1);
+            color: var(--success-color);
+        }
+
+        .user-status.offline {
+            background: rgba(142, 142, 147, 0.1);
+            color: var(--text-secondary);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+
+            .profile-stats {
+                justify-content: center;
+            }
+
+            .profile-actions {
+                justify-content: center;
+            }
+
+            .option-card {
+                padding: 20px;
+            }
+
+            .option-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .profile-card, .auth-section, .account-options {
+                margin: 0 -10px 30px;
+                border-radius: var(--radius-lg);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .page-header {
+                padding: 40px 0;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .profile-card, .auth-section {
+                padding: 25px;
+            }
+
+            .avatar-circle {
+                width: 80px;
+                height: 80px;
+            }
+
+            .avatar-circle i {
+                font-size: 2.5rem;
+            }
+
+            .profile-info h3 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-background"></div>
+    
+    <div id="navbar-placeholder"></div>
+
+    <main class="container">
+        <section class="account-section">
+            <div class="page-header">
+                <h1>
+                    <i class="ph ph-user-circle"></i>
+                    Il Tuo Account
+                </h1>
+                <p>Gestisci le tue informazioni e preferenze</p>
+            </div>
+
+            <div class="account-details">
+                <!-- Auth Section (shown when not logged in) -->
+                <div class="auth-section logged-out" id="authSection">
+                    <h3>Accedi al tuo Account</h3>
+                    <p>Accedi per salvare le tue preferenze, gestire wishlist e carrello, e ricevere offerte personalizzate.</p>
+                    
+                    <div class="auth-form" id="loginForm">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" placeholder="La tua email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" placeholder="La tua password" required>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary" onclick="handleLogin()">
+                                <i class="ph ph-sign-in"></i>
+                                Accedi
+                            </button>
+                        </div>
+                        <p style="margin-top: 15px; color: var(--text-secondary);">
+                            Non hai un account? 
+                            <a href="#" onclick="showRegisterForm()" style="color: var(--primary-color);">Registrati qui</a>
+                        </p>
+                    </div>
+
+                    <div class="auth-form" id="registerForm" style="display: none;">
+                        <div class="form-group">
+                            <label for="regName">Nome</label>
+                            <input type="text" id="regName" placeholder="Il tuo nome" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="regEmail">Email</label>
+                            <input type="email" id="regEmail" placeholder="La tua email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="regPassword">Password</label>
+                            <input type="password" id="regPassword" placeholder="Scegli una password" required>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary" onclick="handleRegister()">
+                                <i class="ph ph-user-plus"></i>
+                                Registrati
+                            </button>
+                        </div>
+                        <p style="margin-top: 15px; color: var(--text-secondary);">
+                            Hai già un account? 
+                            <a href="#" onclick="showLoginForm()" style="color: var(--primary-color);">Accedi qui</a>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Profile Card (shown when logged in) -->
+                <div class="profile-card" id="profileCard" style="display: none;">
+                    <div class="profile-header">
+                        <div class="profile-avatar">
+                            <div class="avatar-circle">
+                                <i class="ph ph-user"></i>
+                            </div>
+                            <button class="btn btn-secondary btn-small">Cambia Avatar</button>
+                        </div>
+                        <div class="profile-info">
+                            <h3 id="userName">Utente Cronoshop</h3>
+                            <p id="userEmail">user@example.com</p>
+                            <div class="user-status online">
+                                <i class="ph ph-circle" style="color: var(--success-color);"></i>
+                                Online
+                            </div>
+                            <div class="profile-stats">
+                                <div class="profile-stat">
+                                    <span class="profile-stat-number" id="wishlistCount">0</span>
+                                    <span class="profile-stat-label">Wishlist</span>
+                                </div>
+                                <div class="profile-stat">
+                                    <span class="profile-stat-number" id="cartCount">0</span>
+                                    <span class="profile-stat-label">Carrello</span>
+                                </div>
+                                <div class="profile-stat">
+                                    <span class="profile-stat-number" id="userPoints">0</span>
+                                    <span class="profile-stat-label">Punti</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile-actions">
+                            <button class="btn btn-primary">
+                                <i class="ph ph-pencil"></i>
+                                Modifica Profilo
+                            </button>
+                            <button class="btn btn-danger" onclick="handleLogout()">
+                                <i class="ph ph-sign-out"></i>
+                                Logout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Account Options -->
+                <div class="account-options">
+                    <a href="wishlist.html" class="option-card">
+                        <div class="option-icon" style="background: var(--error-color);">
+                            <i class="ph ph-heart"></i>
+                        </div>
+                        <div class="option-content">
+                            <h4>Wishlist</h4>
+                            <p>Gestisci i prodotti salvati nei tuoi preferiti</p>
+                        </div>
+                        <i class="ph ph-caret-right option-arrow"></i>
+                    </a>
+
+                    <a href="cart.html" class="option-card">
+                        <div class="option-icon" style="background: var(--primary-color);">
+                            <i class="ph ph-shopping-cart"></i>
+                        </div>
+                        <div class="option-content">
+                            <h4>Carrello</h4>
+                            <p>Visualizza e gestisci i prodotti nel carrello</p>
+                        </div>
+                        <i class="ph ph-caret-right option-arrow"></i>
+                    </a>
+
+                    <a href="themes.html" class="option-card">
+                        <div class="option-icon" style="background: var(--secondary-color);">
+                            <i class="ph ph-palette"></i>
+                        </div>
+                        <div class="option-content">
+                            <h4>Tema e Aspetto</h4>
+                            <p>Personalizza l'aspetto dell'applicazione</p>
+                        </div>
+                        <i class="ph ph-caret-right option-arrow"></i>
+                    </a>
+
+                    <div class="option-card" onclick="toggleNotifications()">
+                        <div class="option-icon" style="background: var(--warning-color);">
+                            <i class="ph ph-bell"></i>
+                        </div>
+                        <div class="option-content">
+                            <h4>Notifiche</h4>
+                            <p>Gestisci le notifiche e gli avvisi</p>
+                        </div>
+                        <i class="ph ph-caret-right option-arrow"></i>
+                    </div>
+
+                    <a href="stats.html" class="option-card">
+                        <div class="option-icon" style="background: var(--success-color);">
+                            <i class="ph ph-chart-bar"></i>
+                        </div>
+                        <div class="option-content">
+                            <h4>Statistiche</h4>
+                            <p>Visualizza le tue statistiche di utilizzo</p>
+                        </div>
+                        <i class="ph ph-caret-right option-arrow"></i>
+                    </a>
+
+                    <a href="privacy.html" class="option-card">
+                        <div class="option-icon" style="background: var(--text-secondary);">
+                            <i class="ph ph-shield-check"></i>
+                        </div>
+                        <div class="option-content">
+                            <h4>Privacy e Sicurezza</h4>
+                            <p>Impostazioni privacy e informazioni legali</p>
+                        </div>
+                        <i class="ph ph-caret-right option-arrow"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script>
+        // Account page functionality
+        let currentUser = null;
+
+        class AccountManager {
+            constructor() {
+                this.loadUserData();
+                this.updateUI();
+            }
+
+            loadUserData() {
+                try {
+                    const userData = localStorage.getItem('cronoshop_user');
+                    if (userData) {
+                        currentUser = JSON.parse(userData);
+                    }
+                } catch (error) {
+                    console.error('Error loading user data:', error);
+                }
+            }
+
+            saveUserData() {
+                try {
+                    if (currentUser) {
+                        localStorage.setItem('cronoshop_user', JSON.stringify(currentUser));
+                    } else {
+                        localStorage.removeItem('cronoshop_user');
+                    }
+                } catch (error) {
+                    console.error('Error saving user data:', error);
+                }
+            }
+
+            updateUI() {
+                const authSection = document.getElementById('authSection');
+                const profileCard = document.getElementById('profileCard');
+
+                if (currentUser) {
+                    // User is logged in
+                    authSection.style.display = 'none';
+                    profileCard.style.display = 'block';
+                    
+                    // Update profile information
+                    document.getElementById('userName').textContent = currentUser.name || 'Utente Cronoshop';
+                    document.getElementById('userEmail').textContent = currentUser.email || 'user@example.com';
+                    
+                    // Update stats
+                    this.updateUserStats();
+                } else {
+                    // User is not logged in
+                    authSection.style.display = 'block';
+                    profileCard.style.display = 'none';
+                }
+            }
+
+            updateUserStats() {
+                try {
+                    // Load wishlist count
+                    const wishlist = JSON.parse(localStorage.getItem('cronoshop_wishlist') || '[]');
+                    document.getElementById('wishlistCount').textContent = wishlist.length;
+
+                    // Load cart count
+                    const cart = JSON.parse(localStorage.getItem('cronoshop_cart') || '[]');
+                    const cartTotal = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+                    document.getElementById('cartCount').textContent = cartTotal;
+
+                    // Load user points (simulate)
+                    document.getElementById('userPoints').textContent = currentUser?.points || Math.floor(Math.random() * 1000);
+                } catch (error) {
+                    console.error('Error updating user stats:', error);
+                }
+            }
+
+            login(email, password) {
+                // Simulate login process
+                if (email && password) {
+                    currentUser = {
+                        id: Date.now(),
+                        name: email.split('@')[0],
+                        email: email,
+                        points: Math.floor(Math.random() * 1000),
+                        loginTime: new Date().toISOString()
+                    };
+                    
+                    this.saveUserData();
+                    this.updateUI();
+                    showNotification('Login effettuato con successo!', 'success');
+                    return true;
+                } else {
+                    showNotification('Email e password sono obbligatori', 'error');
+                    return false;
+                }
+            }
+
+            register(name, email, password) {
+                // Simulate registration process
+                if (name && email && password) {
+                    currentUser = {
+                        id: Date.now(),
+                        name: name,
+                        email: email,
+                        points: 100, // Welcome bonus
+                        registrationTime: new Date().toISOString()
+                    };
+                    
+                    this.saveUserData();
+                    this.updateUI();
+                    showNotification('Registrazione completata con successo!', 'success');
+                    return true;
+                } else {
+                    showNotification('Tutti i campi sono obbligatori', 'error');
+                    return false;
+                }
+            }
+
+            logout() {
+                currentUser = null;
+                this.saveUserData();
+                this.updateUI();
+                showNotification('Logout effettuato', 'info');
+            }
+        }
+
+        // Global functions
+        function handleLogin() {
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+            
+            if (accountManager.login(email, password)) {
+                // Clear form
+                document.getElementById('email').value = '';
+                document.getElementById('password').value = '';
+            }
+        }
+
+        function handleRegister() {
+            const name = document.getElementById('regName').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const password = document.getElementById('regPassword').value.trim();
+            
+            if (accountManager.register(name, email, password)) {
+                // Clear form
+                document.getElementById('regName').value = '';
+                document.getElementById('regEmail').value = '';
+                document.getElementById('regPassword').value = '';
+            }
+        }
+
+        function handleLogout() {
+            if (confirm('Sei sicuro di voler effettuare il logout?')) {
+                accountManager.logout();
+            }
+        }
+
+        function showLoginForm() {
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('registerForm').style.display = 'none';
+        }
+
+        function showRegisterForm() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'block';
+        }
+
+        function toggleNotifications() {
+            showNotification('Funzione notifiche in arrivo!', 'info');
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <div class="notification-content">
+                    <i class="ph ph-${type === 'success' ? 'check-circle' : type === 'error' ? 'x-circle' : 'info'}"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+
+            // Add notification styles if not already present
+            if (!document.querySelector('.notification-styles')) {
+                const style = document.createElement('style');
+                style.className = 'notification-styles';
+                style.textContent = `
+                    .notification {
+                        position: fixed;
+                        top: 20px;
+                        right: 20px;
+                        background: var(--bg-secondary);
+                        color: var(--text-primary);
+                        padding: 15px 20px;
+                        border-radius: var(--radius-md);
+                        box-shadow: var(--shadow-lg);
+                        border: 1px solid var(--glass-border);
+                        z-index: 1000;
+                        transform: translateX(400px);
+                        opacity: 0;
+                        transition: all var(--transition-smooth);
+                    }
+                    .notification.show {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                    .notification-content {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                    }
+                    .notification-success {
+                        border-left: 4px solid var(--success-color);
+                    }
+                    .notification-error {
+                        border-left: 4px solid var(--error-color);
+                    }
+                    .notification-info {
+                        border-left: 4px solid var(--primary-color);
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+
+            document.body.appendChild(notification);
+
+            setTimeout(() => notification.classList.add('show'), 100);
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Load components
+        function loadComponent(url, placeholderId) {
+            fetch(url)
+                .then(response => response.ok ? response.text() : Promise.reject('Errore nel caricamento'))
+                .then(data => {
+                    const placeholder = document.getElementById(placeholderId);
+                    if (!placeholder) return;
+                    
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = data;
+                    
+                    const script = tempDiv.querySelector('script');
+                    placeholder.innerHTML = tempDiv.innerHTML;
+
+                    if (script) {
+                        const newScript = document.createElement('script');
+                        newScript.textContent = script.textContent;
+                        document.body.appendChild(newScript).remove();
+                    }
+                })
+                .catch(error => console.error(`Impossibile caricare ${url}: ${error}`));
+        }
+
+        // Initialize when DOM is loaded
+        let accountManager;
+        document.addEventListener('DOMContentLoaded', () => {
+            loadComponent('nav.html', 'navbar-placeholder');
+            loadComponent('footer.html', 'footer-placeholder');
+            accountManager = new AccountManager();
+        });
+    </script>
+</body>
+</html>

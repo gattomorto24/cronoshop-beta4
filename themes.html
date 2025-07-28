@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temi e Personalizzazione - Cronoshop</title>
+    
+    <meta name="description" content="Personalizza l'aspetto di Cronoshop con temi, colori e impostazioni avanzate.">
+    <meta name="keywords" content="temi cronoshop, personalizzazione, dark mode, colori, impostazioni">
+    <meta name="author" content="Cronoshop Team">
+    <link rel="canonical" href="https://www.cronoshop.eu/themes.html">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/cronoshop-logo.png">
+    <link rel="apple-touch-icon" href="assets/cronoshop-logo.png">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <style>
+        /* Additional styles for themes page */
+        .themes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--ios-spacing-lg);
+            margin-bottom: var(--ios-spacing-xl);
+        }
+        
+        .theme-card {
+            background: var(--ios-bg-secondary);
+            border-radius: var(--ios-radius-lg);
+            padding: var(--ios-spacing-lg);
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all var(--ios-transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .theme-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--ios-shadow-lg);
+        }
+        
+        .theme-card.active {
+            border-color: var(--ios-blue);
+            box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1);
+        }
+        
+        .theme-preview {
+            height: 120px;
+            border-radius: var(--ios-radius-md);
+            margin-bottom: var(--ios-spacing-md);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .theme-preview-header {
+            height: 30px;
+            display: flex;
+            align-items: center;
+            padding: 0 var(--ios-spacing-sm);
+            gap: var(--ios-spacing-xs);
+        }
+        
+        .theme-preview-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        
+        .theme-preview-content {
+            flex: 1;
+            padding: var(--ios-spacing-sm);
+            display: flex;
+            flex-direction: column;
+            gap: var(--ios-spacing-xs);
+        }
+        
+        .theme-preview-bar {
+            height: 8px;
+            border-radius: 4px;
+        }
+        
+        .theme-preview-bar.short {
+            width: 60%;
+        }
+        
+        .theme-preview-bar.medium {
+            width: 80%;
+        }
+        
+        .theme-preview-bar.long {
+            width: 100%;
+        }
+        
+        /* Theme previews */
+        .theme-light .theme-preview {
+            background: #f2f2f7;
+        }
+        
+        .theme-light .theme-preview-header {
+            background: #ffffff;
+            border-bottom: 1px solid #e5e5ea;
+        }
+        
+        .theme-light .theme-preview-dot:nth-child(1) { background: #ff5f57; }
+        .theme-light .theme-preview-dot:nth-child(2) { background: #ffbd2e; }
+        .theme-light .theme-preview-dot:nth-child(3) { background: #28ca42; }
+        
+        .theme-light .theme-preview-bar {
+            background: #e5e5ea;
+        }
+        
+        .theme-dark .theme-preview {
+            background: #000000;
+        }
+        
+        .theme-dark .theme-preview-header {
+            background: #1c1c1e;
+            border-bottom: 1px solid #38383a;
+        }
+        
+        .theme-dark .theme-preview-dot:nth-child(1) { background: #ff453a; }
+        .theme-dark .theme-preview-dot:nth-child(2) { background: #ffd60a; }
+        .theme-dark .theme-preview-dot:nth-child(3) { background: #30d158; }
+        
+        .theme-dark .theme-preview-bar {
+            background: #2c2c2e;
+        }
+        
+        .theme-blue .theme-preview {
+            background: linear-gradient(135deg, #007aff, #5856d6);
+        }
+        
+        .theme-green .theme-preview {
+            background: linear-gradient(135deg, #34c759, #00c7be);
+        }
+        
+        .theme-purple .theme-preview {
+            background: linear-gradient(135deg, #af52de, #ff2d92);
+        }
+        
+        .theme-orange .theme-preview {
+            background: linear-gradient(135deg, #ff9500, #ffcc00);
+        }
+        
+        .customization-section {
+            background: var(--ios-bg-secondary);
+            border-radius: var(--ios-radius-lg);
+            padding: var(--ios-spacing-xl);
+            margin-bottom: var(--ios-spacing-xl);
+            border: 1px solid var(--ios-separator-non-opaque);
+        }
+        
+        .customization-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--ios-spacing-lg);
+        }
+        
+        .setting-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--ios-spacing-md);
+            background: var(--ios-fill-quaternary);
+            border-radius: var(--ios-radius-md);
+        }
+        
+        .setting-info h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: var(--ios-spacing-xs);
+            color: var(--ios-text-primary);
+        }
+        
+        .setting-info p {
+            font-size: 14px;
+            color: var(--ios-text-secondary);
+        }
+        
+        .ios-toggle {
+            position: relative;
+            width: 50px;
+            height: 30px;
+            background: var(--ios-fill-tertiary);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all var(--ios-transition-fast);
+        }
+        
+        .ios-toggle.active {
+            background: var(--ios-blue);
+        }
+        
+        .ios-toggle::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 26px;
+            height: 26px;
+            background: white;
+            border-radius: 50%;
+            transition: all var(--ios-transition-fast);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .ios-toggle.active::after {
+            transform: translateX(20px);
+        }
+        
+        .ios-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: var(--ios-fill-tertiary);
+            outline: none;
+            cursor: pointer;
+        }
+        
+        .ios-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--ios-blue);
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .ios-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--ios-blue);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .color-picker-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: var(--ios-spacing-sm);
+            margin-top: var(--ios-spacing-sm);
+        }
+        
+        .color-option {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--ios-radius-md);
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all var(--ios-transition-fast);
+        }
+        
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+        
+        .color-option.active {
+            border-color: var(--ios-text-primary);
+            box-shadow: 0 0 0 2px var(--ios-bg-secondary);
+        }
+        
+        .preview-section {
+            background: var(--ios-bg-secondary);
+            border-radius: var(--ios-radius-lg);
+            padding: var(--ios-spacing-xl);
+            border: 1px solid var(--ios-separator-non-opaque);
+        }
+        
+        .preview-mockup {
+            background: var(--ios-bg-primary);
+            border-radius: var(--ios-radius-lg);
+            padding: var(--ios-spacing-lg);
+            border: 1px solid var(--ios-separator-non-opaque);
+        }
+        
+        .mockup-navbar {
+            height: 60px;
+            background: var(--ios-bg-secondary);
+            border-radius: var(--ios-radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 var(--ios-spacing-md);
+            margin-bottom: var(--ios-spacing-md);
+            border: 1px solid var(--ios-separator-non-opaque);
+        }
+        
+        .mockup-content {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--ios-spacing-md);
+        }
+        
+        .mockup-card {
+            background: var(--ios-bg-secondary);
+            border-radius: var(--ios-radius-md);
+            padding: var(--ios-spacing-md);
+            border: 1px solid var(--ios-separator-non-opaque);
+        }
+        
+        .reset-section {
+            text-align: center;
+            padding: var(--ios-spacing-xl);
+            background: var(--ios-fill-quaternary);
+            border-radius: var(--ios-radius-lg);
+            margin-top: var(--ios-spacing-xl);
+        }
+    </style>
+</head>
+<body>
+    <header class="glass-header"></header>
+    
+    <main class="ios-main">
+        <div class="ios-container">
+            <!-- Header Section -->
+            <section class="ios-section">
+                <div class="ios-section-header">
+                    <div>
+                        <h1>
+                            <i class="ph ph-palette"></i>
+                            Temi e Personalizzazione
+                        </h1>
+                        <p>Personalizza l'aspetto di Cronoshop secondo i tuoi gusti</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Theme Selection -->
+            <section class="customization-section">
+                <h2 style="margin-bottom: var(--ios-spacing-lg); display: flex; align-items: center; gap: var(--ios-spacing-sm);">
+                    <i class="ph ph-swatches"></i>
+                    Scegli il Tuo Tema
+                </h2>
+                
+                <div class="themes-grid">
+                    <div class="theme-card theme-light active" data-theme="light">
+                        <div class="theme-preview">
+                            <div class="theme-preview-header">
+                                <div class="theme-preview-dot"></div>
+                                <div class="theme-preview-dot"></div>
+                                <div class="theme-preview-dot"></div>
+                            </div>
+                            <div class="theme-preview-content">
+                                <div class="theme-preview-bar long"></div>
+                                <div class="theme-preview-bar medium"></div>
+                                <div class="theme-preview-bar short"></div>
+                            </div>
+                        </div>
+                        <h3>Tema Chiaro</h3>
+                        <p>Il tema classico di iOS con colori chiari e puliti</p>
+                    </div>
+                    
+                    <div class="theme-card theme-dark" data-theme="dark">
+                        <div class="theme-preview">
+                            <div class="theme-preview-header">
+                                <div class="theme-preview-dot"></div>
+                                <div class="theme-preview-dot"></div>
+                                <div class="theme-preview-dot"></div>
+                            </div>
+                            <div class="theme-preview-content">
+                                <div class="theme-preview-bar long"></div>
+                                <div class="theme-preview-bar medium"></div>
+                                <div class="theme-preview-bar short"></div>
+                            </div>
+                        </div>
+                        <h3>Tema Scuro</h3>
+                        <p>Perfetto per l'uso notturno, riduce l'affaticamento degli occhi</p>
+                    </div>
+                    
+                    <div class="theme-card theme-blue" data-theme="blue">
+                        <div class="theme-preview">
+                            <div class="theme-preview-header">
+                                <div class="theme-preview-dot"></div>
+                                <div class="theme-preview-dot"></div>
+                                <div class="theme-preview-dot"></div>
+                            </div>
+                            <div class="theme-preview-content">
+                                <div class="theme-preview-bar long"></div>
+                                <div class="theme-preview-bar medium"></div>
+                                <div class="theme-preview-bar short"></div>
+                            </div>
+                        </div>
+                        <h3>Tema Blu Oceano</h3>
+                        <p>Gradiente blu rilassante ispirato all'oceano</p>
+                    </div>
+                    
+                    <div class="theme-card theme-green" data-theme="green">
+                        <div class="theme-preview">
+                            <div class="theme-preview-header">
+                                <div class="theme-preview-dot"></div>
+                                <div class="theme-preview-dot"></div>
+                                <div class="theme-preview-dot"></div>
+                            </div>
+                            <div class="theme-preview-content">
+                                <div class="theme-preview-bar long"></div>
+                                <div class="theme-preview-bar medium"></div>
+                                <div class="theme-preview-bar short"></div>
+                            </div>
+                        </div>
+                        <h3>Tema Verde Natura</h3>
+                        <p>Colori verdi freschi ispirati alla natura</p>
+                    </div>
+                    
+                    <div class="theme-card theme-purple" data-theme="purple">
+                        <div class="theme-preview">
+                            <div class="theme-preview-header">
+                                <div class="theme-preview-dot"></div>
+                                <div class="theme-preview-dot"></div>
+                                <div class="theme-preview-dot"></div>
+                            </div>
+                            <div class="theme-preview-content">
+                                <div class="theme-preview-bar long"></div>
+                                <div class="theme-preview-bar medium"></div>
+                                <div class="theme-preview-bar short"></div>
+                            </div>
+                        </div>
+                        <h3>Tema Viola Elegante</h3>
+                        <p>Gradiente viola sofisticato e moderno</p>
+                    </div>
+                    
+                    <div class="theme-card theme-orange" data-theme="orange">
+                        <div class="theme-preview">
+                            <div class="theme-preview-header">
+                                <div class="theme-preview-dot"></div>
+                                <div class="theme-preview-dot"></div>
+                                <div class="theme-preview-dot"></div>
+                            </div>
+                            <div class="theme-preview-content">
+                                <div class="theme-preview-bar long"></div>
+                                <div class="theme-preview-bar medium"></div>
+                                <div class="theme-preview-bar short"></div>
+                            </div>
+                        </div>
+                        <h3>Tema Arancione Energia</h3>
+                        <p>Colori caldi e energici per un'esperienza vivace</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Advanced Customization -->
+            <section class="customization-section">
+                <h2 style="margin-bottom: var(--ios-spacing-lg); display: flex; align-items: center; gap: var(--ios-spacing-sm);">
+                    <i class="ph ph-gear"></i>
+                    Personalizzazione Avanzata
+                </h2>
+                
+                <div class="customization-grid">
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <h4>Modalità Automatica</h4>
+                            <p>Cambia tema in base all'ora del giorno</p>
+                        </div>
+                        <div class="ios-toggle" id="autoThemeToggle">
+                        </div>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <h4>Effetto Vetro</h4>
+                            <p>Abilita effetti di trasparenza e blur</p>
+                        </div>
+                        <div class="ios-toggle" id="glassEffectToggle">
+                        </div>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <h4>Animazioni Ridotte</h4>
+                            <p>Riduce le animazioni per migliorare le prestazioni</p>
+                        </div>
+                        <div class="ios-toggle" id="reducedMotionToggle">
+                        </div>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <h4>Contrasto Elevato</h4>
+                            <p>Aumenta il contrasto per una migliore leggibilità</p>
+                        </div>
+                        <div class="ios-toggle" id="highContrastToggle">
+                        </div>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <h4>Dimensione Testo</h4>
+                            <p>Regola la dimensione del testo</p>
+                        </div>
+                        <input type="range" class="ios-slider" id="fontSizeSlider" min="12" max="20" value="16">
+                    </div>
+                    
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <h4>Raggio Bordi</h4>
+                            <p>Personalizza l'arrotondamento degli elementi</p>
+                        </div>
+                        <input type="range" class="ios-slider" id="borderRadiusSlider" min="4" max="24" value="12">
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Color Customization -->
+            <section class="customization-section">
+                <h2 style="margin-bottom: var(--ios-spacing-lg); display: flex; align-items: center; gap: var(--ios-spacing-sm);">
+                    <i class="ph ph-paint-brush"></i>
+                    Colori Personalizzati
+                </h2>
+                
+                <div style="margin-bottom: var(--ios-spacing-lg);">
+                    <h3 style="margin-bottom: var(--ios-spacing-md);">Colore Principale</h3>
+                    <div class="color-picker-grid">
+                        <div class="color-option active" style="background: #007aff;" data-color="#007aff"></div>
+                        <div class="color-option" style="background: #34c759;" data-color="#34c759"></div>
+                        <div class="color-option" style="background: #ff3b30;" data-color="#ff3b30"></div>
+                        <div class="color-option" style="background: #ff9500;" data-color="#ff9500"></div>
+                        <div class="color-option" style="background: #af52de;" data-color="#af52de"></div>
+                        <div class="color-option" style="background: #ff2d92;" data-color="#ff2d92"></div>
+                        <div class="color-option" style="background: #5856d6;" data-color="#5856d6"></div>
+                        <div class="color-option" style="background: #00c7be;" data-color="#00c7be"></div>
+                        <div class="color-option" style="background: #ffcc00;" data-color="#ffcc00"></div>
+                        <div class="color-option" style="background: #8e8e93;" data-color="#8e8e93"></div>
+                        <div class="color-option" style="background: #1c1c1e;" data-color="#1c1c1e"></div>
+                        <div class="color-option" style="background: #ffffff; border: 1px solid #e5e5ea;" data-color="#ffffff"></div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 style="margin-bottom: var(--ios-spacing-md);">Colore di Sfondo</h3>
+                    <div class="color-picker-grid">
+                        <div class="color-option active" style="background: #f2f2f7;" data-bg-color="#f2f2f7"></div>
+                        <div class="color-option" style="background: #ffffff;" data-bg-color="#ffffff"></div>
+                        <div class="color-option" style="background: #000000;" data-bg-color="#000000"></div>
+                        <div class="color-option" style="background: #1c1c1e;" data-bg-color="#1c1c1e"></div>
+                        <div class="color-option" style="background: #2c2c2e;" data-bg-color="#2c2c2e"></div>
+                        <div class="color-option" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);" data-bg-color="gradient1"></div>
+                        <div class="color-option" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);" data-bg-color="gradient2"></div>
+                        <div class="color-option" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);" data-bg-color="gradient3"></div>
+                        <div class="color-option" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);" data-bg-color="gradient4"></div>
+                        <div class="color-option" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);" data-bg-color="gradient5"></div>
+                        <div class="color-option" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);" data-bg-color="gradient6"></div>
+                        <div class="color-option" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);" data-bg-color="gradient7"></div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Live Preview -->
+            <section class="preview-section">
+                <h2 style="margin-bottom: var(--ios-spacing-lg); display: flex; align-items: center; gap: var(--ios-spacing-sm);">
+                    <i class="ph ph-eye"></i>
+                    Anteprima Live
+                </h2>
+                
+                <div class="preview-mockup">
+                    <div class="mockup-navbar">
+                        <div style="display: flex; align-items: center; gap: var(--ios-spacing-sm);">
+                            <div style="width: 24px; height: 24px; background: var(--ios-blue); border-radius: 6px;"></div>
+                            <span style="font-weight: 600;">Cronoshop</span>
+                        </div>
+                        <div style="display: flex; gap: var(--ios-spacing-sm);">
+                            <div style="width: 32px; height: 32px; background: var(--ios-fill-tertiary); border-radius: 50%;"></div>
+                            <div style="width: 32px; height: 32px; background: var(--ios-fill-tertiary); border-radius: 50%;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mockup-content">
+                        <div class="mockup-card">
+                            <div style="width: 100%; height: 80px; background: var(--ios-fill-tertiary); border-radius: var(--ios-radius-md); margin-bottom: var(--ios-spacing-sm);"></div>
+                            <div style="height: 16px; background: var(--ios-fill-tertiary); border-radius: 8px; margin-bottom: var(--ios-spacing-xs);"></div>
+                            <div style="height: 12px; background: var(--ios-fill-quaternary); border-radius: 6px; width: 70%;"></div>
+                        </div>
+                        
+                        <div class="mockup-card">
+                            <div style="width: 100%; height: 80px; background: var(--ios-fill-tertiary); border-radius: var(--ios-radius-md); margin-bottom: var(--ios-spacing-sm);"></div>
+                            <div style="height: 16px; background: var(--ios-fill-tertiary); border-radius: 8px; margin-bottom: var(--ios-spacing-xs);"></div>
+                            <div style="height: 12px; background: var(--ios-fill-quaternary); border-radius: 6px; width: 85%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Reset Section -->
+            <section class="reset-section">
+                <h3 style="margin-bottom: var(--ios-spacing-md);">
+                    <i class="ph ph-arrow-clockwise"></i>
+                    Ripristina Impostazioni
+                </h3>
+                <p style="color: var(--ios-text-secondary); margin-bottom: var(--ios-spacing-lg);">
+                    Ripristina tutte le personalizzazioni ai valori predefiniti
+                </p>
+                <button class="ios-btn ios-btn-secondary" id="resetButton">
+                    <i class="ph ph-trash"></i>
+                    Ripristina Tutto
+                </button>
+            </section>
+        </div>
+    </main>
+    
+    <footer class="glass-footer"></footer>
+    
+    <script src="script.js"></script>
+    <script>
+        class ThemeCustomizer {
+            constructor() {
+                this.settings = this.loadSettings();
+                this.init();
+            }
+            
+            init() {
+                this.setupEventListeners();
+                this.applySettings();
+                this.updateUI();
+            }
+            
+            loadSettings() {
+                const defaultSettings = {
+                    theme: 'light',
+                    autoTheme: false,
+                    glassEffect: true,
+                    reducedMotion: false,
+                    highContrast: false,
+                    fontSize: 16,
+                    borderRadius: 12,
+                    primaryColor: '#007aff',
+                    backgroundColor: '#f2f2f7'
+                };
+                
+                try {
+                    const saved = localStorage.getItem('cronoshop_theme_settings');
+                    return saved ? { ...defaultSettings, ...JSON.parse(saved) } : defaultSettings;
+                } catch (error) {
+                    console.error('Error loading theme settings:', error);
+                    return defaultSettings;
+                }
+            }
+            
+            saveSettings() {
+                try {
+                    localStorage.setItem('cronoshop_theme_settings', JSON.stringify(this.settings));
+                } catch (error) {
+                    console.error('Error saving theme settings:', error);
+                }
+            }
+            
+            setupEventListeners() {
+                // Theme cards
+                document.querySelectorAll('.theme-card').forEach(card => {
+                    card.addEventListener('click', () => {
+                        const theme = card.dataset.theme;
+                        this.setTheme(theme);
+                    });
+                });
+                
+                // Toggles
+                document.getElementById('autoThemeToggle').addEventListener('click', () => {
+                    this.toggleSetting('autoTheme');
+                });
+                
+                document.getElementById('glassEffectToggle').addEventListener('click', () => {
+                    this.toggleSetting('glassEffect');
+                });
+                
+                document.getElementById('reducedMotionToggle').addEventListener('click', () => {
+                    this.toggleSetting('reducedMotion');
+                });
+                
+                document.getElementById('highContrastToggle').addEventListener('click', () => {
+                    this.toggleSetting('highContrast');
+                });
+                
+                // Sliders
+                document.getElementById('fontSizeSlider').addEventListener('input', (e) => {
+                    this.setSetting('fontSize', parseInt(e.target.value));
+                });
+                
+                document.getElementById('borderRadiusSlider').addEventListener('input', (e) => {
+                    this.setSetting('borderRadius', parseInt(e.target.value));
+                });
+                
+                // Color pickers
+                document.querySelectorAll('[data-color]').forEach(option => {
+                    option.addEventListener('click', () => {
+                        const color = option.dataset.color;
+                        this.setSetting('primaryColor', color);
+                        this.updateColorPicker('color', color);
+                    });
+                });
+                
+                document.querySelectorAll('[data-bg-color]').forEach(option => {
+                    option.addEventListener('click', () => {
+                        const color = option.dataset.bgColor;
+                        this.setSetting('backgroundColor', color);
+                        this.updateColorPicker('bg-color', color);
+                    });
+                });
+                
+                // Reset button
+                document.getElementById('resetButton').addEventListener('click', () => {
+                    this.resetSettings();
+                });
+                
+                // Auto theme based on time
+                if (this.settings.autoTheme) {
+                    this.setupAutoTheme();
+                }
+            }
+            
+            setTheme(theme) {
+                this.settings.theme = theme;
+                this.saveSettings();
+                this.applySettings();
+                this.updateThemeCards();
+                
+                if (window.app) {
+                    window.app.showNotification(`Tema ${theme} applicato!`, 'success');
+                }
+            }
+            
+            toggleSetting(setting) {
+                this.settings[setting] = !this.settings[setting];
+                this.saveSettings();
+                this.applySettings();
+                this.updateUI();
+                
+                if (window.app) {
+                    window.app.showNotification(`${setting} ${this.settings[setting] ? 'attivato' : 'disattivato'}`, 'success');
+                }
+            }
+            
+            setSetting(setting, value) {
+                this.settings[setting] = value;
+                this.saveSettings();
+                this.applySettings();
+                
+                if (window.app) {
+                    window.app.showNotification(`${setting} aggiornato`, 'success');
+                }
+            }
+            
+            applySettings() {
+                const root = document.documentElement;
+                const body = document.body;
+                
+                // Remove all theme classes
+                body.classList.remove('ios-dark-mode', 'theme-blue', 'theme-green', 'theme-purple', 'theme-orange', 'glass-effect', 'reduced-motion', 'high-contrast');
+                
+                // Apply theme
+                if (this.settings.theme === 'dark') {
+                    body.classList.add('ios-dark-mode');
+                } else if (this.settings.theme !== 'light') {
+                    body.classList.add(`theme-${this.settings.theme}`);
+                }
+                
+                // Apply effects
+                if (this.settings.glassEffect) {
+                    body.classList.add('glass-effect');
+                }
+                
+                if (this.settings.reducedMotion) {
+                    body.classList.add('reduced-motion');
+                }
+                
+                if (this.settings.highContrast) {
+                    body.classList.add('high-contrast');
+                }
+                
+                // Apply custom properties
+                root.style.setProperty('--custom-font-size', `${this.settings.fontSize}px`);
+                root.style.setProperty('--custom-border-radius', `${this.settings.borderRadius}px`);
+                root.style.setProperty('--custom-primary-color', this.settings.primaryColor);
+                
+                // Apply background
+                if (this.settings.backgroundColor.startsWith('gradient')) {
+                    const gradients = {
+                        gradient1: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                        gradient2: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                        gradient3: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+                        gradient4: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+                        gradient5: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+                        gradient6: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
+                        gradient7: 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)'
+                    };
+                    root.style.setProperty('--custom-bg-color', gradients[this.settings.backgroundColor]);
+                } else {
+                    root.style.setProperty('--custom-bg-color', this.settings.backgroundColor);
+                }
+            }
+            
+            updateUI() {
+                // Update toggles
+                document.getElementById('autoThemeToggle
+                // Update toggles
+                document.getElementById('autoThemeToggle').classList.toggle('active', this.settings.autoTheme);
+                document.getElementById('glassEffectToggle').classList.toggle('active', this.settings.glassEffect);
+                document.getElementById('reducedMotionToggle').classList.toggle('active', this.settings.reducedMotion);
+                document.getElementById('highContrastToggle').classList.toggle('active', this.settings.highContrast);
+                
+                // Update sliders
+                document.getElementById('fontSizeSlider').value = this.settings.fontSize;
+                document.getElementById('borderRadiusSlider').value = this.settings.borderRadius;
+                
+                // Update theme cards
+                this.updateThemeCards();
+            }
+            
+            updateThemeCards() {
+                document.querySelectorAll('.theme-card').forEach(card => {
+                    card.classList.remove('active');
+                });
+                
+                const activeCard = document.querySelector(`[data-theme="${this.settings.theme}"]`);
+                if (activeCard) {
+                    activeCard.classList.add('active');
+                }
+            }
+            
+            updateColorPicker(type, value) {
+                document.querySelectorAll(`[data-${type}]`).forEach(option => {
+                    option.classList.remove('active');
+                });
+                
+                const activeOption = document.querySelector(`[data-${type}="${value}"]`);
+                if (activeOption) {
+                    activeOption.classList.add('active');
+                }
+            }
+            
+            setupAutoTheme() {
+                const updateAutoTheme = () => {
+                    if (!this.settings.autoTheme) return;
+                    
+                    const hour = new Date().getHours();
+                    const isDark = hour < 7 || hour > 19;
+                    const newTheme = isDark ? 'dark' : 'light';
+                    
+                    if (newTheme !== this.settings.theme) {
+                        this.setTheme(newTheme);
+                    }
+                };
+                
+                updateAutoTheme();
+                setInterval(updateAutoTheme, 60000); // Check every minute
+            }
+            
+            resetSettings() {
+                if (confirm('Sei sicuro di voler ripristinare tutte le impostazioni?')) {
+                    localStorage.removeItem('cronoshop_theme_settings');
+                    this.settings = this.loadSettings();
+                    this.applySettings();
+                    this.updateUI();
+                    
+                    if (window.app) {
+                        window.app.showNotification('Impostazioni ripristinate!', 'success');
+                    }
+                }
+            }
+        }
+        
+        // Initialize theme customizer when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new ThemeCustomizer();
+        });
+    </script>
+</body>
+</html>
