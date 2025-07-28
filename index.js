@@ -1,159 +1,160 @@
-/**
- * CRONOSHOP INDEX.JS - Main functionality and animations
- * Handles all interactions, animations, and dynamic content loading
- */
-
+// Index page functionality
 class CronoshopIndex {
   constructor() {
     this.products = []
-    this.filteredProducts = []
-    this.isSearchActive = false
-    this.currentSearchQuery = ""
-    this.animationQueue = []
-
     this.init()
   }
 
   init() {
     this.loadProducts()
     this.setupEventListeners()
-    this.setupAnimations()
-    this.loadUserPreferences()
-
-    // Initialize with a slight delay for smooth loading
-    setTimeout(() => {
-      this.hideLoadingIndicator()
-      this.displayProducts()
-    }, 1500)
+    this.setupSidebars()
+    this.setupSearch()
+    this.loadTheme()
   }
 
-  // ===== PRODUCT LOADING =====
   loadProducts() {
-    // Load products from main.js - multiple fallback methods
-    const products = window.products || window.products || this.getFallbackProducts()
-    this.products = [...products]
-    console.log(`✅ Loaded ${this.products.length} products`)
-    this.filteredProducts = [...this.products]
+    // Try multiple sources for products
+    if (window.products && Array.isArray(window.products)) {
+      this.products = window.products
+      console.log(`Loaded ${this.products.length} products from window.products`)
+    } else if (typeof window.products !== "undefined" && Array.isArray(window.products)) {
+      this.products = window.products
+      console.log(`Loaded ${this.products.length} products from global products`)
+    } else {
+      // Fallback products
+      this.products = [
+        {
+          id: "prod1",
+          nome: "Samsung Galaxy S25 Ultra",
+          prezzo: 1199.0,
+          prezzo_originale: 1599.0,
+          sconto: 25,
+          descrizione: 'Smartphone AI con display 6.9" QHD+',
+          categoria: "smartphone",
+          img: "/placeholder.svg?height=120&width=200&text=Samsung+Galaxy",
+          link: "https://amzn.to/3Z551fa",
+        },
+        {
+          id: "prod2",
+          nome: "Apple iPhone 15 Pro",
+          prezzo: 899.0,
+          prezzo_originale: 1199.0,
+          sconto: 25,
+          descrizione: "iPhone 15 Pro con chip A17 Pro",
+          categoria: "smartphone",
+          img: "/placeholder.svg?height=120&width=200&text=iPhone+15",
+          link: "https://amzn.to/iphone15",
+        },
+        {
+          id: "prod3",
+          nome: "MacBook Air M3",
+          prezzo: 1299.0,
+          prezzo_originale: 1599.0,
+          sconto: 19,
+          descrizione: "MacBook Air con chip M3",
+          categoria: "tech",
+          img: "/placeholder.svg?height=120&width=200&text=MacBook+Air",
+          link: "https://amzn.to/macbook",
+        },
+        {
+          id: "prod4",
+          nome: "AirPods Pro 2",
+          prezzo: 229.0,
+          prezzo_originale: 279.0,
+          sconto: 18,
+          descrizione: "AirPods Pro di 2ª generazione",
+          categoria: "tech",
+          img: "/placeholder.svg?height=120&width=200&text=AirPods+Pro",
+          link: "https://amzn.to/airpods",
+        },
+        {
+          id: "prod5",
+          nome: "Nike Air Max 270",
+          prezzo: 89.99,
+          prezzo_originale: 150.0,
+          sconto: 40,
+          descrizione: "Scarpe sportive Nike Air Max",
+          categoria: "fashion",
+          img: "/placeholder.svg?height=120&width=200&text=Nike+Air+Max",
+          link: "https://amzn.to/nike270",
+        },
+        {
+          id: "prod6",
+          nome: "De'Longhi Macchina Caffè",
+          prezzo: 129.99,
+          prezzo_originale: 199.99,
+          sconto: 35,
+          descrizione: "Macchina per caffè espresso",
+          categoria: "casa",
+          img: "/placeholder.svg?height=120&width=200&text=DeLonghi",
+          link: "https://amzn.to/delonghi",
+        },
+      ]
+      console.log(`Using fallback products: ${this.products.length} items`)
+    }
+
+    this.renderProducts()
   }
 
-  getFallbackProducts() {
-    return [
-      {
-        id: "fallback1",
-        nome: "Samsung Galaxy S25 Ultra",
-        prezzo: 1199.0,
-        prezzo_originale: 1599.0,
-        sconto: 25,
-        descrizione: 'Smartphone AI con display 6.9" QHD+',
-        categoria: "smartphone",
-        img: "/placeholder.svg?height=300&width=400&text=Samsung+Galaxy+S25+Ultra",
-        link: "https://amzn.to/3Z551fa",
-      },
-      {
-        id: "fallback2",
-        nome: "Apple iPhone 15 (128 GB)",
-        prezzo: 645.0,
-        prezzo_originale: 879.0,
-        sconto: 27,
-        descrizione: "Display Super Retina XDR da 6,1 pollici",
-        categoria: "smartphone",
-        img: "/placeholder.svg?height=300&width=400&text=iPhone+15",
-        link: "https://www.amazon.it/dp/B0CHWV5HTM",
-      },
-      {
-        id: "fallback3",
-        nome: "Calvin Klein T-Shirt Uomo",
-        prezzo: 18.0,
-        prezzo_originale: 35.0,
-        sconto: 49,
-        descrizione: "100% cotone per il massimo comfort",
-        categoria: "fashion",
-        img: "/placeholder.svg?height=300&width=400&text=Calvin+Klein+T-Shirt",
-        link: "https://amzn.to/4kbOb6E",
-      },
-      {
-        id: "fallback4",
-        nome: "Amazon Fire TV Stick HD",
-        prezzo: 28.99,
-        prezzo_originale: 49.99,
-        sconto: 42,
-        descrizione: "Streaming HD con TV gratuita",
-        categoria: "tech",
-        img: "/placeholder.svg?height=300&width=400&text=Fire+TV+Stick",
-        link: "https://amzn.to/4jhgwHr",
-      },
-      {
-        id: "fallback5",
-        nome: "Nike Air Max 270",
-        prezzo: 89.99,
-        prezzo_originale: 150.0,
-        sconto: 40,
-        descrizione: "Scarpe sportive con tecnologia Air Max",
-        categoria: "sport",
-        img: "/placeholder.svg?height=300&width=400&text=Nike+Air+Max+270",
-        link: "https://amzn.to/nike270",
-      },
-      {
-        id: "fallback6",
-        nome: "De'Longhi Macchina del Caffè",
-        prezzo: 129.99,
-        prezzo_originale: 199.99,
-        sconto: 35,
-        descrizione: "Macchina per caffè espresso automatica",
-        categoria: "casa",
-        img: "/placeholder.svg?height=300&width=400&text=DeLonghi+Caffe",
-        link: "https://amzn.to/delonghicaffe",
-      },
-    ]
-  }
-
-  displayProducts() {
+  renderProducts() {
     const grid = document.getElementById("productsGrid")
     if (!grid) return
 
     // Keep the big product card and add real products
     const bigProductCard = grid.querySelector(".big-product")
-    const shuffled = [...this.filteredProducts].sort(() => 0.5 - Math.random())
-    const selectedProducts = shuffled.slice(0, 8)
 
-    const productCards = selectedProducts.map((product) => this.createProductCard(product)).join("")
+    const productCards = this.products.map((product) => this.createProductCard(product)).join("")
 
-    // Animate product loading
-    this.animateProductsIn(grid, bigProductCard.outerHTML + productCards)
+    if (bigProductCard) {
+      grid.innerHTML = bigProductCard.outerHTML + productCards
+    } else {
+      grid.innerHTML =
+        `
+                <div class="product-card big-product">
+                    <h3>🔥 Offerte Speciali</h3>
+                    <p>Scopri i prodotti più scontati della settimana</p>
+                </div>
+            ` + productCards
+    }
+
+    // Hide loading indicator
+    const loadingIndicator = document.getElementById("loadingIndicator")
+    if (loadingIndicator) {
+      loadingIndicator.style.display = "none"
+    }
   }
 
   createProductCard(product) {
     const price = typeof product.prezzo === "number" ? product.prezzo : Number.parseFloat(product.prezzo) || 0
-    const originalPrice =
-      typeof product.prezzo_originale === "number"
+    const originalPrice = product.prezzo_originale
+      ? typeof product.prezzo_originale === "number"
         ? product.prezzo_originale
-        : Number.parseFloat(product.prezzo_originale) || null
-
-    const hasImage = product.img && !product.img.includes("placeholder")
-    const categoryName = this.getCategoryName(product.categoria)
+        : Number.parseFloat(product.prezzo_originale)
+      : null
 
     return `
-      <div class="product-card" data-product-id="${product.id}">
-        <div class="category">${categoryName}</div>
-        <h3 class="title">${product.nome}</h3>
-        <p class="description">${product.descrizione || "Prodotto di qualità con ottimo rapporto qualità-prezzo"}</p>
-        ${
-          hasImage
-            ? `<img src="${product.img}" alt="${product.nome}" class="product-image" loading="lazy" onerror="this.style.display='none'">`
-            : `<div class="image-placeholder">📦 Immagine prodotto</div>`
-        }
-        <div class="price-section">
-          <div>
-            <span class="price">€${price.toFixed(2)}</span>
-            ${originalPrice ? `<span class="original-price">€${originalPrice.toFixed(2)}</span>` : ""}
-            ${product.sconto ? `<span class="discount-badge">-${product.sconto}%</span>` : ""}
-          </div>
-          <button class="action-icon" onclick="cronoshopIndex.addToCart('${product.id}')" title="Aggiungi al carrello">
-            <i class="ph ph-plus"></i>
-          </button>
-        </div>
-      </div>
-    `
+            <div class="product-card" data-product-id="${product.id}">
+                ${
+                  product.img
+                    ? `<img src="${product.img}" alt="${product.nome}" class="product-image" onerror="this.src='/placeholder.svg?height=120&width=200&text=Prodotto'">`
+                    : `<div class="image-placeholder">Immagine prodotto</div>`
+                }
+                <div class="category">${this.getCategoryName(product.categoria)}</div>
+                <div class="title">${product.nome}</div>
+                <div class="description">${product.descrizione || ""}</div>
+                <div class="price-section">
+                    <div>
+                        <span class="price" onclick="window.open('${product.link}', '_blank')">€${price.toFixed(2)}</span>
+                        ${originalPrice ? `<span class="original-price">€${originalPrice.toFixed(2)}</span>` : ""}
+                        ${product.sconto ? `<span class="discount-badge">-${product.sconto}%</span>` : ""}
+                    </div>
+                    <button class="action-icon" onclick="cronoshopIndex.addToWishlist('${product.id}')" title="Aggiungi alla wishlist">
+                        <i class="ph ph-heart"></i>
+                    </button>
+                </div>
+            </div>
+        `
   }
 
   getCategoryName(category) {
@@ -168,298 +169,153 @@ class CronoshopIndex {
     return categoryNames[category] || category.charAt(0).toUpperCase() + category.slice(1)
   }
 
-  // ===== ANIMATIONS =====
-  setupAnimations() {
-    this.animatePageLoad()
-    this.setupScrollAnimations()
-  }
-
-  animatePageLoad() {
-    const elements = document.querySelectorAll(".main-header, .main-card, .cronoai-ad, .main-footer")
-    elements.forEach((el, index) => {
-      el.style.opacity = "0"
-      el.style.transform = "translateY(30px)"
-
-      setTimeout(() => {
-        el.style.transition = "all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1)"
-        el.style.opacity = "1"
-        el.style.transform = "translateY(0)"
-      }, index * 150)
+  setupEventListeners() {
+    // Favorite button
+    const favoriteBtn = document.getElementById("favoriteBtn")
+    favoriteBtn?.addEventListener("click", () => {
+      favoriteBtn.style.color = favoriteBtn.style.color === "rgb(255, 215, 0)" ? "" : "#ffd700"
+      this.showNotification(
+        favoriteBtn.style.color === "rgb(255, 215, 0)" ? "Aggiunto ai preferiti!" : "Rimosso dai preferiti!",
+        "success",
+      )
     })
   }
 
-  animateProductsIn(grid, content) {
-    grid.style.opacity = "0"
-    grid.innerHTML = content
-
-    setTimeout(() => {
-      grid.style.transition = "opacity 0.5s ease"
-      grid.style.opacity = "1"
-
-      const cards = grid.querySelectorAll(".product-card:not(.big-product)")
-      cards.forEach((card, index) => {
-        card.style.opacity = "0"
-        card.style.transform = "translateY(20px) scale(0.95)"
-
-        setTimeout(() => {
-          card.style.transition = "all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1)"
-          card.style.opacity = "1"
-          card.style.transform = "translateY(0) scale(1)"
-        }, index * 100)
-      })
-    }, 100)
-  }
-
-  setupScrollAnimations() {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.style.opacity = "1"
-            entry.target.style.transform = "translateY(0)"
-          }
-        })
-      },
-      { threshold: 0.1 },
-    )
-
-    setTimeout(() => {
-      document.querySelectorAll(".product-card").forEach((card) => {
-        observer.observe(card)
-      })
-    }, 2000)
-  }
-
-  // ===== EVENT LISTENERS =====
-  setupEventListeners() {
-    this.setupSidebarControls()
-    this.setupSearchControls()
-    this.setupInteractiveElements()
-    this.setupKeyboardShortcuts()
-    this.setupDarkModeToggle()
-  }
-
-  setupSidebarControls() {
+  setupSidebars() {
     const leftSidebarBtn = document.getElementById("leftSidebarBtn")
     const rightSidebarBtn = document.getElementById("rightSidebarBtn")
     const closeRightSidebarBtn = document.getElementById("closeRightSidebarBtn")
-    const overlay = document.getElementById("overlay")
     const leftSidebar = document.getElementById("leftSidebar")
     const rightSidebar = document.getElementById("rightSidebar")
+    const overlay = document.getElementById("overlay")
 
-    const toggleSidebar = (sidebar, show) => {
-      if (show) {
-        sidebar.classList.add("visible")
-        overlay.classList.add("visible")
-        this.animateSidebarContent(sidebar)
-      } else {
-        sidebar.classList.remove("visible")
-        overlay.classList.remove("visible")
-      }
-    }
-
-    leftSidebarBtn?.addEventListener("click", () => {
-      this.playClickAnimation(leftSidebarBtn)
-      toggleSidebar(leftSidebar, true)
+    // Left sidebar toggle
+    leftSidebarBtn?.addEventListener("click", (e) => {
+      e.preventDefault()
+      leftSidebar?.classList.toggle("visible")
+      overlay?.classList.toggle("visible")
     })
 
-    rightSidebarBtn?.addEventListener("click", () => {
-      this.playClickAnimation(rightSidebarBtn)
-      toggleSidebar(rightSidebar, true)
+    // Right sidebar toggle
+    rightSidebarBtn?.addEventListener("click", (e) => {
+      e.preventDefault()
+      rightSidebar?.classList.toggle("visible")
+      overlay?.classList.toggle("visible")
     })
 
-    closeRightSidebarBtn?.addEventListener("click", () => {
-      this.playClickAnimation(closeRightSidebarBtn)
-      toggleSidebar(rightSidebar, false)
+    // Close right sidebar
+    closeRightSidebarBtn?.addEventListener("click", (e) => {
+      e.preventDefault()
+      rightSidebar?.classList.remove("visible")
+      overlay?.classList.remove("visible")
     })
 
+    // Close on overlay click
     overlay?.addEventListener("click", () => {
-      toggleSidebar(leftSidebar, false)
-      toggleSidebar(rightSidebar, false)
+      leftSidebar?.classList.remove("visible")
+      rightSidebar?.classList.remove("visible")
+      overlay?.classList.remove("visible")
     })
 
-    // Toggle switches animation
-    document.querySelectorAll(".toggle").forEach((toggle) => {
-      toggle.addEventListener("change", () => {
-        this.playToggleAnimation(toggle)
-      })
+    // Dark mode toggle in left sidebar
+    const darkModeToggle = document.getElementById("darkModeToggle")
+    darkModeToggle?.addEventListener("change", (e) => {
+      this.toggleTheme(e.target.checked)
+    })
+
+    // Sidebar search
+    const sidebarSearchInput = document.getElementById("sidebarSearchInput")
+    sidebarSearchInput?.addEventListener("input", (e) => {
+      this.handleSearch(e.target.value)
+    })
+
+    // Voice search in sidebar
+    const sidebarVoiceBtn = document.getElementById("sidebarVoiceBtn")
+    sidebarVoiceBtn?.addEventListener("click", () => {
+      this.startVoiceSearch()
     })
   }
 
-  setupSearchControls() {
+  setupSearch() {
     const searchBtn = document.getElementById("searchBtn")
     const dynamicSearchBar = document.getElementById("dynamicSearchBar")
     const searchInput = document.getElementById("searchInput")
     const voiceSearchBtn = document.getElementById("voiceSearchBtn")
 
+    // Toggle search bar
     searchBtn?.addEventListener("click", (e) => {
-      e.stopPropagation()
-      this.toggleSearchBar()
+      e.preventDefault()
+      dynamicSearchBar?.classList.toggle("visible")
+      if (dynamicSearchBar?.classList.contains("visible")) {
+        searchInput?.focus()
+      }
     })
 
+    // Search input
     searchInput?.addEventListener("input", (e) => {
       this.handleSearch(e.target.value)
     })
 
+    // Voice search
     voiceSearchBtn?.addEventListener("click", () => {
       this.startVoiceSearch()
     })
 
-    document.addEventListener("click", (e) => {
-      if (!dynamicSearchBar?.contains(e.target) && !searchBtn?.contains(e.target)) {
-        this.closeSearchBar()
-      }
-    })
-
-    const sidebarSearchInput = document.getElementById("sidebarSearchInput")
-    sidebarSearchInput?.addEventListener("input", (e) => {
-      this.handleSidebarSearch(e.target.value)
-    })
-  }
-
-  setupInteractiveElements() {
-    const favoriteBtn = document.getElementById("favoriteBtn")
-    favoriteBtn?.addEventListener("click", () => {
-      this.toggleFavorite(favoriteBtn)
-    })
-
-    document.querySelectorAll(".action-buttons button").forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        this.createRippleEffect(e, btn)
-      })
-    })
-
-    document.addEventListener("click", (e) => {
-      if (e.target.closest(".product-card .action-icon")) {
-        const icon = e.target.closest(".action-icon")
-        this.playAddToCartAnimation(icon)
-      }
-    })
-  }
-
-  setupKeyboardShortcuts() {
+    // Close search on escape
     document.addEventListener("keydown", (e) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === "k") {
-        e.preventDefault()
-        this.toggleSearchBar()
-      }
-
       if (e.key === "Escape") {
-        this.closeSearchBar()
-        document.getElementById("leftSidebar")?.classList.remove("visible")
-        document.getElementById("rightSidebar")?.classList.remove("visible")
-        document.getElementById("overlay")?.classList.remove("visible")
+        dynamicSearchBar?.classList.remove("visible")
+        const leftSidebar = document.getElementById("leftSidebar")
+        const rightSidebar = document.getElementById("rightSidebar")
+        const overlay = document.getElementById("overlay")
+        leftSidebar?.classList.remove("visible")
+        rightSidebar?.classList.remove("visible")
+        overlay?.classList.remove("visible")
       }
     })
-  }
-
-  setupDarkModeToggle() {
-    const darkModeToggle = document.getElementById("darkModeToggle")
-
-    // Load saved theme
-    const savedTheme = localStorage.getItem("cronoshop_theme")
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
-    const shouldUseDark = savedTheme === "dark" || (!savedTheme && prefersDark)
-
-    if (shouldUseDark) {
-      document.body.classList.add("dark-mode")
-      if (darkModeToggle) darkModeToggle.checked = true
-    }
-
-    darkModeToggle?.addEventListener("change", () => {
-      const isDark = darkModeToggle.checked
-
-      if (isDark) {
-        document.body.classList.add("dark-mode")
-        localStorage.setItem("cronoshop_theme", "dark")
-        this.showNotification("Tema scuro attivato", "success")
-      } else {
-        document.body.classList.remove("dark-mode")
-        localStorage.setItem("cronoshop_theme", "light")
-        this.showNotification("Tema chiaro attivato", "success")
-      }
-    })
-  }
-
-  // ===== SEARCH FUNCTIONALITY =====
-  toggleSearchBar() {
-    const searchBar = document.getElementById("dynamicSearchBar")
-    const searchInput = document.getElementById("searchInput")
-
-    if (!this.isSearchActive) {
-      searchBar.classList.add("visible")
-      this.isSearchActive = true
-      setTimeout(() => searchInput?.focus(), 300)
-      this.animateSearchBarOpen()
-    } else {
-      this.closeSearchBar()
-    }
-  }
-
-  closeSearchBar() {
-    const searchBar = document.getElementById("dynamicSearchBar")
-    const searchInput = document.getElementById("searchInput")
-
-    searchBar?.classList.remove("visible")
-    this.isSearchActive = false
-    if (searchInput) searchInput.value = ""
-    this.currentSearchQuery = ""
-    this.displayProducts()
-  }
-
-  animateSearchBarOpen() {
-    const searchBar = document.getElementById("dynamicSearchBar")
-    if (searchBar) {
-      searchBar.style.transform = "translate(-50%, -50%) scale(0.8)"
-      setTimeout(() => {
-        searchBar.style.transform = "translate(-50%, -50%) scale(1)"
-      }, 50)
-    }
   }
 
   handleSearch(query) {
-    this.currentSearchQuery = query.toLowerCase().trim()
-
-    if (this.currentSearchQuery === "") {
-      this.filteredProducts = [...this.products]
-    } else {
-      this.filteredProducts = this.products.filter(
-        (product) =>
-          product.nome.toLowerCase().includes(this.currentSearchQuery) ||
-          product.categoria.toLowerCase().includes(this.currentSearchQuery) ||
-          (product.descrizione && product.descrizione.toLowerCase().includes(this.currentSearchQuery)),
-      )
+    if (!query.trim()) {
+      this.renderProducts()
+      return
     }
 
-    this.displayProducts()
-    this.showSearchResults()
+    const filteredProducts = this.products.filter(
+      (product) =>
+        product.nome.toLowerCase().includes(query.toLowerCase()) ||
+        product.descrizione?.toLowerCase().includes(query.toLowerCase()) ||
+        product.categoria.toLowerCase().includes(query.toLowerCase()),
+    )
+
+    this.renderFilteredProducts(filteredProducts)
   }
 
-  handleSidebarSearch(query) {
-    console.log("Sidebar search:", query)
-    this.handleSearch(query)
-  }
+  renderFilteredProducts(products) {
+    const grid = document.getElementById("productsGrid")
+    if (!grid) return
 
-  showSearchResults() {
-    const resultsCount = this.filteredProducts.length
-    const bigProductCard = document.querySelector(".big-product")
+    if (products.length === 0) {
+      grid.innerHTML = `
+                <div class="product-card big-product">
+                    <h3>🔍 Nessun risultato</h3>
+                    <p>Prova con altri termini di ricerca</p>
+                </div>
+            `
+      return
+    }
 
-    if (bigProductCard && this.currentSearchQuery) {
-      bigProductCard.innerHTML = `
-        <h3>🔍 Risultati Ricerca</h3>
-        <p>Trovati ${resultsCount} prodotti per "${this.currentSearchQuery}"</p>
+    const productCards = products.map((product) => this.createProductCard(product)).join("")
+    grid.innerHTML =
       `
-    }
+            <div class="product-card big-product">
+                <h3>🔍 Risultati ricerca</h3>
+                <p>Trovati ${products.length} prodotti</p>
+            </div>
+        ` + productCards
   }
 
   startVoiceSearch() {
-    const voiceBtn = document.getElementById("voiceSearchBtn")
-
-    if (!voiceBtn) return
-
-    voiceBtn.style.color = "#ff4757"
-    voiceBtn.style.transform = "scale(1.2)"
-
     if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
       const recognition = new SpeechRecognition()
@@ -471,162 +327,74 @@ class CronoshopIndex {
       recognition.onresult = (event) => {
         const transcript = event.results[0][0].transcript
         const searchInput = document.getElementById("searchInput")
-        if (searchInput) {
-          searchInput.value = transcript
-          this.handleSearch(transcript)
-        }
+        const sidebarSearchInput = document.getElementById("sidebarSearchInput")
+
+        if (searchInput) searchInput.value = transcript
+        if (sidebarSearchInput) sidebarSearchInput.value = transcript
+
+        this.handleSearch(transcript)
+        this.showNotification(`Ricerca vocale: "${transcript}"`, "info")
       }
 
       recognition.onerror = () => {
         this.showNotification("Errore nel riconoscimento vocale", "error")
       }
 
-      recognition.onend = () => {
-        voiceBtn.style.color = ""
-        voiceBtn.style.transform = ""
-      }
-
       recognition.start()
+      this.showNotification("Parla ora...", "info")
     } else {
-      setTimeout(() => {
-        voiceBtn.style.color = ""
-        voiceBtn.style.transform = ""
-        this.showNotification("Ricerca vocale non supportata", "info")
-      }, 2000)
+      this.showNotification("Ricerca vocale non supportata", "error")
     }
   }
 
-  // ===== ANIMATIONS =====
-  playClickAnimation(element) {
-    element.style.transform = "scale(0.95)"
-    setTimeout(() => {
-      element.style.transform = "scale(1)"
-    }, 150)
-  }
+  loadTheme() {
+    const savedTheme = localStorage.getItem("cronoshop_theme")
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
+    const shouldUseDark = savedTheme === "dark" || (!savedTheme && prefersDark)
 
-  playToggleAnimation(toggle) {
-    toggle.style.transform = "scale(1.1)"
-    setTimeout(() => {
-      toggle.style.transform = "scale(1)"
-    }, 200)
-  }
-
-  animateSidebarContent(sidebar) {
-    const items = sidebar.querySelectorAll(".item, .main-menu a")
-    items.forEach((item, index) => {
-      item.style.opacity = "0"
-      item.style.transform = "translateX(-20px)"
-
-      setTimeout(() => {
-        item.style.transition = "all 0.3s ease"
-        item.style.opacity = "1"
-        item.style.transform = "translateX(0)"
-      }, index * 50)
-    })
-  }
-
-  toggleFavorite(btn) {
-    const isFavorited = btn.style.color === "rgb(255, 215, 0)"
-
-    if (isFavorited) {
-      btn.style.color = ""
-      btn.style.transform = "scale(1)"
-      this.showNotification("Rimosso dai preferiti", "info")
-    } else {
-      btn.style.color = "#ffd700"
-      btn.style.transform = "scale(1.2)"
-      setTimeout(() => {
-        btn.style.transform = "scale(1)"
-      }, 200)
-      this.showNotification("Aggiunto ai preferiti", "success")
+    if (shouldUseDark) {
+      document.body.classList.add("dark-mode")
+      const darkModeToggle = document.getElementById("darkModeToggle")
+      if (darkModeToggle) darkModeToggle.checked = true
     }
   }
 
-  createRippleEffect(event, button) {
-    const ripple = document.createElement("span")
-    const rect = button.getBoundingClientRect()
-    const size = Math.max(rect.width, rect.height)
-    const x = event.clientX - rect.left - size / 2
-    const y = event.clientY - rect.top - size / 2
-
-    ripple.style.cssText = `
-      position: absolute;
-      width: ${size}px;
-      height: ${size}px;
-      left: ${x}px;
-      top: ${y}px;
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 50%;
-      transform: scale(0);
-      animation: ripple 0.6s linear;
-      pointer-events: none;
-    `
-
-    button.style.position = "relative"
-    button.style.overflow = "hidden"
-    button.appendChild(ripple)
-
-    setTimeout(() => ripple.remove(), 600)
+  toggleTheme(isDark) {
+    if (isDark) {
+      document.body.classList.add("dark-mode")
+      localStorage.setItem("cronoshop_theme", "dark")
+      this.showNotification("Tema scuro attivato", "success")
+    } else {
+      document.body.classList.remove("dark-mode")
+      localStorage.setItem("cronoshop_theme", "light")
+      this.showNotification("Tema chiaro attivato", "success")
+    }
   }
 
-  playAddToCartAnimation(icon) {
-    icon.style.transform = "scale(1.3) rotate(180deg)"
-    icon.style.background = "#48bb78"
-
-    setTimeout(() => {
-      icon.style.transform = "scale(1) rotate(0deg)"
-      icon.style.background = ""
-    }, 300)
-  }
-
-  // ===== CART FUNCTIONALITY =====
-  addToCart(productId) {
+  addToWishlist(productId) {
     const product = this.products.find((p) => p.id === productId)
-    if (!product) {
-      this.showNotification("Prodotto non trovato", "error")
-      return
-    }
+    if (!product) return
 
     try {
-      const cart = JSON.parse(localStorage.getItem("cronoshop_cart") || "[]")
-      const existingItem = cart.find((item) => item.id === productId)
+      const wishlist = JSON.parse(localStorage.getItem("cronoshop_wishlist") || "[]")
+      const existingItem = wishlist.find((item) => item.id === productId)
 
       if (existingItem) {
-        existingItem.quantity = (existingItem.quantity || 1) + 1
-      } else {
-        cart.push({ ...product, quantity: 1 })
+        this.showNotification("Prodotto già nella wishlist", "info")
+        return
       }
 
-      localStorage.setItem("cronoshop_cart", JSON.stringify(cart))
-      this.showNotification(`${product.nome} aggiunto al carrello!`, "success")
-      this.updateCartBadge()
+      wishlist.push(product)
+      localStorage.setItem("cronoshop_wishlist", JSON.stringify(wishlist))
+      this.showNotification("Prodotto aggiunto alla wishlist!", "success")
+
+      // Update badges if navigation is loaded
+      if (window.cronoshopNav) {
+        window.cronoshopNav.updateBadges()
+      }
     } catch (error) {
-      console.error("Error adding to cart:", error)
-      this.showNotification("Errore nell'aggiungere al carrello", "error")
-    }
-  }
-
-  updateCartBadge() {
-    try {
-      const cart = JSON.parse(localStorage.getItem("cronoshop_cart") || "[]")
-      const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 0), 0)
-
-      const cartBadges = document.querySelectorAll(".cart-badge")
-      cartBadges.forEach((badge) => {
-        badge.textContent = totalItems
-        badge.style.display = totalItems > 0 ? "block" : "none"
-      })
-    } catch (error) {
-      console.error("Error updating cart badge:", error)
-    }
-  }
-
-  // ===== UTILITY FUNCTIONS =====
-  hideLoadingIndicator() {
-    const loading = document.getElementById("loadingIndicator")
-    if (loading) {
-      loading.style.opacity = "0"
-      setTimeout(() => loading.remove(), 300)
+      console.error("Error adding to wishlist:", error)
+      this.showNotification("Errore nell'aggiungere alla wishlist", "error")
     }
   }
 
@@ -640,22 +408,21 @@ class CronoshopIndex {
     }
 
     notification.style.cssText = `
-      position: fixed;
-      top: 80px;
-      right: 20px;
-      background: ${colors[type]};
-      color: white;
-      padding: 16px 24px;
-      border-radius: 12px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-      z-index: 10000;
-      transform: translateX(100%);
-      transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-      max-width: 300px;
-      font-size: 14px;
-      font-weight: 500;
-      backdrop-filter: blur(20px);
-    `
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: ${colors[type]};
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            font-size: 14px;
+            font-weight: 500;
+            max-width: 280px;
+        `
 
     const icons = {
       success: "check-circle",
@@ -665,11 +432,11 @@ class CronoshopIndex {
     }
 
     notification.innerHTML = `
-      <div style="display: flex; align-items: center; gap: 8px;">
-        <i class="ph ph-${icons[type]}"></i>
-        <span>${message}</span>
-      </div>
-    `
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <i class="ph ph-${icons[type]}"></i>
+                <span>${message}</span>
+            </div>
+        `
 
     document.body.appendChild(notification)
 
@@ -682,73 +449,11 @@ class CronoshopIndex {
       setTimeout(() => notification.remove(), 300)
     }, 3000)
   }
-
-  loadUserPreferences() {
-    const preferences = JSON.parse(localStorage.getItem("cronoshop_preferences") || "{}")
-    console.log("User preferences loaded:", preferences)
-  }
-
-  addAnimationStyles() {
-    const style = document.createElement("style")
-    style.textContent = `
-      @keyframes ripple {
-        to {
-          transform: scale(4);
-          opacity: 0;
-        }
-      }
-      
-      @keyframes slideInUp {
-        from {
-          transform: translateY(30px);
-          opacity: 0;
-        }
-        to {
-          transform: translateY(0);
-          opacity: 1;
-        }
-      }
-      
-      @keyframes fadeInScale {
-        from {
-          transform: scale(0.8);
-          opacity: 0;
-        }
-        to {
-          transform: scale(1);
-          opacity: 1;
-        }
-      }
-
-      /* Dark mode styles */
-      body.dark-mode {
-        --background-gradient: linear-gradient(105deg, #1a1a1a 0%, #0d0d0d 100%);
-        --glass-bg: rgba(0, 0, 0, 0.3);
-        --glass-border: rgba(255, 255, 255, 0.05);
-        --text-primary: #ffffff;
-        --text-secondary: #cccccc;
-        --card-bg: rgba(0, 0, 0, 0.4);
-      }
-
-      body.dark-mode {
-        background-image: var(--background-gradient);
-      }
-    `
-    document.head.appendChild(style)
-  }
 }
 
-// Initialize the application
+// Initialize when DOM is loaded
 let cronoshopIndex
-
 document.addEventListener("DOMContentLoaded", () => {
   cronoshopIndex = new CronoshopIndex()
-  cronoshopIndex.addAnimationStyles()
   window.cronoshopIndex = cronoshopIndex
-  console.log("🚀 Cronoshop Index initialized successfully!")
 })
-
-// Export for use in other files
-if (typeof module !== "undefined" && module.exports) {
-  module.exports = CronoshopIndex
-}

@@ -1,262 +1,596 @@
-<nav class="ios-navbar" id="mainNavbar">
-    <div class="ios-navbar-content">
-        <div class="ios-navbar-left">
-            <a href="index.html" class="ios-logo">
-                <img src="assets/cronoshop-logo.png" alt="Cronoshop" class="ios-logo-image">
-                <span class="ios-logo-text">Cronoshop</span>
-            </a>
-        </div>
-        
-        <div class="ios-navbar-center" id="searchContainer">
-            <div class="ios-search-bar">
-                <i class="ph ph-magnifying-glass"></i>
-                <input type="text" id="searchInput" placeholder="Cerca prodotti, categorie..." maxlength="100">
-                <button id="voiceSearchBtn" class="ios-voice-btn" title="Ricerca vocale">
-                    <i class="ph ph-microphone"></i>
-                </button>
-                <button id="searchCancel" class="ios-cancel-btn">
-                    <i class="ph ph-x"></i>
-                </button>
+<header class="main-header glass">
+    <nav class="main-nav">
+        <i class="ph ph-list nav-icon-btn" id="leftSidebarBtn"></i>
+        <a href="index.html" class="nav-link" data-page="index">Home</a>
+        <a href="categorie.html" class="nav-link" data-page="categorie">Categorie</a>
+        <a href="products.html" class="nav-link" data-page="products">Prodotti</a>
+        <a href="groups.html" class="nav-link" data-page="groups">Gruppi</a>
+        <a href="cronoai.html" class="nav-link" data-page="cronoai">CronoAI+</a>
+        <a href="blog.html" class="nav-link" data-page="blog">Blog</a>
+    </nav>
+    <div class="main-nav">
+        <a href="#" id="rightSidebarBtn">Altro</a>
+        <i class="ph ph-magnifying-glass nav-icon-btn" id="searchBtn"></i>
+    </div>
+    <div class="dynamic-search-bar glass" id="dynamicSearchBar">
+        <i class="ph ph-magnifying-glass search-icon"></i>
+        <input type="text" class="search-input" placeholder="Cerca su Cronoshop" id="searchInput">
+        <i class="ph ph-microphone search-icon" id="voiceSearchBtn"></i>
+    </div>
+</header>
+
+<!-- Left Sidebar -->
+<aside class="sidebar left-sidebar glass" id="leftSidebar">
+    <div class="sidebar-content">
+        <div class="edit-tools-header">
+            <button class="btn-edit">••• Edit</button>
+            <div class="icons">
+                <i class="ph ph-selection" title="Selezione"></i>
+                <i class="ph ph-circle" title="Cerchio"></i>
             </div>
         </div>
-
-        <div class="ios-navbar-right">
-            <!-- Desktop Navigation Links -->
-            <div class="ios-nav-desktop">
-                <a href="products.html" class="ios-nav-link" data-page="products">
-                    <i class="ph ph-shopping-bag"></i>
-                    <span>Prodotti</span>
-                </a>
-                <a href="cronoai.html" class="ios-nav-link" data-page="cronoai">
-                    <i class="ph ph-robot"></i>
-                    <span>CronoAI</span>
-                </a>
-                <a href="groups.html" class="ios-nav-link" data-page="groups">
-                    <i class="ph ph-whatsapp-logo"></i>
-                    <span>Gruppi</span>
-                </a>
-            </div>
-
-            <!-- Action Buttons -->
-            <button class="ios-nav-action" id="searchToggle" title="Cerca">
-                <i class="ph ph-magnifying-glass"></i>
-            </button>
+        <div class="sidebar-search">
+            <i class="ph ph-magnifying-glass"></i>
+            <input type="text" placeholder="Search" id="sidebarSearchInput">
+            <i class="ph ph-microphone" id="sidebarVoiceBtn"></i>
+        </div>
+        <div class="nav-tool-list">
+            <div class="section-heading">Impostazioni</div>
+            <div class="item"><span>Notifiche Push</span> <input type="checkbox" class="toggle" checked></div>
+            <div class="item"><span>Tema Scuro</span> <input type="checkbox" class="toggle" id="darkModeToggle"></div>
+            <div class="item"><span>Suoni</span> <input type="checkbox" class="toggle"></div>
+            <div class="item"><span>Vibrazione</span> <input type="checkbox" class="toggle"></div>
             
-            <button class="ios-nav-action" id="themeToggle" title="Cambia tema">
-                <i class="ph ph-moon"></i>
-            </button>
-            
-            <a href="wishlist.html" class="ios-nav-action" title="Lista desideri">
-                <i class="ph ph-heart"></i>
-                <span class="ios-badge" id="wishlistBadge">0</span>
-            </a>
-            
-            <a href="cart.html" class="ios-nav-action" title="Carrello">
-                <i class="ph ph-shopping-cart"></i>
-                <span class="ios-badge" id="cartBadge">0</span>
-            </a>
-            
-            <button class="ios-nav-action" id="menuToggle" title="Menu">
-                <i class="ph ph-list"></i>
-            </button>
+            <div class="section-heading">Filtri</div>
+            <div class="item"><span>Solo Sconti</span> <input type="checkbox" class="toggle" checked></div>
+            <div class="item"><span>Prodotti Nuovi</span> <input type="checkbox" class="toggle"></div>
+            <div class="item"><span>Spedizione Gratis</span> <input type="checkbox" class="toggle" checked></div>
         </div>
     </div>
-</nav>
+</aside>
 
-<!-- Mobile Menu -->
-<div class="ios-mobile-menu" id="mobileMenu">
-    <div class="ios-mobile-menu-header">
-        <h3>Menu</h3>
-        <button class="ios-close-btn" id="closeMenu">
-            <i class="ph ph-x"></i>
-        </button>
+<!-- Right Sidebar -->
+<aside class="sidebar right-sidebar glass" id="rightSidebar">
+    <div class="sidebar-content">
+        <div class="main-menu-header">
+            <i class="ph ph-arrow-left" id="closeRightSidebarBtn"></i>
+        </div>
+        <nav class="main-menu">
+            <a href="account.html"><span>Account</span> <span>&gt;</span></a>
+            <a href="wishlist.html"><span>Wishlist</span> <span>&gt;</span></a>
+            <a href="cart.html"><span>Carrello</span> <span>&gt;</span></a>
+            <a href="chisiamo.html"><span>Chi Siamo</span> <span>&gt;</span></a>
+            <a href="stats.html"><span>Statistiche</span> <span>&gt;</span></a>
+            <a href="themes.html"><span>Temi</span> <span>&gt;</span></a>
+            <a href="faq.html"><span>FAQ</span> <span>&gt;</span></a>
+            <a href="privacy.html"><span>Privacy</span> <span>&gt;</span></a>
+            <a href="terms.html"><span>Termini</span> <span>&gt;</span></a>
+        </nav>
     </div>
-    
-    <div class="ios-mobile-menu-content">
-        <div class="ios-menu-section">
-            <h4>Navigazione</h4>
-            <a href="index.html" class="ios-menu-item" data-page="index">
-                <i class="ph ph-house"></i>
-                <span>Home</span>
-            </a>
-            <a href="products.html" class="ios-menu-item" data-page="products">
-                <i class="ph ph-shopping-bag"></i>
-                <span>Prodotti</span>
-            </a>
-            <a href="cronoai.html" class="ios-menu-item" data-page="cronoai">
-                <i class="ph ph-robot"></i>
-                <span>CronoAI</span>
-            </a>
-            <a href="groups.html" class="ios-menu-item" data-page="groups">
-                <i class="ph ph-whatsapp-logo"></i>
-                <span>Gruppi WhatsApp</span>
-            </a>
-            <a href="blog.html" class="ios-menu-item" data-page="blog">
-                <i class="ph ph-article"></i>
-                <span>Blog</span>
-            </a>
-        </div>
-
-        <div class="ios-menu-section">
-            <h4>Account</h4>
-            <a href="wishlist.html" class="ios-menu-item" data-page="wishlist">
-                <i class="ph ph-heart"></i>
-                <span>Lista Desideri</span>
-            </a>
-            <a href="cart.html" class="ios-menu-item" data-page="cart">
-                <i class="ph ph-shopping-cart"></i>
-                <span>Carrello</span>
-            </a>
-            <a href="account.html" class="ios-menu-item" data-page="account">
-                <i class="ph ph-user"></i>
-                <span>Il Mio Account</span>
-            </a>
-        </div>
-
-        <div class="ios-menu-section">
-            <h4>Informazioni</h4>
-            <a href="chisiamo.html" class="ios-menu-item" data-page="chisiamo">
-                <i class="ph ph-info"></i>
-                <span>Chi Siamo</span>
-            </a>
-            <a href="faq.html" class="ios-menu-item" data-page="faq">
-                <i class="ph ph-question"></i>
-                <span>FAQ</span>
-            </a>
-            <a href="privacy.html" class="ios-menu-item" data-page="privacy">
-                <i class="ph ph-shield-check"></i>
-                <span>Privacy</span>
-            </a>
-            <a href="terms.html" class="ios-menu-item" data-page="terms">
-                <i class="ph ph-file-text"></i>
-                <span>Termini</span>
-            </a>
-        </div>
-
-        <div class="ios-menu-section">
-            <h4>Personalizzazione</h4>
-            <a href="themes.html" class="ios-menu-item" data-page="themes">
-                <i class="ph ph-palette"></i>
-                <span>Temi</span>
-            </a>
-        </div>
-    </div>
-</div>
+</aside>
 
 <!-- Overlay -->
-<div class="ios-overlay" id="overlay"></div>
+<div class="overlay" id="overlay"></div>
+
+<style>
+/* Navigation Styles matching index.html */
+:root {
+    --background-gradient: linear-gradient(105deg, #2d3748 0%, #1a202c 100%);
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --text-primary: #f7fafc;
+    --text-secondary: #a0aec0;
+    --accent-primary: #4299e1;
+    --accent-secondary: #38b2ac;
+    --green-toggle: #48bb78;
+    --card-bg: rgba(45, 55, 72, 0.7);
+    --radius-main: 24px;
+    --radius-sub: 16px;
+    --transition-smooth: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.37);
+}
+
+/* Glass Effect */
+.glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-main);
+    box-shadow: var(--shadow-glass);
+}
+
+/* Header */
+.main-header {
+    padding: 10px 20px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.main-nav .nav-icon-btn {
+    font-size: 22px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.main-nav .nav-icon-btn:hover { 
+    color: var(--text-primary); 
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(1.1);
+}
+
+.main-nav a {
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.main-nav a:hover { 
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.main-nav a.active {
+    color: var(--text-primary);
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.main-nav a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 2px;
+    background: var(--accent-primary);
+    border-radius: 1px;
+}
+
+/* Dynamic Search Bar */
+.dynamic-search-bar {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    width: 50%;
+    max-width: 500px;
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-smooth);
+    pointer-events: none;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dynamic-search-bar.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+    pointer-events: auto;
+}
+
+.dynamic-search-bar .search-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: 16px;
+    padding: 0 10px;
+    outline: none;
+}
+
+.dynamic-search-bar .search-input::placeholder {
+    color: var(--text-secondary);
+}
+
+.dynamic-search-bar .search-icon {
+    font-size: 20px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.dynamic-search-bar .search-icon:hover {
+    color: var(--text-primary);
+}
+
+/* Sidebars */
+.sidebar {
+    position: fixed;
+    top: 20px;
+    height: calc(100vh - 40px);
+    width: 300px;
+    transition: transform var(--transition-smooth);
+    z-index: 100;
+}
+
+.left-sidebar { 
+    left: 20px; 
+    transform: translateX(-110%); 
+}
+.left-sidebar.visible { 
+    transform: translateX(0); 
+}
+
+.right-sidebar { 
+    right: 20px; 
+    transform: translateX(110%); 
+}
+.right-sidebar.visible { 
+    transform: translateX(0); 
+}
+
+.sidebar-content { 
+    padding: 20px; 
+    height: 100%;
+    overflow-y: auto;
+}
+
+/* Left Sidebar Content */
+.edit-tools-header { 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    margin-bottom: 20px; 
+}
+
+.edit-tools-header .btn-edit { 
+    background: var(--accent-primary); 
+    border: none; 
+    color: white; 
+    padding: 8px 12px; 
+    border-radius: 8px; 
+    font-weight: 500; 
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.edit-tools-header .btn-edit:hover {
+    background: color-mix(in srgb, var(--accent-primary) 90%, black);
+    transform: translateY(-1px);
+}
+
+.edit-tools-header .icons { 
+    display: flex; 
+    gap: 15px; 
+    font-size: 20px; 
+}
+
+.edit-tools-header .icons i {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 4px;
+    border-radius: 4px;
+}
+
+.edit-tools-header .icons i:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(1.1);
+}
+
+.sidebar-search { 
+    display: flex; 
+    align-items: center; 
+    background: rgba(0,0,0,0.2); 
+    border-radius: 8px; 
+    padding: 8px; 
+    margin-bottom: 20px;
+    transition: all 0.2s ease;
+}
+
+.sidebar-search:focus-within {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--accent-primary);
+}
+
+.sidebar-search input { 
+    flex: 1; 
+    background: none; 
+    border: none; 
+    color: white; 
+    outline: none; 
+    margin-left: 8px;
+}
+
+.sidebar-search input::placeholder {
+    color: var(--text-secondary);
+}
+
+.sidebar-search i {
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.sidebar-search i:hover {
+    color: var(--text-primary);
+}
+
+.nav-tool-list .section-heading {
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 15px;
+    margin-top: 20px;
+}
+
+.nav-tool-list .item { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.nav-tool-list .item:last-child {
+    border-bottom: none;
+}
+
+.nav-tool-list .toggle {
+    appearance: none; 
+    width: 40px; 
+    height: 24px; 
+    background: rgba(0,0,0,0.3); 
+    border-radius: 12px; 
+    position: relative; 
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.nav-tool-list .toggle::before { 
+    content: ''; 
+    position: absolute; 
+    top: 2px; 
+    left: 2px; 
+    width: 20px; 
+    height: 20px; 
+    background: white; 
+    border-radius: 50%; 
+    transition: transform 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.nav-tool-list .toggle:checked { 
+    background: var(--green-toggle); 
+}
+
+.nav-tool-list .toggle:checked::before { 
+    transform: translateX(16px); 
+}
+
+/* Right Sidebar Content */
+.main-menu-header { 
+    display: flex; 
+    justify-content: flex-end; 
+    align-items: center; 
+    font-size: 22px; 
+    padding-bottom: 10px; 
+    margin-bottom: 10px; 
+    border-bottom: 1px solid var(--glass-border); 
+}
+
+.main-menu-header i {
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.main-menu-header i:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(1.1);
+}
+
+.main-menu a { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 14px 10px; 
+    text-decoration: none; 
+    color: var(--text-secondary); 
+    font-weight: 500; 
+    border-radius: 8px; 
+    transition: all 0.3s ease;
+    margin-bottom: 4px;
+}
+
+.main-menu a:hover { 
+    background-color: var(--glass-bg); 
+    color: var(--text-primary);
+    transform: translateX(4px);
+}
+
+/* Overlay */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 50;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+    backdrop-filter: blur(2px);
+}
+
+.overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .main-nav a:not(.active) { display: none; }
+    .left-sidebar { width: 280px; }
+    .right-sidebar { width: 250px; }
+}
+
+@media (max-width: 768px) {
+    .sidebar { 
+        top: 10px; 
+        left: 10px; 
+        right: 10px;
+        width: calc(100% - 20px); 
+        height: calc(100vh - 20px); 
+        border-radius: var(--radius-main); 
+        transition: opacity 0.3s, visibility 0.3s; 
+        transform: none;
+        opacity: 0; 
+        visibility: hidden; 
+        pointer-events: none; 
+    }
+    
+    .sidebar.visible { 
+        opacity: 1; 
+        visibility: visible; 
+        pointer-events: auto; 
+        transform: none;
+    }
+
+    .dynamic-search-bar {
+        width: 80%;
+    }
+}
+</style>
 
 <script>
 class CronoshopNavigation {
     constructor() {
-        this.isSearchActive = false;
-        this.isDarkMode = false;
         this.init();
     }
 
     init() {
         this.setupEventListeners();
-        this.loadTheme();
-        this.updateBadges();
         this.highlightActiveNavigation();
+        this.loadTheme();
     }
 
     setupEventListeners() {
-        // Menu toggle
-        const menuToggle = document.getElementById('menuToggle');
-        const closeMenu = document.getElementById('closeMenu');
+        // Left sidebar toggle
+        const leftSidebarBtn = document.getElementById('leftSidebarBtn');
+        const leftSidebar = document.getElementById('leftSidebar');
         const overlay = document.getElementById('overlay');
 
-        menuToggle?.addEventListener('click', () => this.toggleMenu());
-        closeMenu?.addEventListener('click', () => this.closeMenu());
-        overlay?.addEventListener('click', () => this.closeMenu());
+        leftSidebarBtn?.addEventListener('click', (e) => {
+            e.preventDefault();
+            leftSidebar?.classList.toggle('visible');
+            overlay?.classList.toggle('visible');
+        });
+
+        // Right sidebar toggle
+        const rightSidebarBtn = document.getElementById('rightSidebarBtn');
+        const rightSidebar = document.getElementById('rightSidebar');
+        const closeRightSidebarBtn = document.getElementById('closeRightSidebarBtn');
+
+        rightSidebarBtn?.addEventListener('click', (e) => {
+            e.preventDefault();
+            rightSidebar?.classList.toggle('visible');
+            overlay?.classList.toggle('visible');
+        });
+
+        closeRightSidebarBtn?.addEventListener('click', (e) => {
+            e.preventDefault();
+            rightSidebar?.classList.remove('visible');
+            overlay?.classList.remove('visible');
+        });
+
+        // Close on overlay click
+        overlay?.addEventListener('click', () => {
+            leftSidebar?.classList.remove('visible');
+            rightSidebar?.classList.remove('visible');
+            overlay?.classList.remove('visible');
+        });
 
         // Search toggle
-        const searchToggle = document.getElementById('searchToggle');
-        const searchCancel = document.getElementById('searchCancel');
+        const searchBtn = document.getElementById('searchBtn');
+        const dynamicSearchBar = document.getElementById('dynamicSearchBar');
         const searchInput = document.getElementById('searchInput');
-        const voiceSearchBtn = document.getElementById('voiceSearchBtn');
 
-        searchToggle?.addEventListener('click', () => this.toggleSearch());
-        searchCancel?.addEventListener('click', () => this.closeSearch());
-        searchInput?.addEventListener('input', (e) => this.handleSearch(e.target.value));
-        voiceSearchBtn?.addEventListener('click', () => this.startVoiceSearch());
-
-        // Theme toggle
-        const themeToggle = document.getElementById('themeToggle');
-        themeToggle?.addEventListener('click', () => this.toggleTheme());
-
-        // Keyboard shortcuts
-        document.addEventListener('keydown', (e) => {
-            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-                e.preventDefault();
-                this.toggleSearch();
-            }
-            if (e.key === 'Escape') {
-                this.closeSearch();
-                this.closeMenu();
+        searchBtn?.addEventListener('click', (e) => {
+            e.preventDefault();
+            dynamicSearchBar?.classList.toggle('visible');
+            if (dynamicSearchBar?.classList.contains('visible')) {
+                searchInput?.focus();
             }
         });
 
-        // Listen for cart updates
-        document.addEventListener('cronoshop:cart-updated', () => this.updateBadges());
+        // Search functionality
+        searchInput?.addEventListener('input', (e) => {
+            this.handleSearch(e.target.value);
+        });
+
+        // Voice search
+        const voiceSearchBtn = document.getElementById('voiceSearchBtn');
+        voiceSearchBtn?.addEventListener('click', () => {
+            this.startVoiceSearch();
+        });
+
+        // Dark mode toggle
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        darkModeToggle?.addEventListener('change', (e) => {
+            this.toggleTheme(e.target.checked);
+        });
+
+        // Sidebar search
+        const sidebarSearchInput = document.getElementById('sidebarSearchInput');
+        sidebarSearchInput?.addEventListener('input', (e) => {
+            this.handleSearch(e.target.value);
+        });
+
+        // Sidebar voice search
+        const sidebarVoiceBtn = document.getElementById('sidebarVoiceBtn');
+        sidebarVoiceBtn?.addEventListener('click', () => {
+            this.startVoiceSearch();
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                dynamicSearchBar?.classList.remove('visible');
+                leftSidebar?.classList.remove('visible');
+                rightSidebar?.classList.remove('visible');
+                overlay?.classList.remove('visible');
+            }
+        });
     }
 
-    toggleMenu() {
-        const mobileMenu = document.getElementById('mobileMenu');
-        const overlay = document.getElementById('overlay');
-        
-        mobileMenu?.classList.add('active');
-        overlay?.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-
-    closeMenu() {
-        const mobileMenu = document.getElementById('mobileMenu');
-        const overlay = document.getElementById('overlay');
-        
-        mobileMenu?.classList.remove('active');
-        overlay?.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-
-    toggleSearch() {
-        const navbar = document.getElementById('mainNavbar');
-        const searchInput = document.getElementById('searchInput');
-        
-        if (!this.isSearchActive) {
-            navbar?.classList.add('search-active');
-            this.isSearchActive = true;
-            setTimeout(() => searchInput?.focus(), 100);
-        } else {
-            this.closeSearch();
-        }
-    }
-
-    closeSearch() {
-        const navbar = document.getElementById('mainNavbar');
-        const searchInput = document.getElementById('searchInput');
-        
-        navbar?.classList.remove('search-active');
-        this.isSearchActive = false;
-        if (searchInput) searchInput.value = '';
+    highlightActiveNavigation() {
+        const currentPage = window.location.pathname.split('/').pop().replace('.html', '') || 'index';
+        const activeLinks = document.querySelectorAll(`[data-page="${currentPage}"]`);
+        activeLinks.forEach(link => link.classList.add('active'));
     }
 
     handleSearch(query) {
-        // Dispatch search event for index.js to handle
-        if (window.cronoshopIndex) {
-            window.cronoshopIndex.handleSearch(query);
-        }
+        // Dispatch search event for page-specific handling
+        document.dispatchEvent(new CustomEvent('cronoshop:search', {
+            detail: { query }
+        }));
     }
 
     startVoiceSearch() {
-        const voiceBtn = document.getElementById('voiceSearchBtn');
-        
-        if (!voiceBtn) return;
-        
-        voiceBtn.style.color = 'var(--ios-red)';
-        voiceBtn.style.transform = 'scale(1.2)';
-        
         if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             const recognition = new SpeechRecognition();
@@ -268,48 +602,23 @@ class CronoshopNavigation {
             recognition.onresult = (event) => {
                 const transcript = event.results[0][0].transcript;
                 const searchInput = document.getElementById('searchInput');
-                if (searchInput) {
-                    searchInput.value = transcript;
-                    this.handleSearch(transcript);
-                }
+                const sidebarSearchInput = document.getElementById('sidebarSearchInput');
+                
+                if (searchInput) searchInput.value = transcript;
+                if (sidebarSearchInput) sidebarSearchInput.value = transcript;
+                
+                this.handleSearch(transcript);
+                this.showNotification(`Ricerca vocale: "${transcript}"`, 'info');
             };
             
             recognition.onerror = () => {
                 this.showNotification('Errore nel riconoscimento vocale', 'error');
             };
             
-            recognition.onend = () => {
-                voiceBtn.style.color = '';
-                voiceBtn.style.transform = '';
-            };
-            
             recognition.start();
+            this.showNotification('Parla ora...', 'info');
         } else {
-            setTimeout(() => {
-                voiceBtn.style.color = '';
-                voiceBtn.style.transform = '';
-                this.showNotification('Ricerca vocale non supportata', 'info');
-            }, 1000);
-        }
-    }
-
-    toggleTheme() {
-        const body = document.body;
-        const themeBtn = document.getElementById('themeToggle');
-        const icon = themeBtn?.querySelector('i');
-        
-        this.isDarkMode = !this.isDarkMode;
-        
-        if (this.isDarkMode) {
-            body.classList.add('dark-mode');
-            if (icon) icon.className = 'ph ph-sun';
-            localStorage.setItem('cronoshop_theme', 'dark');
-            this.showNotification('Tema scuro attivato', 'success');
-        } else {
-            body.classList.remove('dark-mode');
-            if (icon) icon.className = 'ph ph-moon';
-            localStorage.setItem('cronoshop_theme', 'light');
-            this.showNotification('Tema chiaro attivato', 'success');
+            this.showNotification('Ricerca vocale non supportata', 'error');
         }
     }
 
@@ -320,39 +629,21 @@ class CronoshopNavigation {
         
         if (shouldUseDark) {
             document.body.classList.add('dark-mode');
-            this.isDarkMode = true;
-            const themeBtn = document.getElementById('themeToggle');
-            const icon = themeBtn?.querySelector('i');
-            if (icon) icon.className = 'ph ph-sun';
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            if (darkModeToggle) darkModeToggle.checked = true;
         }
     }
 
-    updateBadges() {
-        try {
-            const cart = JSON.parse(localStorage.getItem('cronoshop_cart') || '[]');
-            const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 0), 0);
-            
-            const cartBadge = document.getElementById('cartBadge');
-            if (cartBadge) {
-                cartBadge.textContent = totalItems;
-                cartBadge.style.display = totalItems > 0 ? 'block' : 'none';
-            }
-
-            const wishlist = JSON.parse(localStorage.getItem('cronoshop_wishlist') || '[]');
-            const wishlistBadge = document.getElementById('wishlistBadge');
-            if (wishlistBadge) {
-                wishlistBadge.textContent = wishlist.length;
-                wishlistBadge.style.display = wishlist.length > 0 ? 'block' : 'none';
-            }
-        } catch (error) {
-            console.error('Error updating badges:', error);
+    toggleTheme(isDark) {
+        if (isDark) {
+            document.body.classList.add('dark-mode');
+            localStorage.setItem('cronoshop_theme', 'dark');
+            this.showNotification('Tema scuro attivato', 'success');
+        } else {
+            document.body.classList.remove('dark-mode');
+            localStorage.setItem('cronoshop_theme', 'light');
+            this.showNotification('Tema chiaro attivato', 'success');
         }
-    }
-
-    highlightActiveNavigation() {
-        const currentPage = window.location.pathname.split('/').pop().replace('.html', '') || 'index';
-        const activeLinks = document.querySelectorAll(`[data-page="${currentPage}"]`);
-        activeLinks.forEach(link => link.classList.add('active'));
     }
 
     showNotification(message, type = 'info') {
@@ -408,12 +699,8 @@ class CronoshopNavigation {
     }
 }
 
-// Initialize navigation when DOM is loaded
+// Initialize navigation
 document.addEventListener('DOMContentLoaded', () => {
-    window.CronoshopNavigation = CronoshopNavigation;
-    new CronoshopNavigation();
+    window.cronoshopNav = new CronoshopNavigation();
 });
-
-// Make it globally available
-window.CronoshopNavigation = CronoshopNavigation;
 </script>
