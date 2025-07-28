@@ -4,8 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cronoshop - Le Migliori Offerte Amazon 2025</title>
+    
     <meta name="description" content="Scopri ogni giorno le migliori offerte Amazon con il nuovo design iOS di Cronoshop. Interface moderna e intuitiva per risparmiare senza sforzo.">
+    <meta name="author" content="Cronoshop Team">
+    <link rel="canonical" href="https://www.cronoshop.eu/">
+    
     <link rel="icon" type="image/png" href="assets/cronoshop-logo.png">
+    <link rel="apple-touch-icon" href="assets/cronoshop-logo.png">
+    
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <script src="themes.js" defer></script>
     
@@ -22,7 +28,7 @@
             --text-secondary: #a0a0a5;
             --accent-primary: #0A84FF;
             --accent-green: #30D158;
-            --accent-red: #FF453A;
+            --accent-purple: #BF5AF2;
             --overlay-bg: rgba(0, 0, 0, 0.6);
             --radius-main: 24px;
             --radius-sub: 16px;
@@ -38,7 +44,7 @@
             --text-secondary: #6e6e73;
             --accent-primary: #007AFF;
             --accent-green: #34C759;
-            --accent-red: #FF3B30;
+            --accent-purple: #AF52DE;
             --overlay-bg: rgba(0, 0, 0, 0.4);
         }
 
@@ -52,14 +58,8 @@
             min-height: 100vh;
         }
         .page-wrapper { padding-top: 80px; }
-        .glass {
-            background: var(--bg-glass);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--border-glass);
-            border-radius: var(--radius-main);
-            transition: background 0.3s, border 0.3s;
-        }
+        .glass { background: var(--bg-glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--border-glass); border-radius: var(--radius-main); transition: background 0.3s, border 0.3s; }
+        a { color: var(--accent-primary); text-decoration: none; font-weight: 500; }
         
         /* Header, Search & Sidebars */
         .main-header { position: fixed; top: 20px; left: 20px; right: 20px; z-index: 1000; display: flex; align-items: center; gap: 20px; padding: 0 20px; height: 70px; }
@@ -115,89 +115,48 @@
 
         /* Products Grid */
         .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-        .product-card { border-radius: var(--radius-sub); overflow: hidden; transition: all 0.3s ease; cursor: pointer; }
+        .product-card { border-radius: var(--radius-sub); overflow: hidden; transition: all 0.3s ease; position: relative; }
+        .product-card-clickable { cursor: pointer; }
         .product-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 15px 40px rgba(0,0,0,0.4); }
         .product-image { width: 100%; height: 200px; object-fit: cover; display: block; }
-        .product-info { padding: 1.5rem; }
+        .product-info { padding: 1.5rem; background: var(--bg-interactive); }
         .product-info h4 { font-size: 1.1rem; margin-bottom: 0.5rem; line-height: 1.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .product-info .price { font-size: 1.4rem; font-weight: 700; color: var(--accent-green); margin-bottom: 1rem; }
         .product-actions { display: flex; gap: 10px; }
         .buy-btn { flex-grow: 1; background: var(--accent-primary); color: white; border: none; padding: 10px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: background-color 0.2s; }
         .buy-btn:hover { background: color-mix(in srgb, var(--accent-primary) 85%, black); }
-        .icon-btn { width: 40px; height: 40px; background: var(--bg-interactive); border: none; border-radius: 10px; color: var(--text-primary); cursor: pointer; transition: background-color 0.2s; font-size: 18px; }
-        .icon-btn:hover { background-color: color-mix(in srgb, var(--bg-interactive) 80%, white); }
-        .icon-btn.active { color: var(--accent-red); }
+        .icon-btn { width: 40px; height: 40px; background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: 10px; color: var(--text-primary); cursor: pointer; transition: all 0.2s; font-size: 18px; }
+        .icon-btn:hover { background-color: color-mix(in srgb, var(--bg-interactive) 80%, white); transform: scale(1.1); }
+        .icon-btn.active { color: var(--accent-red); background-color: rgba(255, 59, 48, 0.1); }
 
-        /* Product Modal */
-        .modal-container { position: fixed; inset: 0; z-index: 3000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; }
+        /* Product Modal (Premium Redesign) */
+        .modal-container { position: fixed; inset: 0; z-index: 3000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; padding: 20px; }
         .modal-container.visible { opacity: 1; visibility: visible; }
-        .modal-content { max-width: 600px; width: 90%; transform: scale(0.9); transition: transform 0.3s; }
+        .modal-content { max-width: 500px; width: 100%; transform: scale(0.9); transition: transform 0.3s; }
         .modal-container.visible .modal-content { transform: scale(1); }
-        .modal-image { width: 100%; height: 250px; object-fit: cover; border-radius: var(--radius-main) var(--radius-main) 0 0; }
+        .modal-image { width: 100%; height: 250px; object-fit: cover; border-radius: var(--radius-main) var(--radius-main) 0 0; display: block; }
         .modal-info { padding: 2rem; }
-        .modal-title { font-size: 1.8rem; margin-bottom: 1rem; }
+        .modal-title { font-size: 1.8rem; margin-bottom: 1rem; line-height: 1.3; }
         .modal-description { color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.6; }
-        .modal-price { font-size: 2rem; font-weight: 700; color: var(--accent-green); margin-bottom: 1.5rem; }
-        .modal-price .original { font-size: 1rem; color: var(--text-secondary); text-decoration: line-through; margin-left: 10px; }
+        .modal-price { font-size: 2rem; font-weight: 700; color: var(--accent-green); margin-bottom: 2rem; display: flex; align-items: baseline; gap: 10px; }
+        .modal-price .original { font-size: 1rem; color: var(--text-secondary); text-decoration: line-through; }
+        .modal-actions { display: grid; grid-template-columns: 1fr auto; gap: 10px; }
+        
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .page-wrapper { padding-top: 70px; }
+            .main-header { top: 10px; left: 10px; right: 10px; }
+            .main-grid { grid-template-columns: 1fr; }
+            .search-container.active { max-width: calc(100% - 140px); }
+        }
     </style>
 </head>
 <body class="dark-mode">
 
-    <header class="main-header glass" id="mainHeader">
-        <button class="header-btn" id="leftSidebarBtn" aria-label="Apri menu"><i class="ph-bold ph-list"></i></button>
-        <div class="search-container-wrapper">
-            <div class="search-container glass" id="searchContainer">
-                <i class="ph ph-magnifying-glass"></i>
-                <input type="text" id="searchInput" placeholder="Cerca un'offerta...">
-            </div>
-        </div>
-        <button class="header-btn" id="rightSidebarBtn" aria-label="Apri impostazioni"><i class="ph-bold ph-gear"></i></button>
-    </header>
-
-    <aside class="sidebar left-sidebar glass" id="leftSidebar">
-        <div class="sidebar-header">
-            <h3>Menu</h3>
-            <button class="close-btn" id="closeLeftSidebarBtn"><i class="ph-bold ph-x"></i></button>
-        </div>
-        <nav class="sidebar-nav">
-             <ul>
-                <li><a href="index.html"><i class="ph ph-house"></i> Home</a></li>
-                <li><a href="account.html"><i class="ph ph-user-circle"></i> Account</a></li>
-                <li><a href="products.html"><i class="ph ph-shopping-bag"></i> Prodotti</a></li>
-                <li><a href="wishlist.html"><i class="ph ph-heart"></i> Wishlist</a></li>
-                <li><a href="cart.html"><i class="ph ph-shopping-cart"></i> Carrello</a></li>
-                <li><a href="chisiamo.html"><i class="ph ph-info"></i> Chi Siamo</a></li>
-                <li><a href="blog.html"><i class="ph ph-newspaper"></i> Blog</a></li>
-                <li><a href="stats.html"><i class="ph ph-chart-bar"></i> Statistiche</a></li>
-                <li><a href="themes.html"><i class="ph ph-palette"></i> Temi</a></li>
-                <li><a href="faq.html"><i class="ph ph-question"></i> FAQ</a></li>
-                <li><a href="privacy.html"><i class="ph ph-shield-check"></i> Privacy</a></li>
-                <li><a href="terms.html"><i class="ph ph-file-text"></i> Termini</a></li>
-            </ul>
-        </nav>
-    </aside>
-
-    <aside class="sidebar right-sidebar glass" id="rightSidebar">
-         <div class="sidebar-header">
-            <h3>Impostazioni</h3>
-            <button class="close-btn" id="closeRightSidebarBtn"><i class="ph-bold ph-x"></i></button>
-        </div>
-        <nav class="sidebar-nav">
-            <ul>
-                <li>
-                    <label class="setting-item" for="themeToggle">
-                        <span><i class="ph ph-moon"></i> Tema Scuro</span>
-                        <div class="toggle-switch">
-                            <input type="checkbox" id="themeToggle" checked>
-                            <span class="slider"></span>
-                        </div>
-                    </label>
-                </li>
-                 <li><a href="#"><i class="ph ph-bell"></i> Notifiche</a></li>
-            </ul>
-        </nav>
-    </aside>
-
+    <header class="main-header glass" id="mainHeader"></header>
+    <aside class="sidebar left-sidebar glass" id="leftSidebar"></aside>
+    <aside class="sidebar right-sidebar glass" id="rightSidebar"></aside>
     <div class="overlay" id="overlay"></div>
 
     <div class="page-wrapper">
