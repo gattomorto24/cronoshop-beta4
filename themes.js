@@ -322,3 +322,95 @@ class ThemeManager {
 document.addEventListener('DOMContentLoaded', () => {
     new ThemeManager();
 });
+// ===================================================================================
+//   MOBILE OPTIMIZER - SCRIPT AGGIUNTIVO PER OTTIMIZZAZIONE MOBILE
+//   Versione: 1.0
+//   Descrizione: Questo script viene eseguito su ogni pagina per applicare
+//   ottimizzazioni CSS specifiche per i dispositivi con schermo piccolo.
+// ===================================================================================
+
+const applyMobileOptimizations = () => {
+    const isMobile = window.innerWidth <= 768;
+    const body = document.body;
+    const styleTagId = 'mobile-optimization-styles';
+    let styleTag = document.getElementById(styleTagId);
+
+    if (isMobile) {
+        body.classList.add('is-mobile');
+
+        // Se il tag di stile non esiste già, lo creiamo e lo aggiungiamo
+        if (!styleTag) {
+            styleTag = document.createElement('style');
+            styleTag.id = styleTagId;
+            styleTag.textContent = `
+                /* --- STILI PER OTTIMIZZAZIONE MOBILE --- */
+
+                /* Aumenta la dimensione del testo base per una migliore leggibilità */
+                .is-mobile {
+                    -webkit-text-size-adjust: 100%; /* Previene lo zoom automatico del testo su iOS */
+                }
+
+                /* Rende i pulsanti principali più grandi e facili da toccare */
+                .is-mobile .btn,
+                .is-mobile .action-button {
+                    padding: 1rem 1.8rem;
+                    font-size: 1.1rem; /* Testo più grande sui pulsanti */
+                }
+                
+                /* Ottimizza le card per un layout a colonna singola */
+                .is-mobile .main-grid,
+                .is-mobile .products-grid,
+                .is-mobile .themes-grid,
+                .is-mobile .groups-grid,
+                .is-mobile .benefits-grid,
+                .is-mobile .account-options-grid {
+                    grid-template-columns: 1fr; /* Forza una singola colonna */
+                }
+                
+                /* Migliora la spaziatura per il tocco */
+                .is-mobile .main-header {
+                    padding: 0 10px;
+                    gap: 10px;
+                }
+                
+                .is-mobile .page-header {
+                    padding: 20px 10px;
+                }
+                
+                .is-mobile .page-header h1 {
+                    font-size: 2rem; /* Titoli più compatti */
+                }
+
+                /* Rende il popup del prodotto a schermo intero per una migliore visualizzazione */
+                .is-mobile .modal-content {
+                    width: calc(100% - 20px);
+                    height: calc(100% - 40px);
+                    border-radius: var(--radius-main);
+                }
+            `;
+            document.head.appendChild(styleTag);
+        }
+    } else {
+        // Se lo schermo non è più mobile, rimuoviamo la classe e gli stili
+        body.classList.remove('is-mobile');
+        if (styleTag) {
+            styleTag.remove();
+        }
+    }
+};
+
+// --- ESECUZIONE ---
+// Aggiungiamo un listener all'evento DOMContentLoaded per assicurarci che lo script principale
+// sia già stato eseguito, poi aggiungiamo la nostra logica.
+document.addEventListener('DOMContentLoaded', () => {
+    // Esegui la funzione una volta al caricamento
+    applyMobileOptimizations();
+
+    // E poi rieseguila ogni volta che la finestra viene ridimensionata
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        // Usiamo un timeout per evitare di eseguire la funzione troppe volte durante il ridimensionamento
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(applyMobileOptimizations, 150);
+    });
+});
