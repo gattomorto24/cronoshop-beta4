@@ -1,72 +1,475 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="assets/cronoshop-logo.png">
-    <link rel="apple-touch-icon" href="assets/cronoshop-logo.png">
-    <meta name="author" content="Cronoshop Team" />
-    <link rel="canonical" href="https://www.cronoshop.eu/faq.html">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FAQ - Cronoshop</title>
     <meta name="description" content="Domande frequenti su Cronoshop.">
+    <meta name="author" content="Cronoshop Team">
+    <link rel="canonical" href="https://www.cronoshop.eu/faq.html">
+    <link rel="icon" type="image/png" href="assets/cronoshop-logo.png">
+    <link rel="apple-touch-icon" href="assets/cronoshop-logo.png">
     <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 <body>
-    <!-- Header -->
-    <header class="glass-header" id="navigation-container"></header>
-    <main class="container">
-        <section class="faq">
-            <h2>FAQ</h2>
-            <div class="faq-list">
-                <div class="glass-card p-3">
-                    <h3>1. Cos'è Cronoshop?</h3>
-                    <p>Cronoshop è una piattaforma che raccoglie e segnala le migliori offerte Amazon ogni giorno.</p>
+    <div class="page-wrapper">
+        <div id="navigation-container"></div>
+        
+        <main class="main-content">
+            <div class="main-card glass">
+                <div class="page-header">
+                    <h1>❓ Domande Frequenti</h1>
+                    <p>Trova le risposte alle domande più comuni su Cronoshop</p>
                 </div>
-                <div class="glass-card p-3">
-                    <h3>2. Devo pagare per usare Cronoshop?</h3>
-                    <p>No, l'accesso a Cronoshop è completamente gratuito.</p>
-                </div>
-                <div class="glass-card p-3">
-                    <h3>3. Vendete prodotti direttamente?</h3>
-                    <p>No, Cronoshop non vende prodotti direttamente ma ti reindirizza su Amazon tramite link affiliati.</p>
-                </div>
-                <div class="glass-card p-3">
-                    <h3>4. Perché dovrei usare i vostri link?</h3>
-                    <p>Usando i nostri link il prezzo non cambia, ma ci supporti nel mantenere attivo il servizio.</p>
-                </div>
-                <div class="glass-card p-3">
-                    <h3>5. Come fate a trovare le offerte?</h3>
-                    <p>Usiamo una combinazione di sistemi automatizzati e analisi manuale da parte del team.</p>
-                </div>
-                <div class="glass-card p-3">
-                    <h3>6. Gli sconti sono sempre aggiornati?</h3>
-                    <p>Sì, le offerte sono aggiornate quotidianamente e hanno validità limitata.</p>
-                </div>
-                <div class="glass-card p-3">
-                    <h3>7. Posso salvare i miei prodotti preferiti?</h3>
-                    <p>Sì, puoi aggiungerli alla tua wishlist personale se sei registrato.</p>
-                </div>
-                <div class="glass-card p-3">
-                    <h3>8. Serve un account per usare Cronoshop?</h3>
-                    <p>Puoi navigare liberamente, ma alcune funzionalità avanzate richiedono la registrazione.</p>
-                </div>
-                <div class="glass-card p-3">
-                    <h3>9. Come mi registro?</h3>
-                    <p>Vai su <a href="account.html">account.html</a> e segui la procedura guidata.</p>
-                </div>
-                <div class="glass-card p-3">
-                    <h3>10. Come funziona il carrello?</h3>
-                    <p>Il carrello serve a salvare i tuoi articoli preferiti, anche se il vero acquisto avviene su Amazon.</p>
-                </div>
-                <!-- Altre 30 domande qui di seguito -->
-            </div>
-        </section>
-    </main>
 
-    <footer class="glass-footer" id="footer-container"></footer>
+                <div class="faq-search glass" style="margin-bottom: 2rem; padding: 1rem; border-radius: 16px;">
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="ph ph-magnifying-glass" style="color: var(--text-secondary);"></i>
+                        <input type="text" id="faqSearch" placeholder="Cerca nelle FAQ..." 
+                               style="flex: 1; background: transparent; border: none; color: var(--text-primary); outline: none; font-size: 1rem;">
+                    </div>
+                </div>
+
+                <div class="faq-categories" style="margin-bottom: 2rem;">
+                    <div class="category-filters" style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center;">
+                        <button class="category-filter active" data-category="all">Tutte</button>
+                        <button class="category-filter" data-category="generale">Generale</button>
+                        <button class="category-filter" data-category="account">Account</button>
+                        <button class="category-filter" data-category="offerte">Offerte</button>
+                        <button class="category-filter" data-category="tecnico">Tecnico</button>
+                        <button class="category-filter" data-category="privacy">Privacy</button>
+                    </div>
+                </div>
+
+                <div class="faq-list" id="faqList">
+                    <!-- FAQ items will be loaded here -->
+                </div>
+
+                <div class="faq-contact glass" style="margin-top: 3rem; padding: 2rem; border-radius: 16px; text-align: center;">
+                    <h3 style="color: var(--text-primary); margin-bottom: 1rem;">Non hai trovato quello che cercavi?</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                        Contattaci direttamente per ricevere assistenza personalizzata
+                    </p>
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                        <a href="mailto:support@cronoshop.eu" class="action-btn primary">
+                            <i class="ph ph-envelope"></i>
+                            Email Support
+                        </a>
+                        <a href="groups.html" class="action-btn secondary">
+                            <i class="ph ph-whatsapp-logo"></i>
+                            WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <style>
+        .category-filter {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .category-filter:hover {
+            background: var(--accent-primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .category-filter.active {
+            background: var(--accent-primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(66, 153, 225, 0.3);
+        }
+
+        .faq-item {
+            background: var(--card-bg);
+            border-radius: var(--radius-sub);
+            margin-bottom: 1rem;
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glass);
+        }
+
+        .faq-question {
+            width: 100%;
+            background: none;
+            border: none;
+            padding: 1.5rem;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .faq-toggle {
+            font-size: 1.5rem;
+            color: var(--accent-primary);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+
+        .faq-answer-content {
+            padding: 1.5rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .faq-answer-content p {
+            margin-bottom: 1rem;
+        }
+
+        .faq-answer-content ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .faq-answer-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .faq-answer-content a {
+            color: var(--accent-primary);
+            text-decoration: none;
+        }
+
+        .faq-answer-content a:hover {
+            text-decoration: underline;
+        }
+
+        .faq-category {
+            display: inline-block;
+            background: var(--accent-primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+
+        .no-results i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--accent-primary);
+        }
+
+        @media (max-width: 768px) {
+            .category-filters {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 0.5rem;
+            }
+
+            .category-filter {
+                flex-shrink: 0;
+            }
+        }
+    </style>
 
     <script src="script.js"></script>
-    <script src="src/utils/nav-loader.js"></script>
+    <script>
+        class FAQManager {
+            constructor() {
+                this.faqs = [
+                    {
+                        id: 1,
+                        category: 'generale',
+                        question: 'Cos\'è Cronoshop?',
+                        answer: 'Cronoshop è una piattaforma che raccoglie e segnala le migliori offerte Amazon ogni giorno. Non vendiamo prodotti direttamente, ma ti aiutiamo a trovare i migliori sconti disponibili su Amazon Italia.'
+                    },
+                    {
+                        id: 2,
+                        category: 'generale',
+                        question: 'Devo pagare per usare Cronoshop?',
+                        answer: 'No, l\'accesso a Cronoshop è completamente gratuito. Puoi navigare, cercare prodotti e accedere alle offerte senza alcun costo.'
+                    },
+                    {
+                        id: 3,
+                        category: 'generale',
+                        question: 'Vendete prodotti direttamente?',
+                        answer: 'No, Cronoshop non vende prodotti direttamente. Siamo un servizio di aggregazione che ti reindirizza su Amazon tramite link affiliati. Tutti gli acquisti avvengono su Amazon.'
+                    },
+                    {
+                        id: 4,
+                        category: 'offerte',
+                        question: 'Perché dovrei usare i vostri link?',
+                        answer: 'Usando i nostri link il prezzo non cambia per te, ma ci supporti nel mantenere attivo il servizio. Inoltre, i nostri link sono sempre aggiornati e verificati.'
+                    },
+                    {
+                        id: 5,
+                        category: 'offerte',
+                        question: 'Come fate a trovare le offerte?',
+                        answer: 'Usiamo una combinazione di sistemi automatizzati, API di Amazon e analisi manuale da parte del nostro team per selezionare solo le migliori offerte.'
+                    },
+                    {
+                        id: 6,
+                        category: 'offerte',
+                        question: 'Gli sconti sono sempre aggiornati?',
+                        answer: 'Sì, le offerte sono aggiornate più volte al giorno. Tuttavia, i prezzi su Amazon possono cambiare rapidamente, quindi ti consigliamo di verificare sempre il prezzo finale su Amazon.'
+                    },
+                    {
+                        id: 7,
+                        category: 'account',
+                        question: 'Posso salvare i miei prodotti preferiti?',
+                        answer: 'Sì, puoi aggiungere prodotti alla tua wishlist e al carrello. Questi dati vengono salvati localmente nel tuo browser.'
+                    },
+                    {
+                        id: 8,
+                        category: 'account',
+                        question: 'Serve un account per usare Cronoshop?',
+                        answer: 'Puoi navigare liberamente senza account. Alcune funzionalità come la wishlist e le preferenze vengono salvate localmente nel tuo browser.'
+                    },
+                    {
+                        id: 9,
+                        category: 'account',
+                        question: 'Come funziona il carrello?',
+                        answer: 'Il carrello serve a salvare i tuoi articoli preferiti e calcolare il totale. Quando procedi all\'acquisto, verrai reindirizzato su Amazon per completare la transazione.'
+                    },
+                    {
+                        id: 10,
+                        category: 'tecnico',
+                        question: 'Il sito funziona su mobile?',
+                        answer: 'Sì, Cronoshop è completamente ottimizzato per dispositivi mobili. Puoi usarlo comodamente da smartphone e tablet.'
+                    },
+                    {
+                        id: 11,
+                        category: 'tecnico',
+                        question: 'Posso usare la ricerca vocale?',
+                        answer: 'Sì, se il tuo browser supporta la Web Speech API, puoi usare la ricerca vocale cliccando sull\'icona del microfono nella barra di ricerca.'
+                    },
+                    {
+                        id: 12,
+                        category: 'tecnico',
+                        question: 'Come attivo il tema scuro?',
+                        answer: 'Puoi attivare il tema scuro dal menu laterale sinistro (icona hamburger) oppure dalla pagina Temi. Le tue preferenze vengono salvate automaticamente.'
+                    },
+                    {
+                        id: 13,
+                        category: 'privacy',
+                        question: 'Che dati raccogliete?',
+                        answer: 'Raccogliamo solo i dati necessari per il funzionamento del servizio. Puoi consultare la nostra <a href="privacy.html">Privacy Policy</a> per tutti i dettagli.'
+                    },
+                    {
+                        id: 14,
+                        category: 'privacy',
+                        question: 'I miei dati sono sicuri?',
+                        answer: 'Sì, utilizziamo tecnologie di sicurezza standard e non condividiamo i tuoi dati personali con terze parti senza il tuo consenso.'
+                    },
+                    {
+                        id: 15,
+                        category: 'privacy',
+                        question: 'Usate cookie?',
+                        answer: 'Utilizziamo solo cookie tecnici necessari per il funzionamento del sito. Non utilizziamo cookie di profilazione senza il tuo consenso.'
+                    },
+                    {
+                        id: 16,
+                        category: 'generale',
+                        question: 'Come posso contattarvi?',
+                        answer: 'Puoi contattarci via email a support@cronoshop.eu o tramite i nostri gruppi WhatsApp ufficiali. Trovi tutti i link nella sezione <a href="groups.html">Gruppi</a>.'
+                    },
+                    {
+                        id: 17,
+                        category: 'offerte',
+                        question: 'Quanto durano le offerte?',
+                        answer: 'La durata delle offerte varia. Alcune durano poche ore, altre diversi giorni. Ti consigliamo di approfittarne il prima possibile.'
+                    },
+                    {
+                        id: 18,
+                        category: 'tecnico',
+                        question: 'Posso condividere le offerte?',
+                        answer: 'Sì, ogni prodotto ha un pulsante di condivisione. Puoi condividere tramite i social media o copiare il link negli appunti.'
+                    },
+                    {
+                        id: 19,
+                        category: 'generale',
+                        question: 'Cos\'è CronoAI?',
+                        answer: 'CronoAI è il nostro assistente virtuale che ti aiuta a trovare prodotti specifici e risponde alle tue domande sulle offerte disponibili.'
+                    },
+                    {
+                        id: 20,
+                        category: 'account',
+                        question: 'Posso cancellare i miei dati?',
+                        answer: 'Sì, puoi cancellare tutti i tuoi dati locali (wishlist, carrello, preferenze) dalle impostazioni del browser o contattandoci direttamente.'
+                    }
+                ];
+                
+                this.currentCategory = 'all';
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+                this.renderFAQs();
+            }
+
+            setupEventListeners() {
+                // Search functionality
+                const searchInput = document.getElementById('faqSearch');
+                searchInput.addEventListener('input', (e) => {
+                    this.searchFAQs(e.target.value);
+                });
+
+                // Category filters
+                document.querySelectorAll('.category-filter').forEach(filter => {
+                    filter.addEventListener('click', (e) => {
+                        this.setCategory(e.target.dataset.category);
+                    });
+                });
+            }
+
+            renderFAQs(faqsToRender = null) {
+                const faqList = document.getElementById('faqList');
+                const faqs = faqsToRender || this.getFilteredFAQs();
+
+                if (faqs.length === 0) {
+                    faqList.innerHTML = `
+                        <div class="no-results">
+                            <i class="ph ph-magnifying-glass"></i>
+                            <h3>Nessun risultato trovato</h3>
+                            <p>Prova a modificare i termini di ricerca o seleziona una categoria diversa</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                faqList.innerHTML = faqs.map(faq => `
+                    <div class="faq-item" data-category="${faq.category}">
+                        <button class="faq-question" onclick="faqManager.toggleFAQ(this)">
+                            <span>
+                                <div class="faq-category">${this.getCategoryName(faq.category)}</div>
+                                ${faq.question}
+                            </span>
+                            <span class="faq-toggle">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>${faq.answer}</p>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            getFilteredFAQs() {
+                if (this.currentCategory === 'all') {
+                    return this.faqs;
+                }
+                return this.faqs.filter(faq => faq.category === this.currentCategory);
+            }
+
+            setCategory(category) {
+                this.currentCategory = category;
+                
+                // Update active filter
+                document.querySelectorAll('.category-filter').forEach(filter => {
+                    filter.classList.remove('active');
+                });
+                document.querySelector(`[data-category="${category}"]`).classList.add('active');
+                
+                this.renderFAQs();
+            }
+
+            searchFAQs(query) {
+                if (!query.trim()) {
+                    this.renderFAQs();
+                    return;
+                }
+
+                const filteredFAQs = this.faqs.filter(faq => 
+                    faq.question.toLowerCase().includes(query.toLowerCase()) ||
+                    faq.answer.toLowerCase().includes(query.toLowerCase())
+                );
+
+                this.renderFAQs(filteredFAQs);
+            }
+
+            toggleFAQ(element) {
+                const faqItem = element.closest('.faq-item');
+                const isActive = faqItem.classList.contains('active');
+                
+                // Close all other FAQs
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                    item.querySelector('.faq-toggle').textContent = '+';
+                });
+                
+                // Toggle current FAQ
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                    element.querySelector('.faq-toggle').textContent = '×';
+                }
+            }
+
+            getCategoryName(category) {
+                const categoryNames = {
+                    generale: 'Generale',
+                    account: 'Account',
+                    offerte: 'Offerte',
+                    tecnico: 'Tecnico',
+                    privacy: 'Privacy'
+                };
+                return categoryNames[category] || category;
+            }
+        }
+
+        // Initialize FAQ manager
+        let faqManager;
+        document.addEventListener('DOMContentLoaded', () => {
+            faqManager = new FAQManager();
+            
+            // Load navigation
+            fetch('nav.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('navigation-container').innerHTML = data;
+                })
+                .catch(error => console.error('Error loading navigation:', error));
+        });
+    </script>
 </body>
 </html>

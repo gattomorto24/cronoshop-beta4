@@ -1,867 +1,541 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/cronoshop-logo.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/cronoshop-logo.png">
-    <link rel="apple-touch-icon" href="assets/cronoshop-logo.png">
-    <meta name="author" content="Cronoshop Team" />
-    <meta name="description" content="Unisciti ai gruppi Cronoshop per ricevere offerte esclusive.">
-    <link rel="canonical" href="https://www.cronoshop.eu/groups.html" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gruppi - Cronoshop</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="description" content="Unisciti ai gruppi Cronoshop per ricevere offerte esclusive.">
+    <meta name="author" content="Cronoshop Team">
+    <link rel="canonical" href="https://www.cronoshop.eu/groups.html">
+    <link rel="icon" type="image/png" href="assets/cronoshop-logo.png">
+    <link rel="apple-touch-icon" href="assets/cronoshop-logo.png">
+    <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+    <div class="page-wrapper">
+        <div id="navigation-container"></div>
+        
+        <main class="main-content">
+            <div class="main-card glass">
+                <div class="page-header">
+                    <h1>📱 Gruppi Cronoshop</h1>
+                    <p>Unisciti alla nostra community per ricevere le migliori offerte in tempo reale</p>
+                </div>
+
+                <!-- Main WhatsApp Channel -->
+                <div class="main-channel glass" style="margin-bottom: 3rem; padding: 2rem; border-radius: 24px; text-align: center; background: linear-gradient(135deg, #25d366, #128c7e);">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">📱</div>
+                    <h2 style="color: white; margin-bottom: 1rem; font-size: 2rem;">Canale Principale Cronoshop</h2>
+                    <p style="color: rgba(255,255,255,0.9); margin-bottom: 2rem; font-size: 1.1rem;">
+                        Segui il nostro canale per ricevere tutte le migliori offerte Amazon in tempo reale
+                    </p>
+                    <div class="channel-stats" style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 2rem; flex-wrap: wrap;">
+                        <div class="stat-item">
+                            <span class="stat-number" style="display: block; font-size: 2rem; font-weight: 700; color: white;">2.5K+</span>
+                            <span class="stat-label" style="font-size: 0.9rem; color: rgba(255,255,255,0.8);">Seguaci Attivi</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" style="display: block; font-size: 2rem; font-weight: 700; color: white;">50+</span>
+                            <span class="stat-label" style="font-size: 0.9rem; color: rgba(255,255,255,0.8);">Offerte al Giorno</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" style="display: block; font-size: 2rem; font-weight: 700; color: white;">24/7</span>
+                            <span class="stat-label" style="font-size: 0.9rem; color: rgba(255,255,255,0.8);">Aggiornamenti</span>
+                        </div>
+                    </div>
+                    <button class="action-btn" onclick="groupsManager.joinGroup('main_whatsapp')" 
+                            style="background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3); backdrop-filter: blur(10px); font-size: 1.1rem; padding: 1rem 2rem;">
+                        🚀 Segui il Canale Principale
+                    </button>
+                </div>
+
+                <!-- Specialized Groups -->
+                <div class="specialized-groups">
+                    <h2 style="text-align: center; margin-bottom: 2rem; color: var(--text-primary);">🎯 Gruppi Specializzati</h2>
+                    
+                    <div class="groups-grid">
+                        <!-- Groups will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Telegram Section -->
+                <div class="telegram-section" style="margin-top: 3rem;">
+                    <h2 style="text-align: center; margin-bottom: 2rem; color: var(--text-primary);">✈️ Unisciti anche su Telegram!</h2>
+                    
+                    <div class="telegram-card glass" style="padding: 2rem; border-radius: 24px; text-align: center; background: linear-gradient(135deg, #0088cc, #005f99);">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">✈️</div>
+                        <h3 style="color: white; margin-bottom: 1rem;">Canale Offerte Cronoshop (Telegram)</h3>
+                        <p style="color: rgba(255,255,255,0.9); margin-bottom: 2rem;">
+                            Non perderti nessuna offerta! Ricevi le promozioni direttamente sul tuo Telegram.
+                        </p>
+                        <div style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 2rem; flex-wrap: wrap;">
+                            <div class="stat-item">
+                                <span class="stat-number" style="display: block; font-size: 1.5rem; font-weight: 700; color: white;">1.5K+</span>
+                                <span class="stat-label" style="font-size: 0.8rem; color: rgba(255,255,255,0.8);">Seguaci</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" style="display: block; font-size: 1.5rem; font-weight: 700; color: white;">🟢</span>
+                                <span class="stat-label" style="font-size: 0.8rem; color: rgba(255,255,255,0.8);">Sempre Attivo</span>
+                            </div>
+                        </div>
+                        <button class="action-btn" onclick="groupsManager.joinGroup('main_telegram')"
+                                style="background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3); backdrop-filter: blur(10px);">
+                            🚀 Unisciti al Canale
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Benefits Section -->
+                <div class="benefits-section" style="margin-top: 3rem;">
+                    <h2 style="text-align: center; margin-bottom: 2rem; color: var(--text-primary);">✨ Vantaggi dei Nostri Canali & Gruppi</h2>
+                    
+                    <div class="benefits-grid">
+                        <!-- Benefits will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- FAQ Section -->
+                <div class="groups-faq glass" style="margin-top: 3rem; padding: 2rem; border-radius: 24px;">
+                    <h2 style="text-align: center; margin-bottom: 2rem; color: var(--text-primary);">❓ Domande Frequenti</h2>
+                    
+                    <div class="faq-list" id="groupsFaqList">
+                        <!-- FAQ items will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
 
     <style>
-        /* Groups Page Styles */
-        :root {
-            --primary-color: #007aff;
-            --secondary-color: #5856d6;
-            --success-color: #34c759;
-            --warning-color: #ff9500;
-            --error-color: #ff3b30;
-            --whatsapp-color: #25d366;
-            --telegram-color: #0088cc;
-            --text-primary: #1d1d1f;
-            --text-secondary: #6e6e73;
-            --bg-primary: #f2f2f7;
-            --bg-secondary: #ffffff;
-            --bg-tertiary: #e5e5ea;
-            --glass-white: rgba(255, 255, 255, 0.1);
-            --glass-white-strong: rgba(255, 255, 255, 0.2);
-            --glass-border: rgba(255, 255, 255, 0.3);
-            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
-            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
-            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.2);
-            --radius-sm: 8px;
-            --radius-md: 12px;
-            --radius-lg: 16px;
-            --radius-xl: 20px;
-            --transition-fast: 0.2s ease;
-            --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .dark-mode {
-            --text-primary: #f5f5f7;
-            --text-secondary: #8d8d92;
-            --bg-primary: #000000;
-            --bg-secondary: #1c1c1e;
-            --bg-tertiary: #2c2c2e;
-            --glass-white: rgba(255, 255, 255, 0.05);
-            --glass-white-strong: rgba(255, 255, 255, 0.1);
-            --glass-border: rgba(255, 255, 255, 0.2);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            padding-top: 80px;
-        }
-
-        .animated-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            z-index: -1;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Page Header */
-        .page-header {
-            text-align: center;
-            padding: 60px 0;
-        }
-
-        .page-header h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-        }
-
-        .page-header p {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* Main Group Banner */
-        .main-group-banner {
-            background: linear-gradient(135deg, var(--whatsapp-color), #128c7e);
-            border-radius: var(--radius-xl);
-            padding: 50px;
-            text-align: center;
-            margin-bottom: 60px;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .main-group-banner::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            z-index: 1;
-        }
-
-        .main-group-banner > * {
-            position: relative;
-            z-index: 2;
-        }
-
-        .whatsapp-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
-        }
-
-        .main-group-banner h3 {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-
-        .main-group-banner p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            margin-bottom: 30px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .group-stats {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-number {
-            display: block;
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* Groups Grid */
         .groups-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 25px;
-            margin-bottom: 60px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .group-card {
-            background: var(--glass-white);
+            background: var(--card-bg);
+            border-radius: var(--radius-sub);
+            padding: 1.5rem;
             backdrop-filter: blur(20px);
-            border-radius: var(--radius-xl);
-            padding: 30px;
             border: 1px solid var(--glass-border);
-            transition: var(--transition-smooth);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
+            transition: all 0.3s ease;
+            text-align: center;
         }
 
         .group-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .group-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 20px;
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-glass);
         }
 
         .group-icon {
             font-size: 3rem;
+            margin-bottom: 1rem;
         }
 
         .group-badge {
-            background: var(--primary-color);
-            color: white;
-            padding: 6px 12px;
-            border-radius: 15px;
-            font-size: 0.7rem;
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
             font-weight: 600;
             text-transform: uppercase;
+            margin-bottom: 1rem;
         }
 
-        .group-badge.NUOVO { background: var(--success-color); }
-        .group-badge.POPOLARE { background: var(--warning-color); }
-        .group-badge.ESCLUSIVO { background: var(--secondary-color); }
-        .group-badge.SALUTE { background: #32d74b; }
-        .group-badge.FLASH { background: var(--error-color); }
-        .group-badge.VIP { background: linear-gradient(45deg, #ffd700, #ffa500); color: #000; }
+        .group-badge.nuovo { background: #34c759; color: white; }
+        .group-badge.popolare { background: #ff9500; color: white; }
+        .group-badge.esclusivo { background: #af52de; color: white; }
+        .group-badge.flash { background: #ff3b30; color: white; }
+        .group-badge.vip { background: linear-gradient(45deg, #ffd700, #ffa500); color: #000; }
 
-        .group-card h4 {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 10px;
+        .group-title {
             color: var(--text-primary);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
         }
 
-        .group-card p {
+        .group-description {
             color: var(--text-secondary);
-            margin-bottom: 20px;
+            margin-bottom: 1.5rem;
             line-height: 1.5;
         }
 
-        .group-info {
+        .group-stats {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 20px;
+            margin-bottom: 1.5rem;
             font-size: 0.9rem;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .member-count, .activity-level {
             color: var(--text-secondary);
-        }
-
-        /* Buttons */
-        .whatsapp-btn, .telegram-btn, .whatsapp-main-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 12px 24px;
-            border-radius: var(--radius-md);
-            font-weight: 600;
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-            transition: var(--transition-fast);
-            font-size: 1rem;
-            width: 100%;
-        }
-
-        .whatsapp-btn, .whatsapp-main-btn {
-            background: linear-gradient(135deg, var(--whatsapp-color), #128c7e);
-            color: white;
-        }
-
-        .whatsapp-btn:hover, .whatsapp-main-btn:hover {
-            background: linear-gradient(135deg, #128c7e, #0d7377);
-            transform: translateY(-2px);
-        }
-
-        .whatsapp-btn.premium {
-            background: linear-gradient(135deg, #ffd700, #ffa500);
-            color: #000;
-        }
-
-        .telegram-btn {
-            background: linear-gradient(135deg, var(--telegram-color), #005f99);
-            color: white;
-        }
-
-        .telegram-btn:hover {
-            background: linear-gradient(135deg, #005f99, #004080);
-            transform: translateY(-2px);
-        }
-
-        /* Section Headers */
-        .section-title {
-            text-align: center;
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 40px;
-            color: var(--text-primary);
-        }
-
-        /* Benefits Section */
-        .benefits-section {
-            margin: 80px 0;
         }
 
         .benefits-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
+            gap: 1.5rem;
         }
 
         .benefit-card {
-            background: var(--glass-white);
+            background: var(--card-bg);
+            border-radius: var(--radius-sub);
+            padding: 1.5rem;
             backdrop-filter: blur(20px);
-            border-radius: var(--radius-lg);
-            padding: 30px;
-            text-align: center;
             border: 1px solid var(--glass-border);
-            transition: var(--transition-smooth);
+            text-align: center;
+            transition: all 0.3s ease;
         }
 
         .benefit-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-glass);
         }
 
         .benefit-icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
         }
 
-        .benefit-card h4 {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 15px;
+        .benefit-title {
             color: var(--text-primary);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
         }
 
-        .benefit-card p {
+        .benefit-description {
             color: var(--text-secondary);
             line-height: 1.5;
         }
 
-        /* FAQ Section */
-        .faq-section {
-            background: var(--glass-white);
-            backdrop-filter: blur(20px);
-            border-radius: var(--radius-xl);
-            padding: 50px;
-            margin: 60px 0;
+        .faq-item {
+            background: var(--glass-bg);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
             border: 1px solid var(--glass-border);
         }
 
-        .faq-section h3 {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 40px;
-            color: var(--text-primary);
-        }
-
-        .faq-list {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .faq-item {
-            border-bottom: 1px solid var(--glass-border);
-            margin-bottom: 20px;
-        }
-
         .faq-question {
+            width: 100%;
+            background: none;
+            border: none;
+            padding: 1rem 1.5rem;
+            text-align: left;
+            cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
-            cursor: pointer;
             color: var(--text-primary);
             font-weight: 600;
-            font-size: 1.1rem;
-            background: none;
-            border: none;
-            width: 100%;
-            text-align: left;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .faq-toggle {
-            font-size: 1.5rem;
-            transition: var(--transition-fast);
-        }
-
-        .faq-answer {
-            padding: 0 0 20px 0;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            display: none;
-        }
-
-        .faq-item.active .faq-answer {
-            display: block;
+            font-size: 1.2rem;
+            color: var(--accent-primary);
+            transition: transform 0.3s ease;
         }
 
         .faq-item.active .faq-toggle {
             transform: rotate(45deg);
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .page-header h1 {
-                font-size: 2.5rem;
-            }
-
-            .main-group-banner {
-                padding: 30px 20px;
-            }
-
-            .main-group-banner h3 {
-                font-size: 2rem;
-            }
-
-            .group-stats {
-                gap: 20px;
-            }
-
-            .groups-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .benefits-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .group-info {
-                flex-direction: column;
-                gap: 5px;
-                text-align: center;
-            }
-
-            .faq-section {
-                padding: 30px 20px;
-            }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: rgba(0, 0, 0, 0.2);
         }
 
-        @media (max-width: 480px) {
-            .container {
-                padding: 0 15px;
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+        }
+
+        .faq-answer-content {
+            padding: 1rem 1.5rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .groups-grid, .benefits-grid {
+                grid-template-columns: 1fr;
             }
 
-            .page-header {
-                padding: 40px 0;
-            }
-
-            .page-header h1 {
-                font-size: 2rem;
-            }
-
-            .main-group-banner h3 {
-                font-size: 1.8rem;
-            }
-
-            .section-title {
-                font-size: 1.8rem;
-            }
-
-            .group-card, .benefit-card {
-                padding: 20px;
+            .channel-stats, .group-stats {
+                flex-direction: column;
+                gap: 1rem;
             }
         }
     </style>
-</head>
-<body>
-    <div class="animated-background"></div>
-    
-    <div id="navbar-placeholder"></div>
 
-    <main class="container">
-        <section class="groups">
-            <div class="page-header">
-                <h1>
-                    <i class="ph ph-users-three"></i>
-                    Gruppi Cronoshop
-                </h1>
-                <p>Unisciti alla nostra community per ricevere le migliori offerte in tempo reale</p>
-            </div>
-
-            <div class="main-group-banner">
-                <div class="whatsapp-icon">📱</div>
-                <h3>Canale Principale Cronoshop (WhatsApp)</h3>
-                <p>
-                    Segui il nostro canale per ricevere tutte le migliori offerte Amazon in tempo reale
-                </p>
-                <div class="group-stats">
-                    <div class="stat-item">
-                        <span class="stat-number">2.5K+</span>
-                        <span class="stat-label">Seguaci Attivi</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">50+</span>
-                        <span class="stat-label">Offerte al Giorno</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">24/7</span>
-                        <span class="stat-label">Aggiornamenti</span>
-                    </div>
-                </div>
-                <button class="whatsapp-main-btn" onclick="joinWhatsAppGroup('main_channel')">
-                    🚀 Segui il Canale Principale
-                </button>
-            </div>
-
-            <div class="specialized-groups">
-                <h3 class="section-title">🎯 Gruppi Specializzati (WhatsApp)</h3>
-                
-                <div class="groups-grid">
-                    <div class="group-card">
-                        <div class="group-header">
-                            <div class="group-icon">📱</div>
-                            <div class="group-badge NUOVO">NUOVO</div>
-                        </div>
-                        <h4>Smartphone & Tech</h4>
-                        <p>Offerte esclusive su iPhone, Samsung, accessori tech e gadget</p>
-                        <div class="group-info">
-                            <span class="member-count">👥 1.2K membri</span>
-                            <span class="activity-level">🔥 Molto Attivo</span>
-                        </div>
-                        <button class="whatsapp-btn" onclick="joinWhatsAppGroup('smartphone')">Unisciti</button>
-                    </div>
-
-                    <div class="group-card">
-                        <div class="group-header">
-                            <div class="group-icon">👕</div>
-                            <div class="group-badge POPOLARE">POPOLARE</div>
-                        </div>
-                        <h4>Fashion & Style</h4>
-                        <p>Abbigliamento, scarpe, accessori moda per uomo e donna</p>
-                        <div class="group-info">
-                            <span class="member-count">👥 850 membri</span>
-                            <span class="activity-level">⚡ Attivo</span>
-                        </div>
-                        <button class="whatsapp-btn" onclick="joinWhatsAppGroup('fashion')">Unisciti</button>
-                    </div>
-
-                    <div class="group-card">
-                        <div class="group-header">
-                            <div class="group-icon">🏠</div>
-                            <div class="group-badge ESCLUSIVO">ESCLUSIVO</div>
-                        </div>
-                        <h4>Casa & Cucina</h4>
-                        <p>Elettrodomestici, arredamento, prodotti per la casa</p>
-                        <div class="group-info">
-                            <span class="member-count">👥 650 membri</span>
-                            <span class="activity-level">📈 In Crescita</span>
-                        </div>
-                        <button class="whatsapp-btn" onclick="joinWhatsAppGroup('casa')">Unisciti</button>
-                    </div>
-
-                    <div class="group-card">
-                        <div class="group-header">
-                            <div class="group-icon">💊</div>
-                            <div class="group-badge SALUTE">SALUTE</div>
-                        </div>
-                        <h4>Salute & Benessere</h4>
-                        <p>Integratori, vitamine, prodotti per la cura personale</p>
-                        <div class="group-info">
-                            <span class="member-count">👥 420 membri</span>
-                            <span class="activity-level">🌱 Moderato</span>
-                        </div>
-                        <button class="whatsapp-btn" onclick="joinWhatsAppGroup('salute')">Unisciti</button>
-                    </div>
-
-                    <div class="group-card">
-                        <div class="group-header">
-                            <div class="group-icon">⚡</div>
-                            <div class="group-badge FLASH">FLASH</div>
-                        </div>
-                        <h4>Offerte Flash</h4>
-                        <p>Sconti lampo e offerte a tempo limitato</p>
-                        <div class="group-info">
-                            <span class="member-count">👥 1.8K membri</span>
-                            <span class="activity-level">🚨 Super Attivo</span>
-                        </div>
-                        <button class="whatsapp-btn" onclick="joinWhatsAppGroup('flash')">Unisciti</button>
-                    </div>
-
-                    <div class="group-card">
-                        <div class="group-header">
-                            <div class="group-icon">💎</div>
-                            <div class="group-badge VIP">VIP</div>
-                        </div>
-                        <h4>Gruppo VIP</h4>
-                        <p>Accesso anticipato alle migliori offerte e sconti esclusivi</p>
-                        <div class="group-info">
-                            <span class="member-count">👥 200 membri</span>
-                            <span class="activity-level">⭐ Esclusivo</span>
-                        </div>
-                        <button class="whatsapp-btn premium" onclick="joinWhatsAppGroup('vip')">Richiedi Accesso</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="telegram-groups">
-                <h3 class="section-title">✈️ Unisciti anche su Telegram!</h3>
-                <div class="groups-grid">
-                    <div class="group-card">
-                        <div class="group-header">
-                            <div class="group-icon" style="font-size: 3rem;">✈️</div>
-                            <div class="group-badge" style="background: var(--telegram-color);">CANALE</div>
-                        </div>
-                        <h4>Canale Offerte Cronoshop (Telegram)</h4>
-                        <p>Non perderti nessuna offerta! Ricevi le promozioni direttamente sul tuo Telegram.</p>
-                        <div class="group-info">
-                            <span class="member-count">👥 1.5K+ Seguaci</span>
-                            <span class="activity-level">🟢 Sempre Attivo</span>
-                        </div>
-                        <button class="telegram-btn" onclick="joinTelegramGroup('main_telegram')">
-                            🚀 Unisciti al Canale
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="benefits-section">
-                <h3 class="section-title">✨ Vantaggi dei Nostri Canali & Gruppi</h3>
-                
-                <div class="benefits-grid">
-                    <div class="benefit-card">
-                        <div class="benefit-icon">⚡</div>
-                        <h4>Notifiche Istantanee</h4>
-                        <p>Ricevi le offerte appena pubblicate, prima che scadano</p>
-                    </div>
-
-                    <div class="benefit-card">
-                        <div class="benefit-icon">🎯</div>
-                        <h4>Offerte Mirate</h4>
-                        <p>Contenuti personalizzati in base ai tuoi interessi</p>
-                    </div>
-
-                    <div class="benefit-card">
-                        <div class="benefit-icon">👥</div>
-                        <h4>Community Attiva</h4>
-                        <p>Condividi opinioni e ricevi consigli da altri membri</p>
-                    </div>
-
-                    <div class="benefit-card">
-                        <div class="benefit-icon">🔒</div>
-                        <h4>Sicurezza Garantita</h4>
-                        <p>Tutti i link sono verificati e sicuri</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="faq-section">
-                <h3>❓ Domande Frequenti</h3>
-                
-                <div class="faq-list">
-                    <div class="faq-item">
-                        <button class="faq-question" onclick="toggleFAQ(this)">
-                            <span>È gratuito unirsi ai gruppi?</span>
-                            <span class="faq-toggle">+</span>
-                        </button>
-                        <div class="faq-answer">
-                            Sì, tutti i nostri canali e gruppi sono completamente gratuiti. Solo il gruppo VIP richiede un'approvazione speciale.
-                        </div>
-                    </div>
-
-                    <div class="faq-item">
-                        <button class="faq-question" onclick="toggleFAQ(this)">
-                            <span>Quante offerte ricevo al giorno?</span>
-                            <span class="faq-toggle">+</span>
-                        </button>
-                        <div class="faq-answer">
-                            Il numero varia da 10-15 offerte nei gruppi specializzati a 50+ nel canale principale.
-                        </div>
-                    </div>
-
-                    <div class="faq-item">
-                        <button class="faq-question" onclick="toggleFAQ(this)">
-                            <span>Posso disattivare le notifiche?</span>
-                            <span class="faq-toggle">+</span>
-                        </button>
-                        <div class="faq-answer">
-                            Certamente! Puoi silenziare il canale o uscire in qualsiasi momento dalle impostazioni di WhatsApp o Telegram.
-                        </div>
-                    </div>
-
-                    <div class="faq-item">
-                        <button class="faq-question" onclick="toggleFAQ(this)">
-                            <span>Come funziona il gruppo VIP?</span>
-                            <span class="faq-toggle">+</span>
-                        </button>
-                        <div class="faq-answer">
-                            Il gruppo VIP offre accesso anticipato alle offerte migliori e sconti esclusivi non disponibili altrove.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <div id="footer-placeholder"></div>
-
+    <script src="script.js"></script>
     <script>
-        // Groups page functionality
-        function joinWhatsAppGroup(groupType) {
-            const groups = {
-                'main_channel': 'https://whatsapp.com/channel/0029VaAqYuREHha5HhZXRH0w',
-                'smartphone': 'https://chat.whatsapp.com/smartphone-tech',
-                'fashion': 'https://chat.whatsapp.com/fashion-style',
-                'casa': 'https://chat.whatsapp.com/casa-cucina',
-                'salute': 'https://chat.whatsapp.com/salute-benessere',
-                'flash': 'https://chat.whatsapp.com/offerte-flash',
-                'vip': 'https://chat.whatsapp.com/gruppo-vip'
-            };
+        class GroupsManager {
+            constructor() {
+                this.groups = [
+                    {
+                        id: 'smartphone',
+                        icon: '📱',
+                        badge: 'nuovo',
+                        title: 'Smartphone & Tech',
+                        description: 'Offerte esclusive su iPhone, Samsung, accessori tech e gadget',
+                        members: '1.2K',
+                        activity: 'Molto Attivo',
+                        link: 'https://chat.whatsapp.com/smartphone-tech'
+                    },
+                    {
+                        id: 'fashion',
+                        icon: '👕',
+                        badge: 'popolare',
+                        title: 'Fashion & Style',
+                        description: 'Abbigliamento, scarpe, accessori moda per uomo e donna',
+                        members: '850',
+                        activity: 'Attivo',
+                        link: 'https://chat.whatsapp.com/fashion-style'
+                    },
+                    {
+                        id: 'casa',
+                        icon: '🏠',
+                        badge: 'esclusivo',
+                        title: 'Casa & Cucina',
+                        description: 'Elettrodomestici, arredamento, prodotti per la casa',
+                        members: '650',
+                        activity: 'In Crescita',
+                        link: 'https://chat.whatsapp.com/casa-cucina'
+                    },
+                    {
+                        id: 'flash',
+                        icon: '⚡',
+                        badge: 'flash',
+                        title: 'Offerte Flash',
+                        description: 'Sconti lampo e offerte a tempo limitato',
+                        members: '1.8K',
+                        activity: 'Super Attivo',
+                        link: 'https://chat.whatsapp.com/offerte-flash'
+                    },
+                    {
+                        id: 'vip',
+                        icon: '💎',
+                        badge: 'vip',
+                        title: 'Gruppo VIP',
+                        description: 'Accesso anticipato alle migliori offerte e sconti esclusivi',
+                        members: '200',
+                        activity: 'Esclusivo',
+                        link: 'https://chat.whatsapp.com/gruppo-vip'
+                    }
+                ];
 
-            const groupUrl = groups[groupType];
-            if (groupUrl) {
-                showNotification('Reindirizzamento a WhatsApp...', 'success');
-                setTimeout(() => {
-                    window.open(groupUrl, '_blank');
-                }, 1000);
-            } else {
-                showNotification('Gruppo non trovato', 'error');
+                this.benefits = [
+                    {
+                        icon: '⚡',
+                        title: 'Notifiche Istantanee',
+                        description: 'Ricevi le offerte appena pubblicate, prima che scadano'
+                    },
+                    {
+                        icon: '🎯',
+                        title: 'Offerte Mirate',
+                        description: 'Contenuti personalizzati in base ai tuoi interessi'
+                    },
+                    {
+                        icon: '👥',
+                        title: 'Community Attiva',
+                        description: 'Condividi opinioni e ricevi consigli da altri membri'
+                    },
+                    {
+                        icon: '🔒',
+                        title: 'Sicurezza Garantita',
+                        description: 'Tutti i link sono verificati e sicuri'
+                    }
+                ];
+
+                this.faqs = [
+                    {
+                        question: 'È gratuito unirsi ai gruppi?',
+                        answer: 'Sì, tutti i nostri canali e gruppi sono completamente gratuiti. Solo il gruppo VIP richiede un\'approvazione speciale.'
+                    },
+                    {
+                        question: 'Quante offerte ricevo al giorno?',
+                        answer: 'Il numero varia da 10-15 offerte nei gruppi specializzati a 50+ nel canale principale.'
+                    },
+                    {
+                        question: 'Posso disattivare le notifiche?',
+                        answer: 'Certamente! Puoi silenziare il canale o uscire in qualsiasi momento dalle impostazioni di WhatsApp o Telegram.'
+                    },
+                    {
+                        question: 'Come funziona il gruppo VIP?',
+                        answer: 'Il gruppo VIP offre accesso anticipato alle offerte migliori e sconti esclusivi non disponibili altrove.'
+                    }
+                ];
+
+                this.init();
             }
-        }
 
-        function joinTelegramGroup(groupType) {
-            const groups = {
-                'main_telegram': 'https://t.me/cronoshop_offerte'
-            };
-
-            const groupUrl = groups[groupType];
-            if (groupUrl) {
-                showNotification('Reindirizzamento a Telegram...', 'success');
-                setTimeout(() => {
-                    window.open(groupUrl, '_blank');
-                }, 1000);
-            } else {
-                showNotification('Canale non trovato', 'error');
+            init() {
+                this.renderGroups();
+                this.renderBenefits();
+                this.renderFAQs();
             }
-        }
 
-        function toggleFAQ(element) {
-            const faqItem = element.parentElement;
-            const answer = element.nextElementSibling;
-            const toggle = element.querySelector('.faq-toggle');
-            
-            const isActive = faqItem.classList.contains('active');
-            
-            // Close all other FAQs
-            document.querySelectorAll('.faq-item').forEach(item => {
-                item.classList.remove('active');
-                item.querySelector('.faq-toggle').textContent = '+';
-            });
-            
-            // Toggle current FAQ
-            if (!isActive) {
-                faqItem.classList.add('active');
-                toggle.textContent = '×';
+            renderGroups() {
+                const groupsGrid = document.querySelector('.groups-grid');
+                groupsGrid.innerHTML = this.groups.map(group => `
+                    <div class="group-card">
+                        <div class="group-icon">${group.icon}</div>
+                        <div class="group-badge ${group.badge}">${group.badge}</div>
+                        <h3 class="group-title">${group.title}</h3>
+                        <p class="group-description">${group.description}</p>
+                        <div class="group-stats">
+                            <span>👥 ${group.members} membri</span>
+                            <span>📈 ${group.activity}</span>
+                        </div>
+                        <button class="action-btn primary" onclick="groupsManager.joinGroup('${group.id}')">
+                            <i class="ph ph-whatsapp-logo"></i>
+                            Unisciti
+                        </button>
+                    </div>
+                `).join('');
             }
-        }
 
-        function showNotification(message, type = 'info') {
-            const notification = document.createElement('div');
-            notification.className = `notification notification-${type}`;
-            notification.innerHTML = `
-                <div class="notification-content">
-                    <i class="ph ph-${type === 'success' ? 'check-circle' : type === 'error' ? 'x-circle' : 'info'}"></i>
-                    <span>${message}</span>
-                </div>
-            `;
+            renderBenefits() {
+                const benefitsGrid = document.querySelector('.benefits-grid');
+                benefitsGrid.innerHTML = this.benefits.map(benefit => `
+                    <div class="benefit-card">
+                        <div class="benefit-icon">${benefit.icon}</div>
+                        <h3 class="benefit-title">${benefit.title}</h3>
+                        <p class="benefit-description">${benefit.description}</p>
+                    </div>
+                `).join('');
+            }
 
-            // Add notification styles if not already present
-            if (!document.querySelector('.notification-styles')) {
-                const style = document.createElement('style');
-                style.className = 'notification-styles';
-                style.textContent = `
-                    .notification {
-                        position: fixed;
-                        top: 20px;
-                        right: 20px;
-                        background: var(--bg-secondary);
-                        color: var(--text-primary);
-                        padding: 15px 20px;
-                        border-radius: var(--radius-md);
-                        box-shadow: var(--shadow-lg);
-                        border: 1px solid var(--glass-border);
-                        z-index: 1000;
-                        transform: translateX(400px);
-                        opacity: 0;
-                        transition: all var(--transition-smooth);
-                    }
-                    .notification.show {
-                        transform: translateX(0);
-                        opacity: 1;
-                    }
-                    .notification-content {
-                        display: flex;
-                        align-items: center;
-                        gap: 10px;
-                    }
-                    .notification-success {
-                        border-left: 4px solid var(--success-color);
-                    }
-                    .notification-error {
-                        border-left: 4px solid var(--error-color);
-                    }
-                    .notification-info {
-                        border-left: 4px solid var(--primary-color);
-                    }
+            renderFAQs() {
+                const faqList = document.getElementById('groupsFaqList');
+                faqList.innerHTML = this.faqs.map((faq, index) => `
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="groupsManager.toggleFAQ(this)">
+                            <span>${faq.question}</span>
+                            <span class="faq-toggle">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>${faq.answer}</p>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            joinGroup(groupId) {
+                const groupLinks = {
+                    'main_whatsapp': 'https://whatsapp.com/channel/0029VaAqYuREHha5HhZXRH0w',
+                    'main_telegram': 'https://t.me/cronoshop_offerte',
+                    'smartphone': 'https://chat.whatsapp.com/smartphone-tech',
+                    'fashion': 'https://chat.whatsapp.com/fashion-style',
+                    'casa': 'https://chat.whatsapp.com/casa-cucina',
+                    'flash': 'https://chat.whatsapp.com/offerte-flash',
+                    'vip': 'https://chat.whatsapp.com/gruppo-vip'
+                };
+
+                const link = groupLinks[groupId];
+                if (link) {
+                    this.showNotification('Reindirizzamento in corso...', 'info');
+                    setTimeout(() => {
+                        window.open(link, '_blank');
+                    }, 1000);
+                } else {
+                    this.showNotification('Gruppo non trovato', 'error');
+                }
+            }
+
+            toggleFAQ(element) {
+                const faqItem = element.closest('.faq-item');
+                const isActive = faqItem.classList.contains('active');
+                
+                // Close all other FAQs
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                    item.querySelector('.faq-toggle').textContent = '+';
+                });
+                
+                // Toggle current FAQ
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                    element.querySelector('.faq-toggle').textContent = '×';
+                }
+            }
+
+            showNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                const colors = {
+                    success: '#48bb78',
+                    error: '#ff4757',
+                    info: '#4299e1',
+                    warning: '#ed8936'
+                };
+
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 100px;
+                    right: 20px;
+                    background: ${colors[type]};
+                    color: white;
+                    padding: 12px 20px;
+                    border-radius: 8px;
+                    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+                    z-index: 10000;
+                    transform: translateX(100%);
+                    transition: transform 0.3s ease;
+                    font-size: 14px;
+                    font-weight: 500;
+                    max-width: 280px;
                 `;
-                document.head.appendChild(style);
+
+                const icons = {
+                    success: 'check-circle',
+                    error: 'x-circle',
+                    info: 'info',
+                    warning: 'warning'
+                };
+
+                notification.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <i class="ph ph-${icons[type]}"></i>
+                        <span>${message}</span>
+                    </div>
+                `;
+
+                document.body.appendChild(notification);
+
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(0)';
+                }, 100);
+
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(100%)';
+                    setTimeout(() => notification.remove(), 300);
+                }, 3000);
             }
-
-            document.body.appendChild(notification);
-
-            setTimeout(() => notification.classList.add('show'), 100);
-            setTimeout(() => {
-                notification.classList.remove('show');
-                setTimeout(() => notification.remove(), 300);
-            }, 3000);
         }
 
-        // Load components
-        function loadComponent(url, placeholderId) {
-            fetch(url)
-                .then(response => response.ok ? response.text() : Promise.reject('Errore nel caricamento'))
-                .then(data => {
-                    const placeholder = document.getElementById(placeholderId);
-                    if (!placeholder) return;
-                    
-                    const tempDiv = document.createElement('div');
-                    tempDiv.innerHTML = data;
-                    
-                    const script = tempDiv.querySelector('script');
-                    placeholder.innerHTML = tempDiv.innerHTML;
-
-                    if (script) {
-                        const newScript = document.createElement('script');
-                        newScript.textContent = script.textContent;
-                        document.body.appendChild(newScript).remove();
-                    }
-                })
-                .catch(error => console.error(`Impossibile caricare ${url}: ${error}`));
-        }
-
-        // Initialize when DOM is loaded
+        // Initialize groups manager
+        let groupsManager;
         document.addEventListener('DOMContentLoaded', () => {
-            loadComponent('nav.html', 'navbar-placeholder');
-            loadComponent('footer.html', 'footer-placeholder');
+            groupsManager = new GroupsManager();
+            
+            // Load navigation
+            fetch('nav.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('navigation-container').innerHTML = data;
+                })
+                .catch(error => console.error('Error loading navigation:', error));
         });
     </script>
 </body>

@@ -770,3 +770,472 @@ function createFallbackNavigation() {
 // Export for global use
 window.CronoshopApp = CronoshopApp
 window.products = products
+
+// Global theme management and utilities
+class CronoshopGlobal {
+  constructor() {
+    this.init()
+  }
+
+  init() {
+    this.initTheme()
+    this.initGlobalEventListeners()
+    this.initUtilities()
+  }
+
+  initTheme() {
+    // Load theme from localStorage or system preference
+    const savedTheme = localStorage.getItem("cronoshop_theme")
+    const savedSettings = localStorage.getItem("cronoshop_theme_settings")
+
+    if (savedSettings) {
+      try {
+        const settings = JSON.parse(savedSettings)
+        this.applyThemeSettings(settings)
+      } catch (error) {
+        console.error("Error loading theme settings:", error)
+        this.applyDefaultTheme()
+      }
+    } else if (savedTheme) {
+      this.applyTheme(savedTheme)
+    } else {
+      // Auto-detect system preference
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
+      this.applyTheme(prefersDark ? "dark" : "light")
+    }
+
+    // Listen for system theme changes
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
+      const currentTheme = localStorage.getItem("cronoshop_theme")
+      if (!currentTheme || currentTheme === "auto") {
+        this.applyTheme(e.matches ? "dark" : "light")
+      }
+    })
+  }
+
+  applyTheme(theme) {
+    const html = document.documentElement
+    html.classList.remove("light-theme", "dark-theme")
+
+    if (theme === "auto") {
+      const hour = new Date().getHours()
+      const isDark = hour < 7 || hour >= 19
+      html.classList.add(isDark ? "dark-theme" : "light-theme")
+    } else {
+      html.classList.add(`${theme}-theme`)
+    }
+
+    localStorage.setItem("cronoshop_theme", theme)
+  }
+
+  applyThemeSettings(settings) {
+    this.applyTheme(settings.theme)
+
+    const root = document.documentElement
+
+    // Apply custom properties
+    if (settings.fontSize) {
+      root.style.setProperty("--font-size-base", `${settings.fontSize}px`)
+      document.body.style.fontSize = `${settings.fontSize}px`
+    }
+
+    if (settings.borderRadius) {
+      root.style.setProperty("--border-radius-custom", `${settings.borderRadius}px`)
+    }
+
+    // Apply classes
+    root.classList.toggle("glass-disabled", !settings.glassEffect)
+    root.classList.toggle("reduced-motion", settings.reducedMotion)
+    root.classList.toggle("high-contrast", settings.highContrast)
+  }
+
+  applyDefaultTheme() {
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
+    this.applyTheme(prefersDark ? "dark" : "light")
+  }
+
+  initGlobalEventListeners() {
+    // Global keyboard shortcuts
+    document.addEventListener("keydown", (e) => {
+      // Ctrl/Cmd + K for search
+      if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+        e.preventDefault()
+        this.focusSearch()
+      }
+
+      // Ctrl/Cmd + D for dark mode toggle
+      if ((e.ctrlKey || e.metaKey) && e.key === "d") {
+        e.preventDefault()
+        this.toggleTheme()
+      }
+    })
+
+    // Global click handler for external links
+    document.addEventListener("click", (e) => {
+      const link = e.target.closest('a[href^="http"]')
+      if (link && !link.href.includes("cronoshop.eu")) {
+        // Add analytics or tracking here if needed
+        console.log("External link clicked:", link.href)
+      }
+    })
+  }
+
+  initUtilities() {
+    // Add utility functions to window for global access
+    window.cronoshop = {
+      theme: {
+        toggle: () => this.toggleTheme(),
+        set: (theme) => this.applyTheme(theme),
+        get: () => localStorage.getItem("cronoshop_theme") || "light",
+      },
+      utils: {
+        formatPrice: this.formatPrice,
+        formatDate: this.formatDate,
+        showNotification: this.showNotification,
+        copyToClipboard: this.copyToClipboard,
+      },
+    }
+  }
+
+  toggleTheme() {
+    const currentTheme = localStorage.getItem("cronoshop_theme") || "light"
+    const newTheme = currentTheme === "light" ? "dark" : "light"
+    this.applyTheme(newTheme)
+    this.showNotification(`Tema ${newTheme === "dark" ? "scuro" : "chiaro"} attivato`, "success")
+  }
+
+  focusSearch() {
+    const searchInput = document.querySelector('#searchInput, .search-input, input[type="search"]')
+    if (searchInput) {
+      searchInput.focus()
+      searchInput.select()
+    }
+  }
+
+  formatPrice(price) {
+    if (typeof price === "string") {
+      price = Number.parseFloat(price.replace(/[^\d.,]/g, "").replace(",", "."))
+    }
+    return new Intl.NumberFormat("it-IT", {
+      style: "currency",
+      currency: "EUR",
+    }).format(price || 0)
+  }
+
+  formatDate(date) {
+    if (typeof date === "string") {
+      date = new Date(date)
+    }
+    return new Intl.DateTimeFormat("it-IT", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }).format(date)
+  }
+
+  showNotification(message, type = "info", duration = 3000) {
+    const notification = document.createElement("div")
+    const colors = {
+      success: "#48bb78",
+      error: "#ff4757",
+      info: "#4299e1",
+      warning: "#ed8936",
+    }
+
+    notification.style.cssText = `
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: ${colors[type]};
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            font-size: 14px;
+            font-weight: 500;
+            max-width: 280px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        `
+
+    const icons = {
+      success: "✓",
+      error: "✕",
+      info: "ℹ",
+      warning: "⚠",
+    }
+
+    notification.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span>${icons[type]}</span>
+                <span>${message}</span>
+            </div>
+        `
+
+    document.body.appendChild(notification)
+
+    // Animate in
+    setTimeout(() => {
+      notification.style.transform = "translateX(0)"
+    }, 100)
+
+    // Animate out
+    setTimeout(() => {
+      notification.style.transform = "translateX(100%)"
+      setTimeout(() => notification.remove(), 300)
+    }, duration)
+
+    return notification
+  }
+
+  copyToClipboard(text) {
+    if (navigator.clipboard) {
+      return navigator.clipboard
+        .writeText(text)
+        .then(() => {
+          this.showNotification("Copiato negli appunti!", "success")
+          return true
+        })
+        .catch(() => {
+          this.fallbackCopyToClipboard(text)
+          return false
+        })
+    } else {
+      return this.fallbackCopyToClipboard(text)
+    }
+  }
+
+  fallbackCopyToClipboard(text) {
+    const textArea = document.createElement("textarea")
+    textArea.value = text
+    textArea.style.position = "fixed"
+    textArea.style.left = "-999999px"
+    textArea.style.top = "-999999px"
+    document.body.appendChild(textArea)
+    textArea.focus()
+    textArea.select()
+
+    try {
+      document.execCommand("copy")
+      this.showNotification("Copiato negli appunti!", "success")
+      return true
+    } catch (err) {
+      this.showNotification("Errore nella copia", "error")
+      return false
+    } finally {
+      document.body.removeChild(textArea)
+    }
+  }
+}
+
+// Navigation management
+class CronoshopNavigation {
+  constructor() {
+    this.isMenuOpen = false
+    this.init()
+  }
+
+  init() {
+    this.setupEventListeners()
+    this.updateActiveNavItem()
+  }
+
+  setupEventListeners() {
+    // Mobile menu toggle
+    document.addEventListener("click", (e) => {
+      if (e.target.closest(".mobile-menu-btn")) {
+        this.toggleMobileMenu()
+      }
+
+      if (e.target.closest(".sidebar-toggle")) {
+        this.toggleSidebar(e.target.closest(".sidebar-toggle").dataset.side)
+      }
+
+      // Close menus when clicking outside
+      if (!e.target.closest(".mobile-menu, .sidebar, .mobile-menu-btn, .sidebar-toggle")) {
+        this.closeMobileMenu()
+        this.closeSidebars()
+      }
+    })
+
+    // Theme toggle in navigation
+    document.addEventListener("click", (e) => {
+      if (e.target.closest(".theme-toggle-btn")) {
+        window.cronoshop?.theme?.toggle()
+      }
+    })
+
+    // Search functionality
+    document.addEventListener("input", (e) => {
+      if (e.target.matches(".search-input")) {
+        this.handleSearch(e.target.value)
+      }
+    })
+
+    // Voice search
+    document.addEventListener("click", (e) => {
+      if (e.target.closest(".voice-search-btn")) {
+        this.startVoiceSearch()
+      }
+    })
+  }
+
+  toggleMobileMenu() {
+    this.isMenuOpen = !this.isMenuOpen
+    const mobileMenu = document.querySelector(".mobile-menu")
+    const menuBtn = document.querySelector(".mobile-menu-btn")
+
+    if (mobileMenu) {
+      mobileMenu.classList.toggle("active", this.isMenuOpen)
+    }
+
+    if (menuBtn) {
+      menuBtn.classList.toggle("active", this.isMenuOpen)
+    }
+
+    // Prevent body scroll when menu is open
+    document.body.style.overflow = this.isMenuOpen ? "hidden" : ""
+  }
+
+  closeMobileMenu() {
+    this.isMenuOpen = false
+    const mobileMenu = document.querySelector(".mobile-menu")
+    const menuBtn = document.querySelector(".mobile-menu-btn")
+
+    if (mobileMenu) {
+      mobileMenu.classList.remove("active")
+    }
+
+    if (menuBtn) {
+      menuBtn.classList.remove("active")
+    }
+
+    document.body.style.overflow = ""
+  }
+
+  toggleSidebar(side) {
+    const sidebar = document.querySelector(`.sidebar-${side}`)
+    const overlay = document.querySelector(".sidebar-overlay")
+
+    if (sidebar) {
+      const isOpen = sidebar.classList.contains("active")
+
+      // Close all sidebars first
+      this.closeSidebars()
+
+      if (!isOpen) {
+        sidebar.classList.add("active")
+        if (overlay) {
+          overlay.classList.add("active")
+        }
+        document.body.style.overflow = "hidden"
+      }
+    }
+  }
+
+  closeSidebars() {
+    const sidebars = document.querySelectorAll(".sidebar-left, .sidebar-right")
+    const overlay = document.querySelector(".sidebar-overlay")
+
+    sidebars.forEach((sidebar) => {
+      sidebar.classList.remove("active")
+    })
+
+    if (overlay) {
+      overlay.classList.remove("active")
+    }
+
+    document.body.style.overflow = ""
+  }
+
+  updateActiveNavItem() {
+    const currentPath = window.location.pathname
+    const navLinks = document.querySelectorAll(".nav-link")
+
+    navLinks.forEach((link) => {
+      const href = link.getAttribute("href")
+      if (href && (currentPath.endsWith(href) || (href === "index.html" && currentPath === "/"))) {
+        link.classList.add("active")
+      } else {
+        link.classList.remove("active")
+      }
+    })
+  }
+
+  handleSearch(query) {
+    if (query.length < 2) return
+
+    // Debounce search
+    clearTimeout(this.searchTimeout)
+    this.searchTimeout = setTimeout(() => {
+      this.performSearch(query)
+    }, 300)
+  }
+
+  performSearch(query) {
+    console.log("Searching for:", query)
+    // Implement search logic here
+    // This could redirect to products.html with search parameters
+    // or show search suggestions
+  }
+
+  startVoiceSearch() {
+    if (!("webkitSpeechRecognition" in window) && !("SpeechRecognition" in window)) {
+      window.cronoshop?.utils?.showNotification("Ricerca vocale non supportata", "error")
+      return
+    }
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+    const recognition = new SpeechRecognition()
+
+    recognition.lang = "it-IT"
+    recognition.continuous = false
+    recognition.interimResults = false
+
+    recognition.onstart = () => {
+      window.cronoshop?.utils?.showNotification("Parla ora...", "info")
+    }
+
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript
+      const searchInput = document.querySelector(".search-input")
+      if (searchInput) {
+        searchInput.value = transcript
+        this.handleSearch(transcript)
+      }
+      window.cronoshop?.utils?.showNotification(`Hai detto: "${transcript}"`, "success")
+    }
+
+    recognition.onerror = (event) => {
+      window.cronoshop?.utils?.showNotification("Errore nella ricerca vocale", "error")
+    }
+
+    recognition.start()
+  }
+}
+
+// Initialize global functionality
+document.addEventListener("DOMContentLoaded", () => {
+  window.cronoshopGlobal = new CronoshopGlobal()
+  window.cronoshopNavigation = new CronoshopNavigation()
+})
+
+// Utility functions for backward compatibility
+function toggleTheme() {
+  window.cronoshop?.theme?.toggle()
+}
+
+function showNotification(message, type = "info") {
+  window.cronoshop?.utils?.showNotification(message, type)
+}
+
+function formatPrice(price) {
+  return window.cronoshop?.utils?.formatPrice(price) || `€${price}`
+}
+
+// Export for modules
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = { CronoshopGlobal, CronoshopNavigation }
+}
