@@ -9,533 +9,362 @@
     <link rel="canonical" href="https://www.cronoshop.eu/groups.html">
     <link rel="icon" type="image/png" href="assets/cronoshop-logo.png">
     <link rel="apple-touch-icon" href="assets/cronoshop-logo.png">
-    <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-</head>
-<body>
-    <div class="page-wrapper">
-        <div id="navigation-container"></div>
+    <script src="themes.js" defer></script>
+
+    <style>
+        /* --- [1] IMPOSTAZIONI GLOBALI E VARIABILI --- */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        :root {
+            /* Colori Tema Scuro (Default) */
+            --bg-main: #121212;
+            --bg-glass: rgba(28, 28, 30, 0.75);
+            --bg-interactive: rgba(44, 44, 46, 0.8);
+            --border-glass: rgba(255, 255, 255, 0.15);
+            --text-primary: #f5f5f7;
+            --text-secondary: #a0a0a5;
+            --accent-primary: #0A84FF;
+            --accent-green: #30D158;
+            --accent-orange: #FF9F0A;
+            --overlay-bg: rgba(0, 0, 0, 0.6);
+            --radius-main: 24px;
+            --radius-sub: 16px;
+            --transition-smooth: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
         
-        <main class="main-content">
-            <div class="main-card glass">
-                <div class="page-header">
-                    <h1>📱 Gruppi Cronoshop</h1>
-                    <p>Unisciti alla nostra community per ricevere le migliori offerte in tempo reale</p>
-                </div>
+        body.light-mode {
+            --bg-main: #f0f2f5;
+            --bg-glass: rgba(255, 255, 255, 0.7);
+            --bg-interactive: rgba(229, 229, 234, 0.8);
+            --border-glass: rgba(0, 0, 0, 0.1);
+            --text-primary: #1d1d1f;
+            --text-secondary: #6e6e73;
+            --accent-primary: #007AFF;
+            --accent-green: #34C759;
+            --accent-orange: #FF9500;
+            --overlay-bg: rgba(0, 0, 0, 0.4);
+        }
 
-                <!-- Main WhatsApp Channel -->
-                <div class="main-channel glass" style="margin-bottom: 3rem; padding: 2rem; border-radius: 24px; text-align: center; background: linear-gradient(135deg, #25d366, #128c7e);">
-                    <div style="font-size: 4rem; margin-bottom: 1rem;">📱</div>
-                    <h2 style="color: white; margin-bottom: 1rem; font-size: 2rem;">Canale Principale Cronoshop</h2>
-                    <p style="color: rgba(255,255,255,0.9); margin-bottom: 2rem; font-size: 1.1rem;">
-                        Segui il nostro canale per ricevere tutte le migliori offerte Amazon in tempo reale
-                    </p>
-                    <div class="channel-stats" style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 2rem; flex-wrap: wrap;">
-                        <div class="stat-item">
-                            <span class="stat-number" style="display: block; font-size: 2rem; font-weight: 700; color: white;">2.5K+</span>
-                            <span class="stat-label" style="font-size: 0.9rem; color: rgba(255,255,255,0.8);">Seguaci Attivi</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number" style="display: block; font-size: 2rem; font-weight: 700; color: white;">50+</span>
-                            <span class="stat-label" style="font-size: 0.9rem; color: rgba(255,255,255,0.8);">Offerte al Giorno</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number" style="display: block; font-size: 2rem; font-weight: 700; color: white;">24/7</span>
-                            <span class="stat-label" style="font-size: 0.9rem; color: rgba(255,255,255,0.8);">Aggiornamenti</span>
-                        </div>
-                    </div>
-                    <button class="action-btn" onclick="groupsManager.joinGroup('main_whatsapp')" 
-                            style="background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3); backdrop-filter: blur(10px); font-size: 1.1rem; padding: 1rem 2rem;">
-                        🚀 Segui il Canale Principale
-                    </button>
-                </div>
+        /* --- [2] RESET E STILI BASE --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg-main);
+            color: var(--text-primary);
+            transition: background 0.3s, color 0.3s;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .page-wrapper { padding-top: 80px; }
+        .glass {
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-main);
+            transition: background 0.3s, border 0.3s;
+        }
+        
+        /* --- [3] HEADER, SEARCH & SIDEBARS (STANDARD) --- */
+        .main-header { position: fixed; top: 20px; left: 20px; right: 20px; z-index: 1000; display: flex; align-items: center; gap: 20px; padding: 0 20px; height: 70px; }
+        .header-btn { background: none; border: none; color: var(--text-secondary); cursor: pointer; font-size: 28px; display: flex; align-items: center; padding: 8px; border-radius: 50%; transition: all 0.2s; z-index: 1002; }
+        .header-btn:hover { background-color: var(--bg-interactive); color: var(--text-primary); }
+        .search-container-wrapper { flex-grow: 1; display: flex; justify-content: center; }
+        .search-container { display: flex; align-items: center; gap: 15px; padding: 0 20px; width: 100%; max-width: 80px; height: 50px; border-radius: 25px; cursor: pointer; transition: all var(--transition-smooth); overflow: hidden; }
+        .search-container.active { max-width: 500px; cursor: text; }
+        .search-container i { font-size: 20px; color: var(--text-secondary); transition: color 0.3s; }
+        .search-container.active i { color: var(--accent-primary); }
+        .search-container input { background: none; border: none; outline: none; color: var(--text-primary); font-size: 16px; width: 100%; opacity: 0; transform: translateX(-20px); transition: opacity 0.3s ease, transform 0.3s ease; }
+        .search-container.active input { opacity: 1; transform: translateX(0); }
+        .search-container input::placeholder { color: var(--text-secondary); }
+        .sidebar { position: fixed; top: 0; height: 100%; width: 300px; z-index: 2000; padding: 20px; transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .left-sidebar { left: 0; transform: translateX(-105%); }
+        .right-sidebar { right: 0; transform: translateX(105%); }
+        .sidebar.active { transform: translateX(0); }
+        .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding: 10px 0; }
+        .sidebar-header h3 { font-size: 24px; font-weight: 700; }
+        .close-btn { background: rgba(255, 255, 255, 0.1); color: var(--text-primary); border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+        .close-btn:hover { background-color: rgba(255, 255, 255, 0.2); transform: rotate(90deg); }
+        .sidebar-nav ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+        .sidebar-nav a, .setting-item { display: flex; align-items: center; gap: 15px; padding: 12px 15px; border-radius: 12px; font-size: 16px; font-weight: 500; color: var(--text-secondary); text-decoration: none; transition: all 0.2s; }
+        .sidebar-nav a:hover, .setting-item:hover { background-color: var(--accent-primary); color: white; transform: translateX(5px); }
+        .sidebar-nav a i { font-size: 22px; min-width: 25px; text-align: center; }
+        .setting-item { justify-content: space-between; cursor: pointer; }
+        .toggle-switch { position: relative; display: inline-block; width: 50px; height: 30px; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; inset: 0; background-color: var(--bg-interactive); border-radius: 34px; transition: .4s; }
+        .slider:before { position: absolute; content: ""; height: 22px; width: 22px; left: 4px; bottom: 4px; background-color: white; border-radius: 50%; transition: .4s; }
+        input:checked + .slider { background-color: var(--accent-primary); }
+        input:checked + .slider:before { transform: translateX(20px); }
+        .overlay { position: fixed; inset: 0; background: var(--overlay-bg); z-index: 1999; opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s ease; }
+        .overlay.active { opacity: 1; visibility: visible; }
 
-                <!-- Specialized Groups -->
-                <div class="specialized-groups">
-                    <h2 style="text-align: center; margin-bottom: 2rem; color: var(--text-primary);">🎯 Gruppi Specializzati</h2>
-                    
-                    <div class="groups-grid">
-                        <!-- Groups will be loaded here -->
-                    </div>
-                </div>
+        /* --- [4] DESIGN PAGINA GRUPPI --- */
+        .groups-container { max-width: 1200px; margin: 0 auto; }
+        .page-header { text-align: center; padding: 40px 20px; border-radius: var(--radius-main); margin-bottom: 2rem; }
+        .page-header h1 { font-size: 2.8rem; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 1rem; }
+        .page-header p { font-size: 1.1rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
+        
+        .section-title { font-size: 2rem; font-weight: 600; text-align: center; margin-bottom: 2rem; }
+        
+        .channel-card {
+            padding: 2.5rem;
+            text-align: center;
+            border-radius: var(--radius-main);
+            margin-bottom: 3rem;
+            color: white;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .channel-card:hover { transform: scale(1.02); box-shadow: 0 15px 40px rgba(0,0,0,0.3); }
 
-                <!-- Telegram Section -->
-                <div class="telegram-section" style="margin-top: 3rem;">
-                    <h2 style="text-align: center; margin-bottom: 2rem; color: var(--text-primary);">✈️ Unisciti anche su Telegram!</h2>
-                    
-                    <div class="telegram-card glass" style="padding: 2rem; border-radius: 24px; text-align: center; background: linear-gradient(135deg, #0088cc, #005f99);">
-                        <div style="font-size: 4rem; margin-bottom: 1rem;">✈️</div>
-                        <h3 style="color: white; margin-bottom: 1rem;">Canale Offerte Cronoshop (Telegram)</h3>
-                        <p style="color: rgba(255,255,255,0.9); margin-bottom: 2rem;">
-                            Non perderti nessuna offerta! Ricevi le promozioni direttamente sul tuo Telegram.
-                        </p>
-                        <div style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 2rem; flex-wrap: wrap;">
-                            <div class="stat-item">
-                                <span class="stat-number" style="display: block; font-size: 1.5rem; font-weight: 700; color: white;">1.5K+</span>
-                                <span class="stat-label" style="font-size: 0.8rem; color: rgba(255,255,255,0.8);">Seguaci</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-number" style="display: block; font-size: 1.5rem; font-weight: 700; color: white;">🟢</span>
-                                <span class="stat-label" style="font-size: 0.8rem; color: rgba(255,255,255,0.8);">Sempre Attivo</span>
-                            </div>
-                        </div>
-                        <button class="action-btn" onclick="groupsManager.joinGroup('main_telegram')"
-                                style="background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3); backdrop-filter: blur(10px);">
-                            🚀 Unisciti al Canale
-                        </button>
-                    </div>
-                </div>
+        .channel-icon { font-size: 4rem; margin-bottom: 1rem; }
+        .channel-card h2 { font-size: 2.2rem; margin-bottom: 1rem; }
+        .channel-card p { opacity: 0.9; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .channel-stats { display: flex; justify-content: center; gap: 2rem; margin-bottom: 2rem; flex-wrap: wrap; }
+        .stat-item .value { font-size: 1.8rem; font-weight: 700; }
+        .stat-item .label { font-size: 0.9rem; opacity: 0.8; }
+        
+        .btn { border: none; padding: 0.8rem 1.5rem; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; font-size: 1rem; text-decoration: none; }
+        .btn-join { background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(10px); }
+        .btn-join:hover { background: rgba(255,255,255,0.3); transform: translateY(-2px); }
 
-                <!-- Benefits Section -->
-                <div class="benefits-section" style="margin-top: 3rem;">
-                    <h2 style="text-align: center; margin-bottom: 2rem; color: var(--text-primary);">✨ Vantaggi dei Nostri Canali & Gruppi</h2>
-                    
-                    <div class="benefits-grid">
-                        <!-- Benefits will be loaded here -->
-                    </div>
-                </div>
+        .groups-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+        .group-card { padding: 2rem; display: flex; flex-direction: column; align-items: center; text-align: center; transition: all 0.3s; }
+        .group-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .group-icon { font-size: 2.5rem; margin-bottom: 1rem; width: 70px; height: 70px; border-radius: var(--radius-sub); display: flex; align-items: center; justify-content: center; color: white; }
+        .group-card h3 { font-size: 1.3rem; margin-bottom: 0.5rem; }
+        .group-card p { color: var(--text-secondary); margin-bottom: 1.5rem; flex-grow: 1; }
+        
+        .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+        .benefit-card { padding: 2rem; text-align: center; }
+        .benefit-icon { font-size: 2.5rem; color: var(--accent-primary); margin-bottom: 1rem; }
 
-                <!-- FAQ Section -->
-                <div class="groups-faq glass" style="margin-top: 3rem; padding: 2rem; border-radius: 24px;">
-                    <h2 style="text-align: center; margin-bottom: 2rem; color: var(--text-primary);">❓ Domande Frequenti</h2>
-                    
-                    <div class="faq-list" id="groupsFaqList">
-                        <!-- FAQ items will be loaded here -->
-                    </div>
+        .faq-list { display: flex; flex-direction: column; gap: 1rem; }
+        .faq-item { border-radius: var(--radius-sub); overflow: hidden; }
+        .faq-question { width: 100%; background: none; border: none; padding: 1.5rem; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; color: var(--text-primary); font-size: 1.1rem; font-weight: 600; }
+        .faq-question i { font-size: 1.5rem; color: var(--accent-primary); transition: transform 0.3s; }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; background: var(--bg-interactive); }
+        .faq-answer-content { padding: 1.5rem; color: var(--text-secondary); line-height: 1.7; }
+        .faq-item.active .faq-answer { max-height: 200px; }
+        .faq-item.active .faq-question i { transform: rotate(45deg); }
+    </style>
+</head>
+<body class="dark-mode">
+
+    <header class="main-header glass" id="mainHeader"></header>
+    <aside class="sidebar left-sidebar glass" id="leftSidebar"></aside>
+    <aside class="sidebar right-sidebar glass" id="rightSidebar"></aside>
+    <div class="overlay" id="overlay"></div>
+
+    <div class="page-wrapper">
+        <main class="groups-container">
+            <header class="page-header glass">
+                <h1><i class="ph-bold ph-chats-circle"></i> Community Cronoshop</h1>
+                <p>Unisciti ai nostri canali e gruppi per ricevere le migliori offerte in tempo reale.</p>
+            </header>
+
+            <section id="mainChannelCard" class="channel-card"></section>
+
+            <section class="specialized-groups">
+                <h2 class="section-title">Gruppi Tematici</h2>
+                <div class="groups-grid" id="groupsGrid"></div>
+            </section>
+            
+            <section id="telegramChannelCard" class="channel-card"></section>
+
+            <section class="benefits-section">
+                 <h2 class="section-title">Perché Unirsi?</h2>
+                 <div class="benefits-grid" id="benefitsGrid"></div>
+            </section>
+
+            <section class="faq-section glass">
+                 <div style="padding: 2rem;">
+                    <h2 class="section-title">Domande Frequenti</h2>
+                    <div class="faq-list" id="faqList"></div>
                 </div>
-            </div>
+            </section>
         </main>
     </div>
 
-    <style>
-        .groups-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .group-card {
-            background: var(--card-bg);
-            border-radius: var(--radius-sub);
-            padding: 1.5rem;
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        .group-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-glass);
-        }
-
-        .group-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .group-badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-        }
-
-        .group-badge.nuovo { background: #34c759; color: white; }
-        .group-badge.popolare { background: #ff9500; color: white; }
-        .group-badge.esclusivo { background: #af52de; color: white; }
-        .group-badge.flash { background: #ff3b30; color: white; }
-        .group-badge.vip { background: linear-gradient(45deg, #ffd700, #ffa500); color: #000; }
-
-        .group-title {
-            color: var(--text-primary);
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .group-description {
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            line-height: 1.5;
-        }
-
-        .group-stats {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 1.5rem;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .benefit-card {
-            background: var(--card-bg);
-            border-radius: var(--radius-sub);
-            padding: 1.5rem;
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .benefit-card:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-glass);
-        }
-
-        .benefit-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .benefit-title {
-            color: var(--text-primary);
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .benefit-description {
-            color: var(--text-secondary);
-            line-height: 1.5;
-        }
-
-        .faq-item {
-            background: var(--glass-bg);
-            border-radius: 12px;
-            margin-bottom: 1rem;
-            overflow: hidden;
-            border: 1px solid var(--glass-border);
-        }
-
-        .faq-question {
-            width: 100%;
-            background: none;
-            border: none;
-            padding: 1rem 1.5rem;
-            text-align: left;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: var(--text-primary);
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .faq-question:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .faq-toggle {
-            font-size: 1.2rem;
-            color: var(--accent-primary);
-            transition: transform 0.3s ease;
-        }
-
-        .faq-item.active .faq-toggle {
-            transform: rotate(45deg);
-        }
-
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-            background: rgba(0, 0, 0, 0.2);
-        }
-
-        .faq-item.active .faq-answer {
-            max-height: 200px;
-        }
-
-        .faq-answer-content {
-            padding: 1rem 1.5rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        @media (max-width: 768px) {
-            .groups-grid, .benefits-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .channel-stats, .group-stats {
-                flex-direction: column;
-                gap: 1rem;
-            }
-        }
-    </style>
-
-    <script src="script.js"></script>
+    <script src="themes.js" defer></script>
     <script>
-        class GroupsManager {
-            constructor() {
-                this.groups = [
-                    {
-                        id: 'smartphone',
-                        icon: '📱',
-                        badge: 'nuovo',
-                        title: 'Smartphone & Tech',
-                        description: 'Offerte esclusive su iPhone, Samsung, accessori tech e gadget',
-                        members: '1.2K',
-                        activity: 'Molto Attivo',
-                        link: 'https://chat.whatsapp.com/smartphone-tech'
-                    },
-                    {
-                        id: 'fashion',
-                        icon: '👕',
-                        badge: 'popolare',
-                        title: 'Fashion & Style',
-                        description: 'Abbigliamento, scarpe, accessori moda per uomo e donna',
-                        members: '850',
-                        activity: 'Attivo',
-                        link: 'https://chat.whatsapp.com/fashion-style'
-                    },
-                    {
-                        id: 'casa',
-                        icon: '🏠',
-                        badge: 'esclusivo',
-                        title: 'Casa & Cucina',
-                        description: 'Elettrodomestici, arredamento, prodotti per la casa',
-                        members: '650',
-                        activity: 'In Crescita',
-                        link: 'https://chat.whatsapp.com/casa-cucina'
-                    },
-                    {
-                        id: 'flash',
-                        icon: '⚡',
-                        badge: 'flash',
-                        title: 'Offerte Flash',
-                        description: 'Sconti lampo e offerte a tempo limitato',
-                        members: '1.8K',
-                        activity: 'Super Attivo',
-                        link: 'https://chat.whatsapp.com/offerte-flash'
-                    },
-                    {
-                        id: 'vip',
-                        icon: '💎',
-                        badge: 'vip',
-                        title: 'Gruppo VIP',
-                        description: 'Accesso anticipato alle migliori offerte e sconti esclusivi',
-                        members: '200',
-                        activity: 'Esclusivo',
-                        link: 'https://chat.whatsapp.com/gruppo-vip'
-                    }
-                ];
-
-                this.benefits = [
-                    {
-                        icon: '⚡',
-                        title: 'Notifiche Istantanee',
-                        description: 'Ricevi le offerte appena pubblicate, prima che scadano'
-                    },
-                    {
-                        icon: '🎯',
-                        title: 'Offerte Mirate',
-                        description: 'Contenuti personalizzati in base ai tuoi interessi'
-                    },
-                    {
-                        icon: '👥',
-                        title: 'Community Attiva',
-                        description: 'Condividi opinioni e ricevi consigli da altri membri'
-                    },
-                    {
-                        icon: '🔒',
-                        title: 'Sicurezza Garantita',
-                        description: 'Tutti i link sono verificati e sicuri'
-                    }
-                ];
-
-                this.faqs = [
-                    {
-                        question: 'È gratuito unirsi ai gruppi?',
-                        answer: 'Sì, tutti i nostri canali e gruppi sono completamente gratuiti. Solo il gruppo VIP richiede un\'approvazione speciale.'
-                    },
-                    {
-                        question: 'Quante offerte ricevo al giorno?',
-                        answer: 'Il numero varia da 10-15 offerte nei gruppi specializzati a 50+ nel canale principale.'
-                    },
-                    {
-                        question: 'Posso disattivare le notifiche?',
-                        answer: 'Certamente! Puoi silenziare il canale o uscire in qualsiasi momento dalle impostazioni di WhatsApp o Telegram.'
-                    },
-                    {
-                        question: 'Come funziona il gruppo VIP?',
-                        answer: 'Il gruppo VIP offre accesso anticipato alle offerte migliori e sconti esclusivi non disponibili altrove.'
-                    }
-                ];
-
-                this.init();
-            }
-
-            init() {
-                this.renderGroups();
-                this.renderBenefits();
-                this.renderFAQs();
-            }
-
-            renderGroups() {
-                const groupsGrid = document.querySelector('.groups-grid');
-                groupsGrid.innerHTML = this.groups.map(group => `
-                    <div class="group-card">
-                        <div class="group-icon">${group.icon}</div>
-                        <div class="group-badge ${group.badge}">${group.badge}</div>
-                        <h3 class="group-title">${group.title}</h3>
-                        <p class="group-description">${group.description}</p>
-                        <div class="group-stats">
-                            <span>👥 ${group.members} membri</span>
-                            <span>📈 ${group.activity}</span>
-                        </div>
-                        <button class="action-btn primary" onclick="groupsManager.joinGroup('${group.id}')">
-                            <i class="ph ph-whatsapp-logo"></i>
-                            Unisciti
-                        </button>
-                    </div>
-                `).join('');
-            }
-
-            renderBenefits() {
-                const benefitsGrid = document.querySelector('.benefits-grid');
-                benefitsGrid.innerHTML = this.benefits.map(benefit => `
-                    <div class="benefit-card">
-                        <div class="benefit-icon">${benefit.icon}</div>
-                        <h3 class="benefit-title">${benefit.title}</h3>
-                        <p class="benefit-description">${benefit.description}</p>
-                    </div>
-                `).join('');
-            }
-
-            renderFAQs() {
-                const faqList = document.getElementById('groupsFaqList');
-                faqList.innerHTML = this.faqs.map((faq, index) => `
-                    <div class="faq-item">
-                        <button class="faq-question" onclick="groupsManager.toggleFAQ(this)">
-                            <span>${faq.question}</span>
-                            <span class="faq-toggle">+</span>
-                        </button>
-                        <div class="faq-answer">
-                            <div class="faq-answer-content">
-                                <p>${faq.answer}</p>
-                            </div>
-                        </div>
-                    </div>
-                `).join('');
-            }
-
-            joinGroup(groupId) {
-                const groupLinks = {
-                    'main_whatsapp': 'https://whatsapp.com/channel/0029VaAqYuREHha5HhZXRH0w',
-                    'main_telegram': 'https://t.me/cronoshop_offerte',
-                    'smartphone': 'https://chat.whatsapp.com/smartphone-tech',
-                    'fashion': 'https://chat.whatsapp.com/fashion-style',
-                    'casa': 'https://chat.whatsapp.com/casa-cucina',
-                    'flash': 'https://chat.whatsapp.com/offerte-flash',
-                    'vip': 'https://chat.whatsapp.com/gruppo-vip'
-                };
-
-                const link = groupLinks[groupId];
-                if (link) {
-                    this.showNotification('Reindirizzamento in corso...', 'info');
-                    setTimeout(() => {
-                        window.open(link, '_blank');
-                    }, 1000);
-                } else {
-                    this.showNotification('Gruppo non trovato', 'error');
-                }
-            }
-
-            toggleFAQ(element) {
-                const faqItem = element.closest('.faq-item');
-                const isActive = faqItem.classList.contains('active');
-                
-                // Close all other FAQs
-                document.querySelectorAll('.faq-item').forEach(item => {
-                    item.classList.remove('active');
-                    item.querySelector('.faq-toggle').textContent = '+';
-                });
-                
-                // Toggle current FAQ
-                if (!isActive) {
-                    faqItem.classList.add('active');
-                    element.querySelector('.faq-toggle').textContent = '×';
-                }
-            }
-
-            showNotification(message, type = 'info') {
-                const notification = document.createElement('div');
-                const colors = {
-                    success: '#48bb78',
-                    error: '#ff4757',
-                    info: '#4299e1',
-                    warning: '#ed8936'
-                };
-
-                notification.style.cssText = `
-                    position: fixed;
-                    top: 100px;
-                    right: 20px;
-                    background: ${colors[type]};
-                    color: white;
-                    padding: 12px 20px;
-                    border-radius: 8px;
-                    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-                    z-index: 10000;
-                    transform: translateX(100%);
-                    transition: transform 0.3s ease;
-                    font-size: 14px;
-                    font-weight: 500;
-                    max-width: 280px;
-                `;
-
-                const icons = {
-                    success: 'check-circle',
-                    error: 'x-circle',
-                    info: 'info',
-                    warning: 'warning'
-                };
-
-                notification.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <i class="ph ph-${icons[type]}"></i>
-                        <span>${message}</span>
-                    </div>
-                `;
-
-                document.body.appendChild(notification);
-
-                setTimeout(() => {
-                    notification.style.transform = 'translateX(0)';
-                }, 100);
-
-                setTimeout(() => {
-                    notification.style.transform = 'translateX(100%)';
-                    setTimeout(() => notification.remove(), 300);
-                }, 3000);
-            }
-        }
-
-        // Initialize groups manager
-        let groupsManager;
         document.addEventListener('DOMContentLoaded', () => {
-            groupsManager = new GroupsManager();
+            // --- LOGICA UI STANDARD (MENU, RICERCA, OVERLAY) ---
+            const leftSidebar = document.getElementById('leftSidebar');
+            const rightSidebar = document.getElementById('rightSidebar');
+            const overlay = document.getElementById('overlay');
+            const mainHeader = document.getElementById('mainHeader');
+
+            // Inietta dinamicamente l'header e i menu per mantenerli consistenti
+            mainHeader.innerHTML = `
+                <button class="header-btn" id="leftSidebarBtn" aria-label="Apri menu"><i class="ph-bold ph-list"></i></button>
+                <div class="search-container-wrapper"><div class="search-container glass" id="searchContainer"><i class="ph ph-magnifying-glass"></i><input type="text" id="searchInput" placeholder="Cerca..."></div></div>
+                <button class="header-btn" id="rightSidebarBtn" aria-label="Apri impostazioni"><i class="ph-bold ph-gear"></i></button>`;
             
-            // Load navigation
-            fetch('nav.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('navigation-container').innerHTML = data;
-                })
-                .catch(error => console.error('Error loading navigation:', error));
+            leftSidebar.innerHTML = `
+                <div class="sidebar-header"><h3>Menu</h3><button class="close-btn" id="closeLeftSidebarBtn"><i class="ph-bold ph-x"></i></button></div>
+                <nav class="sidebar-nav">
+                    <ul>
+                        <li><a href="index.html"><i class="ph ph-house"></i> Home</a></li>
+                        <li><a href="account.html"><i class="ph ph-user-circle"></i> Account</a></li>
+                        <li><a href="products.html"><i class="ph ph-shopping-bag"></i> Prodotti</a></li>
+                        <li><a href="wishlist.html"><i class="ph ph-heart"></i> Wishlist</a></li>
+                        <li><a href="cart.html"><i class="ph ph-shopping-cart"></i> Carrello</a></li>
+                        <li><a href="chisiamo.html"><i class="ph ph-info"></i> Chi Siamo</a></li>
+                        <li><a href="blog.html"><i class="ph ph-newspaper"></i> Blog</a></li>
+                        <li><a href="stats.html"><i class="ph ph-chart-bar"></i> Statistiche</a></li>
+                        <li><a href="themes.html"><i class="ph ph-palette"></i> Temi</a></li>
+                        <li><a href="faq.html"><i class="ph ph-question"></i> FAQ</a></li>
+                        <li><a href="privacy.html"><i class="ph ph-shield-check"></i> Privacy</a></li>
+                        <li><a href="terms.html"><i class="ph ph-file-text"></i> Termini</a></li>
+                    </ul>
+                </nav>`;
+
+            rightSidebar.innerHTML = `
+                <div class="sidebar-header"><h3>Impostazioni</h3><button class="close-btn" id="closeRightSidebarBtn"><i class="ph-bold ph-x"></i></button></div>
+                <nav class="sidebar-nav">
+                    <ul>
+                        <li><label class="setting-item" for="themeToggle"><span><i class="ph ph-moon"></i> Tema Scuro</span><div class="toggle-switch"><input type="checkbox" id="themeToggle" checked><span class="slider"></span></div></label></li>
+                        <li><a href="#"><i class="ph ph-bell"></i> Notifiche</a></li>
+                    </ul>
+                </nav>`;
+            
+            const leftSidebarBtn = document.getElementById('leftSidebarBtn');
+            const rightSidebarBtn = document.getElementById('rightSidebarBtn');
+            const closeLeftSidebarBtn = document.getElementById('closeLeftSidebarBtn');
+            const closeRightSidebarBtn = document.getElementById('closeRightSidebarBtn');
+            const searchContainer = document.getElementById('searchContainer');
+            const searchInput = document.getElementById('searchInput');
+
+            const toggleSidebar = (sidebar, open) => {
+                sidebar.classList.toggle('active', open);
+                const anySidebarOpen = leftSidebar.classList.contains('active') || rightSidebar.classList.contains('active');
+                overlay.classList.toggle('active', anySidebarOpen);
+            };
+
+            leftSidebarBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleSidebar(leftSidebar, true); });
+            rightSidebarBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleSidebar(rightSidebar, true); });
+            closeLeftSidebarBtn.addEventListener('click', () => toggleSidebar(leftSidebar, false));
+            closeRightSidebarBtn.addEventListener('click', () => toggleSidebar(rightSidebar, false));
+            overlay.addEventListener('click', () => { toggleSidebar(leftSidebar, false); toggleSidebar(rightSidebar, false); });
+            
+            searchContainer.addEventListener('click', () => searchContainer.classList.add('active'));
+            document.addEventListener('click', (e) => {
+                if (!searchContainer.contains(e.target) && searchInput.value === '') searchContainer.classList.remove('active');
+            });
+            searchInput.addEventListener('blur', () => {
+                if(searchInput.value === '') searchContainer.classList.remove('active');
+            });
+            
+            // --- LOGICA SPECIFICA PAGINA GRUPPI ---
+            class GroupsPageManager {
+                constructor() {
+                    this.groups = [
+                         { id: 'smartphone', icon: '📱', color: '#0A84FF', title: 'Smartphone & Tech', description: 'Offerte su iPhone, Samsung e gadget.', members: '1.2K', link: '#' },
+                         { id: 'fashion', icon: '👕', color: '#AF52DE', title: 'Fashion & Style', description: 'Abbigliamento, scarpe e accessori.', members: '850', link: '#' },
+                         { id: 'casa', icon: '🏠', color: '#FF9F0A', title: 'Casa & Cucina', description: 'Elettrodomestici e arredamento.', members: '650', link: '#' },
+                         { id: 'flash', icon: '⚡️', color: '#FF453A', title: 'Offerte Flash', description: 'Sconti lampo a tempo limitato.', members: '1.8K', link: '#' },
+                         { id: 'vip', icon: '💎', color: '#FFD60A', title: 'Gruppo VIP', description: 'Accesso anticipato e sconti esclusivi.', members: '200', link: '#' }
+                    ];
+                    this.benefits = [
+                        { icon: 'ph-timer', title: 'Notifiche Istantanee', description: 'Ricevi le offerte prima che scadano.' },
+                        { icon: 'ph-target', title: 'Offerte Mirate', description: 'Contenuti in base ai tuoi interessi.' },
+                        { icon: 'ph-users-three', title: 'Community Attiva', description: 'Condividi opinioni e ricevi consigli.' },
+                        { icon: 'ph-shield-check', title: 'Link Sicuri', description: 'Tutti i link sono verificati e sicuri.' }
+                    ];
+                    this.faqs = [
+                        { question: 'È gratuito unirsi ai gruppi?', answer: 'Sì, tutti i nostri canali e gruppi sono completamente gratuiti.' },
+                        { question: 'Quante offerte ricevo al giorno?', answer: 'Il numero varia da 10-15 offerte nei gruppi tematici a 50+ nel canale principale.' },
+                        { question: 'Posso disattivare le notifiche?', answer: 'Certamente! Puoi silenziare il canale o uscire in qualsiasi momento.' },
+                    ];
+                    this.init();
+                }
+
+                init() {
+                    this.renderMainChannel();
+                    this.renderTelegramChannel();
+                    this.renderGroups();
+                    this.renderBenefits();
+                    this.renderFAQs();
+                    this.attachFAQListeners();
+                }
+
+                renderMainChannel() {
+                    document.getElementById('mainChannelCard').innerHTML = `
+                        <div class="channel-icon"><i class="ph-bold ph-whatsapp-logo"></i></div>
+                        <h2>Canale Principale WhatsApp</h2>
+                        <p>Segui il nostro canale per ricevere tutte le migliori offerte Amazon in tempo reale.</p>
+                        <div class="channel-stats">
+                            <div class="stat-item"><div class="value">2.5K+</div><div class="label">Seguaci</div></div>
+                            <div class="stat-item"><div class="value">50+</div><div class="label">Offerte/Giorno</div></div>
+                        </div>
+                        <a href="#" class="btn btn-join">🚀 Segui il Canale</a>`;
+                    document.getElementById('mainChannelCard').style.background = 'linear-gradient(135deg, #25d366, #128c7e)';
+                }
+                
+                renderTelegramChannel() {
+                     document.getElementById('telegramChannelCard').innerHTML = `
+                        <div class="channel-icon"><i class="ph-bold ph-telegram-logo"></i></div>
+                        <h2>Unisciti su Telegram</h2>
+                        <p>Ricevi le stesse promozioni direttamente sulla tua app di messaggistica preferita.</p>
+                         <div class="channel-stats">
+                            <div class="stat-item"><div class="value">1.5K+</div><div class="label">Seguaci</div></div>
+                        </div>
+                        <a href="#" class="btn btn-join">✈️ Vai al Canale</a>`;
+                    document.getElementById('telegramChannelCard').style.background = 'linear-gradient(135deg, #0088cc, #005f99)';
+                }
+
+                renderGroups() {
+                    const grid = document.getElementById('groupsGrid');
+                    grid.innerHTML = this.groups.map(group => `
+                        <div class="group-card glass">
+                            <div class="group-icon" style="background-color: ${group.color}">${group.icon}</div>
+                            <h3>${group.title}</h3>
+                            <p>${group.description}</p>
+                            <a href="${group.link}" class="btn btn-join">Unisciti</a>
+                        </div>
+                    `).join('');
+                }
+
+                renderBenefits() {
+                    const grid = document.getElementById('benefitsGrid');
+                    grid.innerHTML = this.benefits.map(benefit => `
+                        <div class="benefit-card glass">
+                            <div class="benefit-icon"><i class="ph-bold ${benefit.icon}"></i></div>
+                            <h3>${benefit.title}</h3>
+                            <p>${benefit.description}</p>
+                        </div>
+                    `).join('');
+                }
+
+                renderFAQs() {
+                    const list = document.getElementById('faqList');
+                    list.innerHTML = this.faqs.map(faq => `
+                        <div class="faq-item glass">
+                            <button class="faq-question">
+                                <span>${faq.question}</span>
+                                <i class="ph-bold ph-plus"></i>
+                            </button>
+                            <div class="faq-answer"><div class="faq-answer-content">${faq.answer}</div></div>
+                        </div>
+                    `).join('');
+                }
+                
+                attachFAQListeners() {
+                    document.getElementById('faqList').addEventListener('click', (e) => {
+                        const question = e.target.closest('.faq-question');
+                        if (question) {
+                            const faqItem = question.parentElement;
+                            const wasActive = faqItem.classList.contains('active');
+                            document.querySelectorAll('.faq-item.active').forEach(item => item.classList.remove('active'));
+                            if (!wasActive) faqItem.classList.add('active');
+                        }
+                    });
+                }
+            }
+            
+            new GroupsPageManager();
         });
     </script>
 </body>
