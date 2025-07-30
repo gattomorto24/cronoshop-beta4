@@ -134,15 +134,38 @@
         /* Product Modal (Premium Redesign) */
         .modal-container { position: fixed; inset: 0; z-index: 3000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; padding: 20px; }
         .modal-container.visible { opacity: 1; visibility: visible; }
-        .modal-content { max-width: 500px; width: 100%; transform: scale(0.9); transition: transform 0.3s; }
+        .modal-content { max-width: 600px; width: 100%; transform: scale(0.9); transition: transform 0.3s; position: relative; }
         .modal-container.visible .modal-content { transform: scale(1); }
-        .modal-image { width: 100%; height: 250px; object-fit: cover; border-radius: var(--radius-main) var(--radius-main) 0 0; display: block; }
-        .modal-info { padding: 2rem; }
+        .modal-header { position: relative; }
+        .modal-image { width: 100%; height: 300px; object-fit: cover; border-radius: var(--radius-main) var(--radius-main) 0 0; display: block; }
+        .modal-close-btn { position: absolute; top: 15px; right: 15px; width: 40px; height: 40px; border-radius: 50%; background: rgba(0,0,0,0.7); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; transition: all 0.2s; z-index: 1; }
+        .modal-close-btn:hover { background: rgba(0,0,0,0.9); transform: scale(1.1); }
+        .modal-expand-btn { position: absolute; top: 15px; left: 15px; width: 40px; height: 40px; border-radius: 50%; background: rgba(0,0,0,0.7); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: all 0.2s; z-index: 1; }
+        .modal-expand-btn:hover { background: rgba(0,0,0,0.9); transform: scale(1.1); }
+        .modal-info { padding: 2rem; position: relative; }
         .modal-title { font-size: 1.8rem; margin-bottom: 1rem; line-height: 1.3; }
         .modal-description { color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.6; }
         .modal-price { font-size: 2rem; font-weight: 700; color: var(--accent-green); margin-bottom: 2rem; display: flex; align-items: baseline; gap: 10px; }
         .modal-price .original { font-size: 1rem; color: var(--text-secondary); text-decoration: line-through; }
-        .modal-actions { display: grid; grid-template-columns: 1fr auto; gap: 10px; }
+        .modal-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.5rem; }
+        .modal-secondary-actions { display: flex; gap: 10px; justify-content: center; }
+        .modal-btn { padding: 12px 20px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 16px; text-decoration: none; border: none; }
+        .modal-btn-primary { background: var(--accent-primary); color: white; }
+        .modal-btn-primary:hover { background: color-mix(in srgb, var(--accent-primary) 85%, black); transform: translateY(-2px); }
+        .modal-btn-success { background: var(--accent-green); color: white; }
+        .modal-btn-success:hover { background: color-mix(in srgb, var(--accent-green) 85%, black); transform: translateY(-2px); }
+        .modal-btn-secondary { background: var(--bg-interactive); color: var(--text-primary); border: 1px solid var(--border-glass); }
+        .modal-btn-secondary:hover { background: var(--bg-glass); transform: translateY(-1px); }
+        .modal-btn-icon { width: 44px; height: 44px; padding: 0; border-radius: 50%; }
+        .modal-btn-icon.active { background: var(--accent-red); color: white; }
+        
+        /* Fullscreen Modal */
+        .modal-container.fullscreen { padding: 0; }
+        .modal-container.fullscreen .modal-content { max-width: 100%; width: 100%; height: 100vh; border-radius: 0; display: flex; flex-direction: column; }
+        .modal-container.fullscreen .modal-image { height: 50vh; border-radius: 0; }
+        .modal-container.fullscreen .modal-info { flex: 1; overflow-y: auto; }
+        .modal-container.fullscreen .modal-close-btn { top: 20px; right: 20px; width: 50px; height: 50px; font-size: 24px; }
+        .modal-container.fullscreen .modal-expand-btn { display: none; }
         
         /* Mobile Optimizations */
         @media (max-width: 768px) {
@@ -151,13 +174,12 @@
             .main-header { top: 10px; left: 10px; right: 10px; }
             .main-grid { grid-template-columns: 1fr; }
             .search-container.active { max-width: calc(100% - 140px); }
+            .modal-actions { grid-template-columns: 1fr; }
+            .modal-secondary-actions { flex-wrap: wrap; }
         }
          @media (max-width: 480px) {
-            .modal-content { border-radius: var(--radius-main); }
-            .modal-image { border-radius: var(--radius-main); }
-            .modal-info { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); border-radius: 0 0 var(--radius-main) var(--radius-main); }
-            .modal-title, .modal-description, .modal-price { color: white; }
-            .modal-price .original { color: rgba(255,255,255,0.7); }
+            .modal-content { width: calc(100% - 20px); }
+            .modal-info { padding: 1.5rem; }
         }
     </style>
 </head>
@@ -361,10 +383,19 @@
             const price = parseFloat(product.prezzo) || 0;
             const originalPrice = parseFloat(product.prezzo_originale) || 0;
             const isLiked = isProductInWishlist(product.id);
+            const isInCart = isProductInCart(product.id);
 
             productModal.innerHTML = `
                 <div class="modal-content glass" onclick="event.stopPropagation()">
-                    <img src="${product.img}" alt="${product.nome}" class="modal-image">
+                    <div class="modal-header">
+                        <img src="${product.img}" alt="${product.nome}" class="modal-image">
+                        <button class="modal-expand-btn" onclick="toggleFullscreen()" aria-label="Espandi">
+                            <i class="ph ph-arrows-out"></i>
+                        </button>
+                        <button class="modal-close-btn" onclick="closeProductModal()" aria-label="Chiudi">
+                            <i class="ph ph-x"></i>
+                        </button>
+                    </div>
                     <div class="modal-info">
                         <h2 class="modal-title">${product.nome}</h2>
                         <p class="modal-description">${product.descrizione}</p>
@@ -373,21 +404,57 @@
                             ${originalPrice > price ? `<span class="original">€${originalPrice.toFixed(2)}</span>` : ''}
                         </div>
                         <div class="modal-actions">
-                             <a href="${product.link}" target="_blank" rel="noopener noreferrer" class="btn primary">Vai su Amazon</a>
-                             <button class="icon-btn ${isLiked ? 'active' : ''}" data-wishlist-id="${product.id}" style="width: 50px; height: 50px; font-size: 24px;"><i class="ph ph-heart"></i></button>
+                            <button class="modal-btn modal-btn-success" onclick="addToCartFromModal('${product.id}')">
+                                <i class="ph ph-shopping-cart"></i>
+                                ${isInCart ? 'Nel Carrello' : 'Aggiungi al Carrello'}
+                            </button>
+                            <a href="${product.link}" target="_blank" rel="noopener noreferrer" class="modal-btn modal-btn-primary">
+                                <i class="ph ph-storefront"></i>
+                                Compra Ora
+                            </a>
+                        </div>
+                        <div class="modal-secondary-actions">
+                            <button class="modal-btn modal-btn-secondary modal-btn-icon ${isLiked ? 'active' : ''}" onclick="toggleWishlistFromModal('${product.id}')" aria-label="Preferiti">
+                                <i class="ph ph-heart"></i>
+                            </button>
+                            <button class="modal-btn modal-btn-secondary modal-btn-icon" onclick="shareProductFromModal('${product.id}')" aria-label="Condividi">
+                                <i class="ph ph-share"></i>
+                            </button>
+                            <button class="modal-btn modal-btn-secondary modal-btn-icon" onclick="copyLinkFromModal('${product.id}')" aria-label="Copia Link">
+                                <i class="ph ph-link"></i>
+                            </button>
                         </div>
                     </div>
                 </div>`;
             productModal.classList.add('visible');
         };
         
-        productModal.addEventListener('click', () => productModal.classList.remove('visible'));
+        const closeProductModal = () => {
+            productModal.classList.remove('visible', 'fullscreen');
+        };
+        
+        const toggleFullscreen = () => {
+            productModal.classList.toggle('fullscreen');
+        };
+        
+        productModal.addEventListener('click', (e) => {
+            if (e.target === productModal) {
+                closeProductModal();
+            }
+        });
 
         // --- LOGICA INTERATTIVA (WISHLIST, ETC.) ---
         const isProductInWishlist = (productId) => {
             try {
                 const wishlist = JSON.parse(localStorage.getItem('cronoshop_wishlist') || '[]');
                 return wishlist.some(item => item.id === productId);
+            } catch { return false; }
+        };
+        
+        const isProductInCart = (productId) => {
+            try {
+                const cart = JSON.parse(localStorage.getItem('cronoshop_cart') || '[]');
+                return cart.some(item => item.id === productId);
             } catch { return false; }
         };
         
@@ -410,6 +477,94 @@
                 localStorage.setItem('cronoshop_wishlist', JSON.stringify(wishlist));
             } catch (e) { console.error("Wishlist Error:", e)}
         };
+        
+        const addToCart = (productId) => {
+            try {
+                let cart = JSON.parse(localStorage.getItem('cronoshop_cart') || '[]');
+                const product = products.find(p => p.id === productId);
+                if (!product) return;
+                
+                const existingItem = cart.find(item => item.id === productId);
+                if (existingItem) {
+                    existingItem.quantity = (existingItem.quantity || 1) + 1;
+                } else {
+                    cart.push({ ...product, quantity: 1 });
+                }
+                localStorage.setItem('cronoshop_cart', JSON.stringify(cart));
+                showNotification('Prodotto aggiunto al carrello!', 'success');
+            } catch (e) { console.error("Cart Error:", e); }
+        };
+        
+        const shareProduct = (productId) => {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            const shareData = {
+                title: `${product.nome} - Cronoshop`,
+                text: `Guarda questa offerta: ${product.nome} a €${product.prezzo}`,
+                url: product.link
+            };
+            
+            if (navigator.share) {
+                navigator.share(shareData).catch(console.error);
+            } else {
+                navigator.clipboard.writeText(`${shareData.title}\n${shareData.text}\n${shareData.url}`)
+                    .then(() => showNotification('Link copiato negli appunti!', 'success'))
+                    .catch(() => showNotification('Errore nella condivisione', 'error'));
+            }
+        };
+        
+        const showNotification = (message, type = 'info') => {
+            const notification = document.createElement('div');
+            const colors = { success: '#30D158', error: '#FF453A', info: '#0A84FF' };
+            notification.style.cssText = `
+                position: fixed; top: 100px; right: 20px; background: ${colors[type]}; color: white;
+                padding: 12px 20px; border-radius: 12px; z-index: 4000; opacity: 0;
+                transition: all 0.3s ease; font-weight: 500;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.style.opacity = '1', 100);
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        };
+        
+        // Funzioni globali per il modal
+        window.addToCartFromModal = (productId) => {
+            addToCart(productId);
+            // Aggiorna il pulsante nel modal
+            const btn = document.querySelector('.modal-btn-success');
+            if (btn) {
+                btn.innerHTML = '<i class="ph ph-check"></i> Nel Carrello';
+                btn.style.background = 'var(--accent-green)';
+            }
+        };
+        
+        window.toggleWishlistFromModal = (productId) => {
+            toggleWishlist(productId);
+            const btn = document.querySelector('.modal-secondary-actions .modal-btn-icon');
+            if (btn) {
+                btn.classList.toggle('active');
+            }
+        };
+        
+        window.shareProductFromModal = (productId) => {
+            shareProduct(productId);
+        };
+        
+        window.copyLinkFromModal = (productId) => {
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                navigator.clipboard.writeText(product.link)
+                    .then(() => showNotification('Link copiato!', 'success'))
+                    .catch(() => showNotification('Errore nella copia', 'error'));
+            }
+        };
+        
+        window.closeProductModal = closeProductModal;
+        window.toggleFullscreen = toggleFullscreen;
 
         document.body.addEventListener('click', (e) => {
             const detailsBtn = e.target.closest('.details-btn');
