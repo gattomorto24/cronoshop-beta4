@@ -4,34 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cronoshop - Le Migliori Offerte Amazon 2025</title>
+    
     <meta name="description" content="Scopri ogni giorno le migliori offerte Amazon con il nuovo design di Cronoshop. Interfaccia moderna e intuitiva per risparmiare senza sforzo.">
     <meta name="author" content="Cronoshop Team">
     <link rel="canonical" href="https://www.cronoshop.eu/">
+    
     <link rel="icon" type="image/png" href="assets/cronoshop-logo.png">
     <link rel="apple-touch-icon" href="assets/cronoshop-logo.png">
+    
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <script src="themes.js" defer></script>
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
         :root {
-            --bg-main: #121212; --bg-glass: rgba(28, 28, 30, 0.75); --bg-interactive: rgba(44, 44, 46, 0.8);
-            --border-glass: rgba(255, 255, 255, 0.15); --text-primary: #f5f5f7; --text-secondary: #a0a0a5;
-            --accent-primary: #0A84FF; --accent-green: #30D158; --accent-red: #FF453A; --overlay-bg: rgba(0, 0, 0, 0.6);
-            --radius-main: 24px; --radius-sub: 16px; --transition-smooth: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            --font-main: 'Inter', -apple-system, sans-serif; --font-size-base: 16px;
+            /* Colori Tema Scuro (Default) */
+            --bg-main: linear-gradient(135deg, #1a202c 0%, #111318 100%);
+            --bg-glass: rgba(28, 28, 30, 0.6);
+            --bg-interactive: rgba(44, 44, 46, 0.7);
+            --border-glass: rgba(255, 255, 255, 0.1);
+            --text-primary: #f5f5f7;
+            --text-secondary: #a0a0a5;
+            --accent-primary: #0A84FF;
+            --accent-green: #30D158;
+            --accent-purple: #BF5AF2;
+            --accent-red: #FF453A;
+            --overlay-bg: rgba(0, 0, 0, 0.6);
+            --radius-main: 24px;
+            --radius-sub: 16px;
+            --transition-smooth: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
+        
         body.light-mode {
-            --bg-main: #f0f2f5; --bg-glass: rgba(255, 255, 255, 0.7); --bg-interactive: rgba(229, 229, 234, 0.8);
-            --border-glass: rgba(0, 0, 0, 0.1); --text-primary: #1d1d1f; --text-secondary: #6e6e73;
-            --accent-primary: #007AFF; --accent-green: #34C759; --accent-red: #FF3B30; --overlay-bg: rgba(0, 0, 0, 0.4);
+            --bg-main: linear-gradient(135deg, #f0f2f5 0%, #e2e8f0 100%);
+            --bg-glass: rgba(255, 255, 255, 0.6);
+            --bg-interactive: rgba(229, 229, 234, 0.7);
+            --border-glass: rgba(0, 0, 0, 0.08);
+            --text-primary: #1d1d1f;
+            --text-secondary: #6e6e73;
+            --accent-primary: #007AFF;
+            --accent-green: #34C759;
+            --accent-red: #FF3B30;
+            --overlay-bg: rgba(0, 0, 0, 0.4);
         }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-        body { font-family: var(--font-main); font-size: var(--font-size-base); background: var(--bg-main); color: var(--text-primary); transition: background 0.3s, color 0.3s; padding: 20px; min-height: 100vh; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg-main);
+            color: var(--text-primary);
+            transition: background-color 0.3s, color 0.3s;
+            padding: 20px;
+            min-height: 100vh;
+        }
         .page-wrapper { padding-top: 80px; }
-        .glass { background: var(--bg-glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--border-glass); border-radius: var(--radius-main); transition: background 0.3s, border 0.3s; }
-        body.glass-disabled .glass { backdrop-filter: none; -webkit-backdrop-filter: none; }
+        .glass { background: var(--bg-glass); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border: 1px solid var(--border-glass); border-radius: var(--radius-main); transition: background 0.3s, border 0.3s; }
         a { color: var(--accent-primary); text-decoration: none; font-weight: 500; }
         
         /* Header, Search & Sidebars */
@@ -70,7 +99,7 @@
         
         /* Main Content Grid */
         .main-container { max-width: 1400px; margin: 0 auto; }
-        .main-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-bottom: 20px; }
+        .main-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 20px; }
         .main-card { padding: 25px; display: flex; flex-direction: column; gap: 20px; }
         .card-header { display: flex; justify-content: space-between; align-items: center; }
         .logo { display: flex; align-items: center; gap: 12px; }
@@ -82,16 +111,16 @@
         .btn.primary { background-color: var(--accent-primary); }
         .btn.secondary { background-color: var(--accent-green); }
         .btn.tertiary { background: linear-gradient(135deg, #BF5AF2, #97266d); }
-        .ai-promo-card { justify-content: center; align-items: center; text-align: center; transition: all 0.3s; }
-        .ai-promo-card:hover { transform: scale(1.02); box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
+        .ai-promo-card { justify-content: center; align-items: center; text-align: center; }
         .ai-promo-card h3 { font-size: 20px; }
         .ai-promo-card p { color: var(--text-secondary); }
 
         /* Products Grid */
         .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-        .product-card { border-radius: var(--radius-sub); overflow: hidden; transition: all 0.3s ease; }
+        .product-card { border-radius: var(--radius-sub); overflow: hidden; transition: all 0.3s ease; position: relative; }
+        .product-card-clickable { cursor: pointer; }
         .product-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 15px 40px rgba(0,0,0,0.4); }
-        .product-image { width: 100%; height: 200px; object-fit: cover; display: block; cursor: pointer; }
+        .product-image { width: 100%; height: 200px; object-fit: cover; display: block; }
         .product-info { padding: 1.5rem; background: var(--bg-interactive); }
         .product-info h4 { font-size: 1.1rem; margin-bottom: 0.5rem; line-height: 1.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .product-info .price { font-size: 1.4rem; font-weight: 700; color: var(--accent-green); margin-bottom: 1rem; }
@@ -105,27 +134,39 @@
         /* Product Modal (Premium Redesign) */
         .modal-container { position: fixed; inset: 0; z-index: 3000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; padding: 20px; }
         .modal-container.visible { opacity: 1; visibility: visible; }
-        .modal-content { max-width: 900px; width: 100%; display: grid; grid-template-columns: 1fr 1fr; transform: scale(0.9); transition: transform 0.3s; overflow: hidden; border-radius: var(--radius-main); }
+        .modal-content { max-width: 600px; width: 100%; transform: scale(0.9); transition: transform 0.3s; position: relative; }
         .modal-container.visible .modal-content { transform: scale(1); }
-        .modal-image { width: 100%; height: 500px; object-fit: cover; display: block; }
-        .modal-info { padding: 2rem 2.5rem; display: flex; flex-direction: column; }
-        .modal-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
-        .modal-title { font-size: 2rem; line-height: 1.3; flex-grow: 1; }
-        .modal-description { color: var(--text-secondary); margin: 1rem 0; line-height: 1.6; flex-grow: 1; }
-        .modal-price { font-size: 2.2rem; font-weight: 700; color: var(--accent-green); margin-bottom: 1.5rem; display: flex; align-items: baseline; gap: 10px; }
-        .modal-price .original { font-size: 1.1rem; color: var(--text-secondary); text-decoration: line-through; }
-        .modal-main-actions { display: grid; grid-template-columns: 1fr auto; gap: 1rem; margin-bottom: 1rem; }
-        .modal-secondary-actions { display: flex; justify-content: space-around; background: var(--bg-interactive); border-radius: var(--radius-sub); padding: 0.5rem; }
-        .modal-secondary-actions .icon-btn { background: none; border: none; font-size: 20px; }
-        .modal-secondary-actions a.icon-btn { display: flex; align-items: center; justify-content: center; }
-
-        /* Fullscreen Image Viewer */
-        .fullscreen-viewer { position: fixed; inset: 0; z-index: 4000; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; }
-        .fullscreen-viewer.visible { opacity: 1; visibility: visible; }
-        .fullscreen-viewer img { max-width: 90%; max-height: 90%; object-fit: contain; transform: scale(0.8); transition: transform 0.3s; }
-        .fullscreen-viewer.visible img { transform: scale(1); }
-        .fullscreen-viewer .close-fullscreen { position: absolute; top: 20px; right: 20px; font-size: 32px; }
-
+        .modal-header { position: relative; }
+        .modal-image { width: 100%; height: 300px; object-fit: cover; border-radius: var(--radius-main) var(--radius-main) 0 0; display: block; }
+        .modal-close-btn { position: absolute; top: 15px; right: 15px; width: 40px; height: 40px; border-radius: 50%; background: rgba(0,0,0,0.7); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; transition: all 0.2s; z-index: 1; }
+        .modal-close-btn:hover { background: rgba(0,0,0,0.9); transform: scale(1.1); }
+        .modal-expand-btn { position: absolute; top: 15px; left: 15px; width: 40px; height: 40px; border-radius: 50%; background: rgba(0,0,0,0.7); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: all 0.2s; z-index: 1; }
+        .modal-expand-btn:hover { background: rgba(0,0,0,0.9); transform: scale(1.1); }
+        .modal-info { padding: 2rem; position: relative; }
+        .modal-title { font-size: 1.8rem; margin-bottom: 1rem; line-height: 1.3; }
+        .modal-description { color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.6; }
+        .modal-price { font-size: 2rem; font-weight: 700; color: var(--accent-green); margin-bottom: 2rem; display: flex; align-items: baseline; gap: 10px; }
+        .modal-price .original { font-size: 1rem; color: var(--text-secondary); text-decoration: line-through; }
+        .modal-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.5rem; }
+        .modal-secondary-actions { display: flex; gap: 10px; justify-content: center; }
+        .modal-btn { padding: 12px 20px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 16px; text-decoration: none; border: none; }
+        .modal-btn-primary { background: var(--accent-primary); color: white; }
+        .modal-btn-primary:hover { background: color-mix(in srgb, var(--accent-primary) 85%, black); transform: translateY(-2px); }
+        .modal-btn-success { background: var(--accent-green); color: white; }
+        .modal-btn-success:hover { background: color-mix(in srgb, var(--accent-green) 85%, black); transform: translateY(-2px); }
+        .modal-btn-secondary { background: var(--bg-interactive); color: var(--text-primary); border: 1px solid var(--border-glass); }
+        .modal-btn-secondary:hover { background: var(--bg-glass); transform: translateY(-1px); }
+        .modal-btn-icon { width: 44px; height: 44px; padding: 0; border-radius: 50%; }
+        .modal-btn-icon.active { background: var(--accent-red); color: white; }
+        
+        /* Fullscreen Modal */
+        .modal-container.fullscreen { padding: 0; }
+        .modal-container.fullscreen .modal-content { max-width: 100%; width: 100%; height: 100vh; border-radius: 0; display: flex; flex-direction: column; }
+        .modal-container.fullscreen .modal-image { height: 50vh; border-radius: 0; }
+        .modal-container.fullscreen .modal-info { flex: 1; overflow-y: auto; }
+        .modal-container.fullscreen .modal-close-btn { top: 20px; right: 20px; width: 50px; height: 50px; font-size: 24px; }
+        .modal-container.fullscreen .modal-expand-btn { display: none; }
+        
         /* Mobile Optimizations */
         @media (max-width: 768px) {
             body { padding: 10px; }
@@ -133,8 +174,12 @@
             .main-header { top: 10px; left: 10px; right: 10px; }
             .main-grid { grid-template-columns: 1fr; }
             .search-container.active { max-width: calc(100% - 140px); }
-            .modal-content { grid-template-columns: 1fr; max-height: 80vh; overflow-y: auto; }
-            .modal-image { height: 250px; }
+            .modal-actions { grid-template-columns: 1fr; }
+            .modal-secondary-actions { flex-wrap: wrap; }
+        }
+         @media (max-width: 480px) {
+            .modal-content { width: calc(100% - 20px); }
+            .modal-info { padding: 1.5rem; }
         }
     </style>
 </head>
@@ -151,7 +196,7 @@
                 <div class="main-card glass">
                     <div class="card-header">
                         <div class="logo">
-                            <img src="assets/cronoshop-logo-black.png" alt="Cronoshop Logo" class="logo-image">
+                            <img src="assets/cronoshop-logo.png" alt="Cronoshop Logo">
                             <span>Cronoshop</span>
                         </div>
                     </div>
@@ -174,11 +219,375 @@
     
     <div class="modal-container" id="productModal">
         </div>
-
-    <div class="fullscreen-viewer" id="fullscreenViewer">
-        </div>
     
-    <script src="main.js"></script>
-    <script src="index.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- [INIZIO] DATI DEI PRODOTTI (INTEGRATI DIRETTAMENTE PER RISOLVERE L'ERRORE) ---
+        const products = [
+          { id: "prod1", link: "https://amzn.to/3Z551fa", img: "https://m.media-amazon.com/images/I/61hiFJPpY9L._AC_SL1500_.jpg", nome: "Samsung Galaxy S25 Ultra", prezzo: 1199.00, prezzo_originale: 1599.00, sconto: 25, descrizione: "Smartphone AI con display 6.9\" QHD+ Dynamic AMOLED 2X, fotocamera da 200MP, RAM 12GB, memoria interna da 256GB, batteria da 5000 mAh. Colore Titanium Silverblue. Garanzia 3 anni.", categoria: "smartphone" },
+          { id: "prod2", link: "https://amzn.to/4mB7UhK", img: "https://m.media-amazon.com/images/I/71b8mpCMTOL._AC_SL1500_.jpg", nome: "by Amazon Quinoa biologica, 500g", prezzo: 5.49, prezzo_originale: 6.99, sconto: 21, descrizione: "Quinoa biologica di alta qualità, ricca di proteine e fibre. Perfetta per insalate e piatti salutari.", categoria: "casa" },
+          { id: "prod3", link: "https://www.amazon.it/dp/B0CHWV5HTM", img: "https://m.media-amazon.com/images/I/71d7rfSl0wL._AC_SL1500_.jpg", nome: "Apple iPhone 15 (128 GB)", prezzo: 645.00, prezzo_originale: 879.00, sconto: 27, descrizione: "Uno dei migliori smartphone per prestazioni e qualità fotografica, ora a un prezzo imbattibile. Display Super Retina XDR da 6,1 pollici e chip A16 Bionic.", categoria: "smartphone" },
+          { id: "prod4", link: "https://amzn.to/4kCH9aV", img: "https://m.media-amazon.com/images/I/618ha2Ia5tL._AC_SL1500_.jpg", nome: "Samsung Galaxy S25 Smartphone AI", prezzo: 929.00, prezzo_originale: 1129.00, sconto: 18, descrizione: "Smartphone con display 6.2'' FHD+ Dynamic AMOLED 2X, fotocamera da 50MP, RAM 12GB, memoria interna 256GB, batteria da 4.000 mAh. Include 3 anni di garanzia. Colore: Mint.", categoria: "smartphone" },
+          { id: "prod5", link: "https://amzn.to/3ZAt8T4", img: "https://m.media-amazon.com/images/I/61Wj-1t3TwL._AC_SL1500_.jpg", nome: "SAMSUNG Galaxy S25 Edge (512 GB)", prezzo: 1299.00, prezzo_originale: 1549.00, sconto: 16, descrizione: "Smartphone AI con display 6.7'' QHD+ Dynamic AMOLED 2X, fotocamera da 200MP, RAM 12GB, memoria interna da 512GB, batteria da 3.900 mAh. Include 3 anni di garanzia. Colore: Titanium Jetblack.", categoria: "smartphone" },
+          { id: "prod6", link: "https://amzn.to/45gPEUX", img: "https://m.media-amazon.com/images/I/61y0hmQWlsL._AC_SL1500_.jpg", nome: "Samsung Galaxy S25+ Smartphone AI (512 GB)", prezzo: 1189.00, prezzo_originale: 1399.00, sconto: 15, descrizione: "Smartphone AI con display 6.7'' QHD+ Dynamic AMOLED 2X, fotocamera da 50MP, RAM 12GB, memoria interna da 512GB, batteria da 4.900 mAh. Include 3 anni di garanzia. Colore: Silver Shadow. Versione italiana.", categoria: "smartphone" }
+        ];
+        // --- [FINE] DATI DEI PRODOTTI ---
+        
+        // --- ELEMENTI DEL DOM ---
+        const mainHeader = document.getElementById('mainHeader');
+        const leftSidebar = document.getElementById('leftSidebar');
+        const rightSidebar = document.getElementById('rightSidebar');
+        const overlay = document.getElementById('overlay');
+        const productsGrid = document.getElementById('productsGrid');
+        const productModal = document.getElementById('productModal');
+
+        // --- INIEZIONE DINAMICA HEADER E MENU ---
+        mainHeader.innerHTML = `
+            <button class="header-btn" id="leftSidebarBtn" aria-label="Apri menu"><i class="ph-bold ph-list"></i></button>
+            <div class="search-container-wrapper">
+                <div class="search-container glass" id="searchContainer">
+                    <i class="ph ph-magnifying-glass"></i>
+                    <input type="text" id="searchInput" placeholder="Cerca un'offerta...">
+                </div>
+            </div>
+            <button class="header-btn" id="rightSidebarBtn" aria-label="Apri impostazioni"><i class="ph-bold ph-gear"></i></button>`;
+
+        leftSidebar.innerHTML = `
+            <div class="sidebar-header">
+                <h3>Menu</h3>
+                <button class="close-btn" id="closeLeftSidebarBtn"><i class="ph-bold ph-x"></i></button>
+            </div>
+            <nav class="sidebar-nav">
+                    <ul>
+                        <li><a href="index.html"><i class="ph ph-house"></i> Home</a></li>
+                        <li><a href="cronoai.html"><i class="ph ph-sparkle"></i> CronoAI✨️</a></li>
+                        <li><a href="account.html"><i class="ph ph-user-circle"></i> Account</a></li>
+                        <li><a href="products.html"><i class="ph ph-shopping-bag"></i> Prodotti</a></li>
+                        <li><a href="wishlist.html"><i class="ph ph-heart"></i> Wishlist</a></li>
+                        <li><a href="cart.html"><i class="ph ph-shopping-cart"></i> Carrello</a></li>
+                        <li><a href="chisiamo.html"><i class="ph ph-info"></i> Chi Siamo</a></li>
+                        <li><a href="blog.html"><i class="ph ph-newspaper"></i> Blog</a></li>
+                        <li><a href="stats.html"><i class="ph ph-chart-bar"></i> Statistiche</a></li>
+                        <li><a href="themes.html"><i class="ph ph-palette"></i> Temi</a></li>
+                        <li><a href="faq.html"><i class="ph ph-question"></i> FAQ</a></li>
+                        <li><a href="privacy.html"><i class="ph ph-shield-check"></i> Privacy</a></li>
+                        <li><a href="terms.html"><i class="ph ph-file-text"></i> Termini</a></li>
+                    </ul>
+            </nav>`;
+
+        rightSidebar.innerHTML = `
+            <div class="sidebar-header">
+                <h3>Impostazioni</h3>
+                <button class="close-btn" id="closeRightSidebarBtn"><i class="ph-bold ph-x"></i></button>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <label class="setting-item" for="themeToggle">
+                            <span><i class="ph ph-moon"></i> Tema Scuro</span>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="themeToggle" checked>
+                                <span class="slider"></span>
+                            </div>
+                        </label>
+                    </li>
+                     <li><a href="#"><i class="ph ph-bell"></i> Notifiche</a></li>
+                </ul>
+            </nav>`;
+
+        // --- RICOLLEGAMENTO ELEMENTI DINAMICI E LOGICA UI ---
+        const leftSidebarBtn = document.getElementById('leftSidebarBtn');
+        const rightSidebarBtn = document.getElementById('rightSidebarBtn');
+        const closeLeftSidebarBtn = document.getElementById('closeLeftSidebarBtn');
+        const closeRightSidebarBtn = document.getElementById('closeRightSidebarBtn');
+        const searchContainer = document.getElementById('searchContainer');
+        const searchInput = document.getElementById('searchInput');
+        const themeToggle = document.getElementById('themeToggle');
+
+        const toggleSidebar = (sidebar, open) => {
+            sidebar.classList.toggle('active', open);
+            const anySidebarOpen = leftSidebar.classList.contains('active') || rightSidebar.classList.contains('active');
+            overlay.classList.toggle('active', anySidebarOpen);
+        };
+
+        leftSidebarBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleSidebar(leftSidebar, true); });
+        rightSidebarBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleSidebar(rightSidebar, true); });
+        closeLeftSidebarBtn.addEventListener('click', () => toggleSidebar(leftSidebar, false));
+        closeRightSidebarBtn.addEventListener('click', () => toggleSidebar(rightSidebar, false));
+        overlay.addEventListener('click', () => {
+            toggleSidebar(leftSidebar, false);
+            toggleSidebar(rightSidebar, false);
+        });
+
+        searchContainer.addEventListener('click', () => {
+            searchContainer.classList.add('active');
+            searchInput.focus();
+        });
+        document.addEventListener('click', (e) => {
+            if (!searchContainer.contains(e.target) && searchInput.value === '') searchContainer.classList.remove('active');
+        });
+        searchInput.addEventListener('blur', () => {
+            if (searchInput.value === '') searchContainer.classList.remove('active');
+        });
+        
+        // --- GESTIONE TEMA ---
+        if (themeToggle) {
+            themeToggle.addEventListener('change', () => {
+                if (window.applyGlobalTheme) {
+                    const newTheme = themeToggle.checked ? 'dark' : 'light';
+                    window.applyGlobalTheme(newTheme);
+                } else {
+                     document.body.classList.toggle('light-mode', !themeToggle.checked);
+                }
+            });
+        }
+        if (document.body.classList.contains('light-mode')) {
+             if (themeToggle) themeToggle.checked = false;
+        }
+
+        // --- GESTIONE PRODOTTI E MODALE ---
+        const renderProducts = (filter = '') => {
+            const query = filter.toLowerCase();
+            const filteredProducts = products.filter(product => 
+                product.nome.toLowerCase().includes(query) ||
+                product.descrizione.toLowerCase().includes(query)
+            );
+            if(productsGrid) {
+                productsGrid.innerHTML = filteredProducts.map(createProductCard).join('');
+            }
+        };
+
+        const createProductCard = (product) => {
+            const price = parseFloat(product.prezzo) || 0;
+            const isLiked = isProductInWishlist(product.id);
+            
+            return `
+                <div class="product-card glass">
+                    <div class="product-card-clickable" data-product-id="${product.id}">
+                        <img src="${product.img}" alt="${product.nome}" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <h4>${product.nome}</h4>
+                        <p class="price">€${price.toFixed(2)}</p>
+                        <div class="product-actions">
+                            <button class="details-btn" data-product-id="${product.id}">Dettagli</button>
+                            <button class="icon-btn ${isLiked ? 'active' : ''}" data-wishlist-id="${product.id}" aria-label="Aggiungi alla wishlist">
+                                <i class="ph ph-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>`;
+        };
+
+        const showProductModal = (product) => {
+            const price = parseFloat(product.prezzo) || 0;
+            const originalPrice = parseFloat(product.prezzo_originale) || 0;
+            const isLiked = isProductInWishlist(product.id);
+            const isInCart = isProductInCart(product.id);
+
+            productModal.innerHTML = `
+                <div class="modal-content glass" onclick="event.stopPropagation()">
+                    <div class="modal-header">
+                        <img src="${product.img}" alt="${product.nome}" class="modal-image">
+                        <button class="modal-expand-btn" onclick="toggleFullscreen()" aria-label="Espandi">
+                            <i class="ph ph-arrows-out"></i>
+                        </button>
+                        <button class="modal-close-btn" onclick="closeProductModal()" aria-label="Chiudi">
+                            <i class="ph ph-x"></i>
+                        </button>
+                    </div>
+                    <div class="modal-info">
+                        <h2 class="modal-title">${product.nome}</h2>
+                        <p class="modal-description">${product.descrizione}</p>
+                        <div class="modal-price">
+                            €${price.toFixed(2)}
+                            ${originalPrice > price ? `<span class="original">€${originalPrice.toFixed(2)}</span>` : ''}
+                        </div>
+                        <div class="modal-actions">
+                            <button class="modal-btn modal-btn-success" onclick="addToCartFromModal('${product.id}')">
+                                <i class="ph ph-shopping-cart"></i>
+                                ${isInCart ? 'Nel Carrello' : 'Aggiungi al Carrello'}
+                            </button>
+                            <a href="${product.link}" target="_blank" rel="noopener noreferrer" class="modal-btn modal-btn-primary">
+                                <i class="ph ph-storefront"></i>
+                                Compra Ora
+                            </a>
+                        </div>
+                        <div class="modal-secondary-actions">
+                            <button class="modal-btn modal-btn-secondary modal-btn-icon ${isLiked ? 'active' : ''}" onclick="toggleWishlistFromModal('${product.id}')" aria-label="Preferiti">
+                                <i class="ph ph-heart"></i>
+                            </button>
+                            <button class="modal-btn modal-btn-secondary modal-btn-icon" onclick="shareProductFromModal('${product.id}')" aria-label="Condividi">
+                                <i class="ph ph-share"></i>
+                            </button>
+                            <button class="modal-btn modal-btn-secondary modal-btn-icon" onclick="copyLinkFromModal('${product.id}')" aria-label="Copia Link">
+                                <i class="ph ph-link"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>`;
+            productModal.classList.add('visible');
+        };
+        
+        const closeProductModal = () => {
+            productModal.classList.remove('visible', 'fullscreen');
+        };
+        
+        const toggleFullscreen = () => {
+            productModal.classList.toggle('fullscreen');
+        };
+        
+        productModal.addEventListener('click', (e) => {
+            if (e.target === productModal) {
+                closeProductModal();
+            }
+        });
+
+        // --- LOGICA INTERATTIVA (WISHLIST, ETC.) ---
+        const isProductInWishlist = (productId) => {
+            try {
+                const wishlist = JSON.parse(localStorage.getItem('cronoshop_wishlist') || '[]');
+                return wishlist.some(item => item.id === productId);
+            } catch { return false; }
+        };
+        
+        const isProductInCart = (productId) => {
+            try {
+                const cart = JSON.parse(localStorage.getItem('cronoshop_cart') || '[]');
+                return cart.some(item => item.id === productId);
+            } catch { return false; }
+        };
+        
+        const toggleWishlist = (productId) => {
+            try {
+                let wishlist = JSON.parse(localStorage.getItem('cronoshop_wishlist') || '[]');
+                const product = products.find(p => p.id === productId);
+                if (!product) return;
+                
+                const itemIndex = wishlist.findIndex(item => item.id === productId);
+                const buttons = document.querySelectorAll(`[data-wishlist-id="${productId}"]`);
+
+                if (itemIndex > -1) {
+                    wishlist.splice(itemIndex, 1);
+                    buttons.forEach(btn => btn.classList.remove('active'));
+                } else {
+                    wishlist.push(product);
+                    buttons.forEach(btn => btn.classList.add('active'));
+                }
+                localStorage.setItem('cronoshop_wishlist', JSON.stringify(wishlist));
+            } catch (e) { console.error("Wishlist Error:", e)}
+        };
+        
+        const addToCart = (productId) => {
+            try {
+                let cart = JSON.parse(localStorage.getItem('cronoshop_cart') || '[]');
+                const product = products.find(p => p.id === productId);
+                if (!product) return;
+                
+                const existingItem = cart.find(item => item.id === productId);
+                if (existingItem) {
+                    existingItem.quantity = (existingItem.quantity || 1) + 1;
+                } else {
+                    cart.push({ ...product, quantity: 1 });
+                }
+                localStorage.setItem('cronoshop_cart', JSON.stringify(cart));
+                showNotification('Prodotto aggiunto al carrello!', 'success');
+            } catch (e) { console.error("Cart Error:", e); }
+        };
+        
+        const shareProduct = (productId) => {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            const shareData = {
+                title: `${product.nome} - Cronoshop`,
+                text: `Guarda questa offerta: ${product.nome} a €${product.prezzo}`,
+                url: product.link
+            };
+            
+            if (navigator.share) {
+                navigator.share(shareData).catch(console.error);
+            } else {
+                navigator.clipboard.writeText(`${shareData.title}\n${shareData.text}\n${shareData.url}`)
+                    .then(() => showNotification('Link copiato negli appunti!', 'success'))
+                    .catch(() => showNotification('Errore nella condivisione', 'error'));
+            }
+        };
+        
+        const showNotification = (message, type = 'info') => {
+            const notification = document.createElement('div');
+            const colors = { success: '#30D158', error: '#FF453A', info: '#0A84FF' };
+            notification.style.cssText = `
+                position: fixed; top: 100px; right: 20px; background: ${colors[type]}; color: white;
+                padding: 12px 20px; border-radius: 12px; z-index: 4000; opacity: 0;
+                transition: all 0.3s ease; font-weight: 500;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.style.opacity = '1', 100);
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        };
+        
+        // Funzioni globali per il modal
+        window.addToCartFromModal = (productId) => {
+            addToCart(productId);
+            // Aggiorna il pulsante nel modal
+            const btn = document.querySelector('.modal-btn-success');
+            if (btn) {
+                btn.innerHTML = '<i class="ph ph-check"></i> Nel Carrello';
+                btn.style.background = 'var(--accent-green)';
+            }
+        };
+        
+        window.toggleWishlistFromModal = (productId) => {
+            toggleWishlist(productId);
+            const btn = document.querySelector('.modal-secondary-actions .modal-btn-icon');
+            if (btn) {
+                btn.classList.toggle('active');
+            }
+        };
+        
+        window.shareProductFromModal = (productId) => {
+            shareProduct(productId);
+        };
+        
+        window.copyLinkFromModal = (productId) => {
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                navigator.clipboard.writeText(product.link)
+                    .then(() => showNotification('Link copiato!', 'success'))
+                    .catch(() => showNotification('Errore nella copia', 'error'));
+            }
+        };
+        
+        window.closeProductModal = closeProductModal;
+        window.toggleFullscreen = toggleFullscreen;
+
+        document.body.addEventListener('click', (e) => {
+            const detailsBtn = e.target.closest('.details-btn');
+            const wishlistBtn = e.target.closest('[data-wishlist-id]');
+            
+            if (detailsBtn) {
+                 const product = products.find(p => p.id === detailsBtn.dataset.productId);
+                 if (product) showProductModal(product);
+            }
+            
+            if (wishlistBtn) {
+                toggleWishlist(wishlistBtn.dataset.wishlistId);
+            }
+        });
+
+        // --- CARICAMENTO INIZIALE ---
+        if (typeof products !== 'undefined' && products.length > 0) {
+            renderProducts();
+        } else {
+            if(productsGrid) productsGrid.innerHTML = `<p style="grid-column: 1 / -1; text-align: center; color: var(--text-secondary);">Nessun prodotto da visualizzare al momento.</p>`;
+        }
+        searchInput.addEventListener('input', () => renderProducts(searchInput.value));
+    });
+    </script>
 </body>
 </html>
