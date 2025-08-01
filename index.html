@@ -181,6 +181,76 @@
             .modal-content { width: calc(100% - 20px); }
             .modal-info { padding: 1.5rem; }
         }
+        /* POPUP BASE */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+}
+
+.popup-box {
+  position: relative;
+  background: #ffffff;
+  color: #222;
+  max-width: 600px;
+  width: 100%;
+  padding: 30px 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.2);
+  overflow-y: auto;
+  max-height: 90vh;
+}
+
+.popup-box h2 {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  color: #111;
+}
+
+.popup-box p {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.popup-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 1.5rem;
+  background: transparent;
+  border: none;
+  color: #666;
+  cursor: pointer;
+}
+
+.popup-close:hover {
+  color: #000;
+}
+
+.popup-button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 20px;
+  background: #007aff;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.popup-button:hover {
+  background: #005fcc;
+}
     </style>
 </head>
 <body class="dark-mode">
@@ -200,6 +270,33 @@
                             <span>Cronoshop</span>
                         </div>
                     </div>
+                    <!-- Popup Avviso CRONOSHOP -->
+<div id="popup-cronoshop" class="popup-overlay">
+  <div class="popup-box">
+    <button class="popup-close" onclick="document.getElementById('popup-cronoshop').style.display='none'">&times;</button>
+    <h2>🚀 CRONOSHOP SI RIFÀ IL LOOK!</h2>
+    <p>I nostri sviluppatori hanno ridisegnato completamente l'interfaccia e la grafica di <strong>cronoshop.eu</strong>, rendendola più intuitiva, moderna e al passo coi tempi.</p>
+    <p>✔️ Navigazione migliorata per trovare subito ciò che ti serve</p>
+    <p>✔️ Grafica più pulita e accattivante, anche su smartphone</p>
+    <p>✔️ Nuovi colori, nuovi font, e animazioni più fluide</p>
+    <p>✔️ Tema scuro e chiaro a tua scelta</p>
+    <p>✔️ Sezione offerte giornaliere più evidenti e veloci da consultare</p>
+    <p>✔️ Carrello e wishlist rivisitati completamente</p>
+    <p>✔️ Accesso rapido al tuo profilo utente</p>
+    <p>✔️ Ottimizzazione SEO per essere più visibili su Google</p>
+    <p>✔️ Menu più semplice e comprensibile</p>
+    <p>✔️ Esperienza migliorata anche su tablet e dispositivi pieghevoli</p>
+    <p>✔️ Animazioni leggere ma eleganti</p>
+    <p>✔️ Più attenzione all’accessibilità e ai dettagli</p>
+    <p>✔️ Navigazione in incognito migliorata</p>
+    <p>✔️ Caricamento ultra-rapido delle pagine</p>
+    <p>✔️ Modalità risparmio dati</p>
+    <p>✔️ Nuove pagine dinamiche in arrivo</p>
+    <p>✔️ Provalo adesso in anteprima!</p>
+
+    <a href="themes.html" class="popup-button">🎨 Prova il nuovo stile</a>
+  </div>
+</div>
                     <div class="actions">
                         <a href="products.html" class="btn primary">Vai alle Offerte</a>
                         <a href="groups.html" class="btn secondary">Seguici su Whatsapp</a>
