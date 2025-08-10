@@ -171,6 +171,17 @@
                 <i class="ph-bold ph-smiley-sad"></i>
                 <h3>Nessun prodotto trovato</h3>
             </div>
+            
+            <!-- Sezione Novità Labubu -->
+            <section class="featured-section" id="featuredSection">
+                <div class="featured-header">
+                    <h2><i class="ph-bold ph-sparkle"></i> 🔥 Novità Esclusiva</h2>
+                    <p>Non perdere la collezione Labubu più amata del momento!</p>
+                </div>
+                <div class="featured-product glass" id="featuredLabubu">
+                    <!-- Contenuto generato dinamicamente -->
+                </div>
+            </section>
         </main>
     </div>
     
@@ -1374,6 +1385,39 @@
 
             new ProductsPageManager(allProducts);
         });
+        
+        // Render featured Labubu
+        const renderFeaturedLabubu = () => {
+            const featuredContainer = document.getElementById('featuredLabubu');
+            if (!featuredContainer) return;
+            
+            featuredContainer.innerHTML = `
+                <div class="featured-content">
+                    <div class="featured-info">
+                        <h3>Collezione Labubu</h3>
+                        <p>I peluche che stanno conquistando il mondo! Design adorabile, qualità premium e un fascino irresistibile che li rende perfetti per ogni collezione.</p>
+                        <div class="featured-price">
+                            <span class="current">€24.99</span>
+                            <span class="original">€34.99</span>
+                            <span class="discount">-29%</span>
+                        </div>
+                        <div class="featured-actions">
+                            <a href="https://amzn.to/3JpXORG" target="_blank" class="featured-btn primary">
+                                <i class="ph ph-shopping-cart"></i> Acquista
+                            </a>
+                            <a href="labubu.html" class="featured-btn secondary">
+                                <i class="ph ph-arrow-right"></i> Scopri di più
+                            </a>
+                        </div>
+                    </div>
+                    <div class="featured-image">
+                        <img src="public/labubu/717VqkMEolL._AC_SX679_.jpg" alt="Labubu Collection">
+                    </div>
+                </div>
+            `;
+        };
+        
+        renderFeaturedLabubu();
     </script>
 </body>
 </html>
