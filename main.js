@@ -7,6 +7,19 @@
 
 const products = [
   {
+    id: "labubu-special",
+    link: "https://amzn.to/3JpXORG",
+    img: "public/labubu/717VqkMEolL._AC_SX679_.jpg",
+    nome: "🔥 NOVITÀ - Collezione Labubu Peluche",
+    prezzo: 24.99,
+    prezzo_originale: 34.99,
+    sconto: 29,
+    descrizione: "I peluche più amati del momento! Adorabili Labubu della collezione esclusiva con design unico e qualità premium. Perfetti per collezionisti e regalo.",
+    categoria: "giocattoli",
+    featured: true,
+    isNew: true
+  },
+  {
     id: "prod1",
     link: "https://amzn.to/3Z551fa",
     img: "https://m.media-amazon.com/images/I/61hiFJPpY9L._AC_SL1500_.jpg",

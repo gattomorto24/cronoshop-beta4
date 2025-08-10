@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collezione Labubu - Cronoshop | I Peluche più Amati del 2025</title>
+    <meta name="description" content="Scopri la collezione completa Labubu su Cronoshop. Peluche adorabili, edizioni limitate e sconti esclusivi. La tendenza che sta conquistando il mondo!">
+    <meta name="author" content="Cronoshop Team">
+    <link rel="canonical" href="https://www.cronoshop.eu/labubu.html">
+    <link rel="icon" type="image/png" href="assets/cronoshop-logo.png">
+    <link rel="apple-touch-icon" href="assets/cronoshop-logo.png">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="themes.js" defer></script>
+
+    <style>
+        /* --- [1] IMPOSTAZIONI GLOBALI E VARIABILI --- */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        :root {
+            --bg-main: #121212;
+            --bg-glass: rgba(28, 28, 30, 0.75);
+            --bg-interactive: rgba(44, 44, 46, 0.8);
+            --border-glass: rgba(255, 255, 255, 0.15);
+            --text-primary: #f5f5f7;
+            --text-secondary: #a0a0a5;
+            --accent-primary: #0A84FF;
+            --accent-green: #30D158;
+            --accent-red: #FF453A;
+            --overlay-bg: rgba(0, 0, 0, 0.6);
+            --radius-main: 24px;
+            --radius-sub: 16px;
+            --transition-smooth: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        
+        body.light-mode {
+            --bg-main: #f0f2f5;
+            --bg-glass: rgba(255, 255, 255, 0.7);
+            --bg-interactive: rgba(229, 229, 234, 0.8);
+            --border-glass: rgba(0, 0, 0, 0.1);
+            --text-primary: #1d1d1f;
+            --text-secondary: #6e6e73;
+            --accent-primary: #007AFF;
+            --accent-green: #34C759;
+            --accent-red: #FF3B30;
+            --overlay-bg: rgba(0, 0, 0, 0.4);
+        }
+
+        /* --- [2] RESET E STILI BASE --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg-main);
+            color: var(--text-primary);
+            transition: background-color 0.3s, color 0.3s;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .page-wrapper { padding-top: 80px; }
+        .glass {
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-main);
+            transition: background 0.3s, border 0.3s;
+        }
+        
+        /* --- [3] HEADER, SEARCH & SIDEBARS (STANDARD) --- */
+        .main-header { position: fixed; top: 20px; left: 20px; right: 20px; z-index: 1000; display: flex; align-items: center; gap: 20px; padding: 0 20px; height: 70px; }
+        .header-btn { background: none; border: none; color: var(--text-secondary); cursor: pointer; font-size: 28px; display: flex; align-items: center; padding: 8px; border-radius: 50%; transition: all 0.2s; z-index: 1002; }
+        .header-btn:hover { background-color: var(--bg-interactive); color: var(--text-primary); }
+        .search-container-wrapper { flex-grow: 1; display: flex; justify-content: center; }
+        .search-container { display: flex; align-items: center; gap: 15px; padding: 0 20px; width: 100%; max-width: 80px; height: 50px; border-radius: 25px; cursor: pointer; transition: all var(--transition-smooth); overflow: hidden; }
+        .search-container.active { max-width: 500px; cursor: text; }
+        .search-container i { font-size: 20px; color: var(--text-secondary); transition: color 0.3s; }
+        .search-container.active i { color: var(--accent-primary); }
+        .search-container input { background: none; border: none; outline: none; color: var(--text-primary); font-size: 16px; width: 100%; opacity: 0; transform: translateX(-20px); transition: opacity 0.3s ease, transform 0.3s ease; }
+        .search-container.active input { opacity: 1; transform: translateX(0); }
+        .search-container input::placeholder { color: var(--text-secondary); }
+        .sidebar { position: fixed; top: 0; height: 100%; width: 300px; z-index: 2000; padding: 20px; transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .left-sidebar { left: 0; transform: translateX(-105%); }
+        .right-sidebar { right: 0; transform: translateX(105%); }
+        .sidebar.active { transform: translateX(0); }
+        .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding: 10px 0; }
+        .sidebar-header h3 { font-size: 24px; font-weight: 700; }
+        .close-btn { background: rgba(255, 255, 255, 0.1); color: var(--text-primary); border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+        .close-btn:hover { background-color: rgba(255, 255, 255, 0.2); transform: rotate(90deg); }
+        .sidebar-nav ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+        .sidebar-nav a, .setting-item { display: flex; align-items: center; gap: 15px; padding: 12px 15px; border-radius: 12px; font-size: 16px; font-weight: 500; color: var(--text-secondary); text-decoration: none; transition: all 0.2s; }
+        .sidebar-nav a:hover, .setting-item:hover { background-color: var(--accent-primary); color: white; transform: translateX(5px); }
+        .sidebar-nav a i { font-size: 22px; min-width: 25px; text-align: center; }
+        .setting-item { justify-content: space-between; cursor: pointer; }
+        .toggle-switch { position: relative; display: inline-block; width: 50px; height: 30px; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; inset: 0; background-color: var(--bg-interactive); border-radius: 34px; transition: .4s; }
+        .slider:before { position: absolute; content: ""; height: 22px; width: 22px; left: 4px; bottom: 4px; background-color: white; border-radius: 50%; transition: .4s; }
+        input:checked + .slider { background-color: var(--accent-primary); }
+        input:checked + .slider:before { transform: translateX(20px); }
+        .overlay { position: fixed; inset: 0; background: var(--overlay-bg); z-index: 1999; opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s ease; }
+        .overlay.active { opacity: 1; visibility: visible; }
+
+        /* --- [4] DESIGN PAGINA LABUBU --- */
+        .labubu-container { max-width: 1400px; margin: 0 auto; }
+        
+        .labubu-hero {
+            background: linear-gradient(135deg, #ff6b9d, #c44569, #f8b500);
+            color: white;
+            padding: 4rem 2rem;
+            border-radius: var(--radius-main);
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .labubu-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.1) 0%, transparent 50%);
+        }
+        
+        .labubu-hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .labubu-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .labubu-hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 2rem auto;
+        }
+        
+        .hero-badge {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .main-carousel {
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .carousel-container {
+            position: relative;
+            height: 500px;
+            border-radius: var(--radius-main);
+            overflow: hidden;
+        }
+        
+        .carousel-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+        
+        .carousel-slide.active {
+            opacity: 1;
+        }
+        
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .carousel-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+        
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .carousel-dot.active {
+            background: white;
+            transform: scale(1.2);
+        }
+        
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .carousel-nav:hover {
+            background: rgba(0,0,0,0.8);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .carousel-prev { left: 20px; }
+        .carousel-next { right: 20px; }
+
+        .content-section {
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .labubu-story {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+        
+        .story-text h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-primary);
+        }
+        
+        .story-text p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        
+        .story-image {
+            border-radius: var(--radius-main);
+            overflow: hidden;
+        }
+        
+        .story-image img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .feature-card {
+            padding: 2rem;
+            text-align: center;
+            border-radius: var(--radius-sub);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #ff6b9d;
+        }
+        
+        .feature-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .purchase-section {
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            color: white;
+            padding: 3rem;
+            border-radius: var(--radius-main);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .purchase-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .purchase-content p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+        
+        .price-display {
+            margin-bottom: 2rem;
+        }
+        
+        .price-current {
+            font-size: 3rem;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .price-original {
+            font-size: 1.5rem;
+            opacity: 0.7;
+            text-decoration: line-through;
+            margin-right: 1rem;
+        }
+        
+        .discount-highlight {
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            font-weight: 600;
+        }
+        
+        .purchase-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .btn-primary {
+            background: rgba(255,255,255,0.9);
+            color: #c44569;
+        }
+        
+        .btn-primary:hover {
+            background: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .btn-secondary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .gallery-section {
+            margin-bottom: 3rem;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .gallery-item {
+            border-radius: var(--radius-sub);
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .reviews-section {
+            padding: 2rem;
+        }
+        
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .review-card {
+            padding: 1.5rem;
+            border-radius: var(--radius-sub);
+        }
+        
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .review-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .review-info h5 {
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+        
+        .review-stars {
+            color: #ffd700;
+            font-size: 0.9rem;
+        }
+        
+        .review-text {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 1024px) {
+            .labubu-story {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .page-wrapper { padding-top: 70px; }
+            .main-header { top: 10px; left: 10px; right: 10px; }
+            
+            .labubu-hero {
+                padding: 2rem 1rem;
+            }
+            
+            .labubu-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .purchase-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body class="dark-mode">
+
+    <header class="main-header glass" id="mainHeader"></header>
+    <aside class="sidebar left-sidebar glass" id="leftSidebar"></aside>
+    <aside class="sidebar right-sidebar glass" id="rightSidebar"></aside>
+    <div class="overlay" id="overlay"></div>
+
+    <div class="page-wrapper">
+        <main class="labubu-container">
+            
+            <!-- Hero Section -->
+            <section class="labubu-hero">
+                <div class="labubu-hero-content">
+                    <div class="hero-badge">🔥 TENDENZA MONDIALE 2025</div>
+                    <h1>Collezione Labubu</h1>
+                    <p>Scopri i peluche che hanno conquistato milioni di cuori in tutto il mondo. Adorabili, collezionabili e irresistibili!</p>
+                </div>
+            </section>
+
+            <!-- Carousel Principale -->
+            <section class="main-carousel glass">
+                <div class="carousel-container">
+                    <div class="carousel-slide active">
+                        <img src="public/labubu/717VqkMEolL._AC_SX679_.jpg" alt="Labubu Rosa">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="public/labubu/71Ga4UYqvAL._AC_SX679_.jpg" alt="Labubu Blu">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="public/labubu/711IpYzAhhL._AC_SL1500_.jpg" alt="Labubu Verde">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="public/labubu/20250810_105057.jpg" alt="Labubu Collezione">
+                    </div>
+                    
+                    <button class="carousel-nav carousel-prev" onclick="changeSlide(-1)">
+                        <i class="ph-bold ph-caret-left"></i>
+                    </button>
+                    <button class="carousel-nav carousel-next" onclick="changeSlide(1)">
+                        <i class="ph-bold ph-caret-right"></i>
+                    </button>
+                    
+                    <div class="carousel-controls">
+                        <button class="carousel-dot active" onclick="goToSlide(0)"></button>
+                        <button class="carousel-dot" onclick="goToSlide(1)"></button>
+                        <button class="carousel-dot" onclick="goToSlide(2)"></button>
+                        <button class="carousel-dot" onclick="goToSlide(3)"></button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Storia dei Labubu -->
+            <section class="content-section glass">
+                <h2 class="section-title"><i class="ph-bold ph-book-open"></i> La Storia dei Labubu</h2>
+                <div class="labubu-story">
+                    <div class="story-text">
+                        <h3>Un Fenomeno Globale</h3>
+                        <p>I Labubu sono nati dalla creatività dell'artista Kasing Lung e sono rapidamente diventati un fenomeno mondiale. Questi adorabili personaggi con i loro denti sporgenti e il loro aspetto unico hanno conquistato collezionisti di tutte le età.</p>
+                        <p>Ogni Labubu ha la sua personalità distintiva e rappresenta un mondo fantastico pieno di avventure e magia. La loro popolarità è esplosa sui social media, diventando un must-have per gli amanti dei collectibles.</p>
+                        <p>La qualità dei materiali, l'attenzione ai dettagli e il design accattivante li rendono perfetti sia come giocattoli che come oggetti da collezione.</p>
+                    </div>
+                    <div class="story-image">
+                        <img src="public/labubu/71Ga4UYqvAL._AC_SX679_.jpg" alt="Labubu Story">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Caratteristiche -->
+            <section class="content-section glass">
+                <h2 class="section-title"><i class="ph-bold ph-star"></i> Perché Scegliere i Labubu</h2>
+                <div class="features-grid">
+                    <div class="feature-card glass">
+                        <div class="feature-icon">🎨</div>
+                        <h4>Design Unico</h4>
+                        <p>Ogni Labubu è progettato con cura maniacale, dai colori vivaci ai dettagli espressivi che li rendono inconfondibili.</p>
+                    </div>
+                    <div class="feature-card glass">
+                        <div class="feature-icon">🌟</div>
+                        <h4>Qualità Premium</h4>
+                        <p>Materiali di alta qualità, morbidi al tatto e resistenti nel tempo. Perfetti per coccole e collezione.</p>
+                    </div>
+                    <div class="feature-card glass">
+                        <div class="feature-icon">💎</div>
+                        <h4>Collezionabili</h4>
+                        <p>Ogni Labubu è un pezzo da collezione che aumenta di valore nel tempo. Perfetti per collezionisti esperti.</p>
+                    </div>
+                    <div class="feature-card glass">
+                        <div class="feature-icon">🎁</div>
+                        <h4>Regalo Perfetto</h4>
+                        <p>Ideali come regalo per bambini e adulti. Un sorriso garantito per chi li riceve!</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sezione Acquisto -->
+            <section class="purchase-section">
+                <div class="purchase-content">
+                    <h2>Porta a Casa la Magia</h2>
+                    <p>Non perdere l'occasione di aggiungere questi adorabili Labubu alla tua collezione!</p>
+                    
+                    <div class="price-display">
+                        <span class="price-current">€24.99</span>
+                        <span class="price-original">€34.99</span>
+                        <span class="discount-highlight">RISPARMIA €10!</span>
+                    </div>
+                    
+                    <div class="purchase-actions">
+                        <a href="https://amzn.to/3JpXORG" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                            <i class="ph ph-shopping-cart"></i> Acquista su Amazon
+                        </a>
+                        <button class="btn btn-secondary" onclick="addLabubuToCart()">
+                            <i class="ph ph-plus"></i> Aggiungi al Carrello
+                        </button>
+                        <button class="btn btn-secondary" onclick="addLabubuToWishlist()">
+                            <i class="ph ph-heart"></i> Salva in Wishlist
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Galleria Completa -->
+            <section class="content-section glass">
+                <h2 class="section-title"><i class="ph-bold ph-images"></i> Galleria Completa</h2>
+                <div class="gallery-grid">
+                    <div class="gallery-item" onclick="openImageModal('public/labubu/717VqkMEolL._AC_SX679_.jpg')">
+                        <img src="public/labubu/717VqkMEolL._AC_SX679_.jpg" alt="Labubu Rosa">
+                    </div>
+                    <div class="gallery-item" onclick="openImageModal('public/labubu/71Ga4UYqvAL._AC_SX679_.jpg')">
+                        <img src="public/labubu/71Ga4UYqvAL._AC_SX679_.jpg" alt="Labubu Blu">
+                    </div>
+                    <div class="gallery-item" onclick="openImageModal('public/labubu/711IpYzAhhL._AC_SL1500_.jpg')">
+                        <img src="public/labubu/711IpYzAhhL._AC_SL1500_.jpg" alt="Labubu Verde">
+                    </div>
+                    <div class="gallery-item" onclick="openImageModal('public/labubu/20250810_105057.jpg')">
+                        <img src="public/labubu/20250810_105057.jpg" alt="Labubu Collezione">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recensioni -->
+            <section class="content-section glass">
+                <h2 class="section-title"><i class="ph-bold ph-chat-circle"></i> Cosa Dicono i Nostri Clienti</h2>
+                <div class="reviews-grid">
+                    <div class="review-card glass">
+                        <div class="review-header">
+                            <div class="review-avatar">M</div>
+                            <div class="review-info">
+                                <h5>Marco R.</h5>
+                                <div class="review-stars">★★★★★</div>
+                            </div>
+                        </div>
+                        <p class="review-text">"I miei figli sono impazziti per questi Labubu! Qualità eccellente e spedizione velocissima. Consigliatissimi!"</p>
+                    </div>
+                    <div class="review-card glass">
+                        <div class="review-header">
+                            <div class="review-avatar">S</div>
+                            <div class="review-info">
+                                <h5>Sofia T.</h5>
+                                <div class="review-stars">★★★★★</div>
+                            </div>
+                        </div>
+                        <p class="review-text">"Sono una collezionista e questi Labubu sono semplicemente perfetti. Dettagli curati e materiali di qualità."</p>
+                    </div>
+                    <div class="review-card glass">
+                        <div class="review-header">
+                            <div class="review-avatar">A</div>
+                            <div class="review-info">
+                                <h5>Alessandro P.</h5>
+                                <div class="review-stars">★★★★★</div>
+                            </div>
+                        </div>
+                        <p class="review-text">"Regalo perfetto per la mia ragazza! È rimasta entusiasta. Prezzo ottimo e qualità top."</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Modal per immagini -->
+    <div id="imageModal" class="image-modal" onclick="closeImageModal()">
+        <div class="modal-content">
+            <img id="modalImage" src="" alt="">
+            <button class="modal-close" onclick="closeImageModal()">
+                <i class="ph-bold ph-x"></i>
+            </button>
+        </div>
+    </div>
+
+    <style>
+        .image-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 3000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .image-modal.active {
+            display: flex;
+        }
+        
+        .image-modal .modal-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+        }
+        
+        .image-modal img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 12px;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- LOGICA UI STANDARD (MENU, RICERCA, OVERLAY) ---
+            const leftSidebar = document.getElementById('leftSidebar');
+            const rightSidebar = document.getElementById('rightSidebar');
+            const overlay = document.getElementById('overlay');
+            const mainHeader = document.getElementById('mainHeader');
+
+            mainHeader.innerHTML = `
+                <button class="header-btn" id="leftSidebarBtn" aria-label="Apri menu"><i class="ph-bold ph-list"></i></button>
+                <div class="search-container-wrapper"><div class="search-container glass" id="searchContainer"><i class="ph ph-magnifying-glass"></i><input type="text" id="searchInput" placeholder="Cerca..."></div></div>
+                <button class="header-btn" id="rightSidebarBtn" aria-label="Apri impostazioni"><i class="ph-bold ph-gear"></i></button>`;
+            
+            leftSidebar.innerHTML = `
+                <div class="sidebar-header"><h3>Menu</h3><button class="close-btn" id="closeLeftSidebarBtn"><i class="ph-bold ph-x"></i></button></div>
+                <nav class="sidebar-nav">
+                    <ul>
+                        <li><a href="index.html"><i class="ph ph-house"></i> Home</a></li>
+                        <li><a href="cronoai.html"><i class="ph ph-sparkle"></i> CronoAI✨️</a></li>
+                        <li><a href="account.html"><i class="ph ph-user-circle"></i> Account</a></li>
+                        <li><a href="products.html"><i class="ph ph-shopping-bag"></i> Prodotti</a></li>
+                        <li><a href="wishlist.html"><i class="ph ph-heart"></i> Wishlist</a></li>
+                        <li><a href="cart.html"><i class="ph ph-shopping-cart"></i> Carrello</a></li>
+                        <li><a href="chisiamo.html"><i class="ph ph-info"></i> Chi Siamo</a></li>
+                        <li><a href="blog.html"><i class="ph ph-newspaper"></i> Blog</a></li>
+                        <li><a href="stats.html"><i class="ph ph-chart-bar"></i> Statistiche</a></li>
+                        <li><a href="themes.html"><i class="ph ph-palette"></i> Temi</a></li>
+                        <li><a href="faq.html"><i class="ph ph-question"></i> FAQ</a></li>
+                        <li><a href="privacy.html"><i class="ph ph-shield-check"></i> Privacy</a></li>
+                        <li><a href="terms.html"><i class="ph ph-file-text"></i> Termini</a></li>
+                    </ul>
+                </nav>`;
+
+            rightSidebar.innerHTML = `
+                <div class="sidebar-header"><h3>Impostazioni</h3><button class="close-btn" id="closeRightSidebarBtn"><i class="ph-bold ph-x"></i></button></div>
+                <nav class="sidebar-nav">
+                    <ul>
+                        <li><label class="setting-item" for="themeToggle"><span><i class="ph ph-moon"></i> Tema Scuro</span><div class="toggle-switch"><input type="checkbox" id="themeToggle" checked><span class="slider"></span></div></label></li>
+                        <li><a href="#"><i class="ph ph-bell"></i> Notifiche</a></li>
+                    </ul>
+                </nav>`;
+            
+            const leftSidebarBtn = document.getElementById('leftSidebarBtn');
+            const rightSidebarBtn = document.getElementById('rightSidebarBtn');
+            const closeLeftSidebarBtn = document.getElementById('closeLeftSidebarBtn');
+            const closeRightSidebarBtn = document.getElementById('closeRightSidebarBtn');
+            const searchContainer = document.getElementById('searchContainer');
+            const searchInput = document.getElementById('searchInput');
+
+            const toggleSidebar = (sidebar, open) => {
+                sidebar.classList.toggle('active', open);
+                const anySidebarOpen = leftSidebar.classList.contains('active') || rightSidebar.classList.contains('active');
+                overlay.classList.toggle('active', anySidebarOpen);
+            };
+
+            leftSidebarBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleSidebar(leftSidebar, true); });
+            rightSidebarBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleSidebar(rightSidebar, true); });
+            closeLeftSidebarBtn.addEventListener('click', () => toggleSidebar(leftSidebar, false));
+            closeRightSidebarBtn.addEventListener('click', () => toggleSidebar(rightSidebar, false));
+            overlay.addEventListener('click', () => { toggleSidebar(leftSidebar, false); toggleSidebar(rightSidebar, false); });
+            
+            searchContainer.addEventListener('click', () => searchContainer.classList.add('active'));
+            document.addEventListener('click', (e) => {
+                if (!searchContainer.contains(e.target) && searchInput.value === '') searchContainer.classList.remove('active');
+            });
+            searchInput.addEventListener('blur', () => {
+                if(searchInput.value === '') searchContainer.classList.remove('active');
+            });
+        });
+
+        // --- FUNZIONI CAROUSEL ---
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.carousel-dot');
+
+        function goToSlide(index) {
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('active');
+            
+            currentSlide = index;
+            
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+        }
+
+        function changeSlide(direction) {
+            const newIndex = (currentSlide + direction + slides.length) % slides.length;
+            goToSlide(newIndex);
+        }
+
+        // Auto-play carousel
+        setInterval(() => {
+            changeSlide(1);
+        }, 5000);
+
+        // --- FUNZIONI LABUBU ---
+        window.addLabubuToCart = function() {
+            const labubuProduct = {
+                id: 'labubu-special',
+                nome: 'Collezione Labubu Peluche',
+                prezzo: 24.99,
+                prezzo_originale: 34.99,
+                sconto: 29,
+                categoria: 'giocattoli',
+                img: 'public/labubu/717VqkMEolL._AC_SX679_.jpg',
+                link: 'https://amzn.to/3JpXORG',
+                descrizione: 'Adorabili peluche Labubu della collezione esclusiva'
+            };
+            
+            try {
+                let cart = JSON.parse(localStorage.getItem('cronoshop_cart') || '[]');
+                const existingItem = cart.find(item => item.id === labubuProduct.id);
+                
+                if (existingItem) {
+                    existingItem.quantity = (existingItem.quantity || 1) + 1;
+                } else {
+                    cart.push({...labubuProduct, quantity: 1});
+                }
+                
+                localStorage.setItem('cronoshop_cart', JSON.stringify(cart));
+                showNotification('Labubu aggiunto al carrello!', 'success');
+            } catch (e) {
+                showNotification('Errore nell\'aggiungere al carrello', 'error');
+            }
+        };
+        
+        window.addLabubuToWishlist = function() {
+            const labubuProduct = {
+                id: 'labubu-special',
+                nome: 'Collezione Labubu Peluche',
+                prezzo: 24.99,
+                prezzo_originale: 34.99,
+                sconto: 29,
+                categoria: 'giocattoli',
+                img: 'public/labubu/717VqkMEolL._AC_SX679_.jpg',
+                link: 'https://amzn.to/3JpXORG',
+                descrizione: 'Adorabili peluche Labubu della collezione esclusiva'
+            };
+            
+            try {
+                let wishlist = JSON.parse(localStorage.getItem('cronoshop_wishlist') || '[]');
+                const existingItem = wishlist.find(item => item.id === labubuProduct.id);
+                
+                if (existingItem) {
+                    showNotification('Labubu già nella wishlist!', 'info');
+                    return;
+                }
+                
+                wishlist.push(labubuProduct);
+                localStorage.setItem('cronoshop_wishlist', JSON.stringify(wishlist));
+                showNotification('Labubu aggiunto alla wishlist!', 'success');
+            } catch (e) {
+                showNotification('Errore nell\'aggiungere alla wishlist', 'error');
+            }
+        };
+
+        // --- FUNZIONI MODAL IMMAGINI ---
+        function openImageModal(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            modalImage.src = imageSrc;
+            modal.classList.add('active');
+        }
+
+        function closeImageModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('active');
+        }
+
+        // Funzione notifica semplice
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            const colors = { success: '#30D158', info: '#0A84FF', error: '#FF453A' };
+            notification.style.cssText = `
+                position: fixed; bottom: 20px; right: 20px; 
+                background-color: ${colors[type]}; color: white; 
+                padding: 15px 25px; border-radius: 12px; z-index: 1001; 
+                opacity: 0; transition: all 0.3s ease;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => { notification.style.opacity = '1'; notification.style.transform = 'translateY(-10px)'; }, 10);
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateY(10px)';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
